@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8">
+  <title>自动换行</title>
+  <style></style>
+  <script src="js/lightbox/js/jquery-1.11.0.min.js"></script>
+
+ </head>
+ <body>
+ <div id="raw"></div>
+ <div id="cont">
+每一次，都在徘徊孤单中坚强， 每一次，就算很受伤也不闪泪光。 我知道，我一直有双隐形的翅膀， 带我飞飞过绝望。 不去想，他们拥有美丽的太阳， 我看见，每天的夕阳也会有变化。 我知道，我一直有双隐形的翅膀， 带我飞给我希望。 我终於看到，所有梦想都开花， 追逐的年轻歌声多嘹亮。 我终於翱翔，用心凝望不害怕， 哪里会有风就飞多远吧。
+ </div>
+   <script>
+
+   var rawtext="每一次，都在徘徊孤单中坚强， 每一次，就算很受伤也不闪泪光。 我知道，我一直有双隐形的翅膀， " +
+           "带我飞飞过绝望。 不去想，他们拥有美丽的太阳， 我看见，每天的夕阳也会有变化。 " +
+           "我知道，我一直有双隐形的翅膀， 带我飞给我希望。 我终於看到，所有梦想都开花， 追逐的年轻歌声多嘹亮。" +
+           " 我终於翱翔，用心凝望不害怕， 哪里会有风就飞多远吧。",lines=[],sentences=[],tmp=[],sent=[];
+   $('#raw').html(rawtext).css({background:"green","padding":"20px"})
+   lines=rawtext.split(/。/);
+
+   for(var i=0;i<lines.length;i++){
+       if(lines[i]=='') continue;
+       sentences[i]=lines[i]+'。';
+   }
+
+   for(var j=0;j<sentences.length;j++){
+      tmp=sentences[j].split('，');
+      sent[j]={};
+      sent[j].frags=[];
+      for(var k=0;k<tmp.length;k++) {
+          sent[j].frags[k] = tmp[k];
+      }
+   }
+   for(var a=0;a<sent[0].frags.length;a++){}
+   console.log('z周杰将a'.length);
+   $('#cont').html(sentences).css({background:"gray","padding":"20px"});
+  </script>
+ </body>
+ </html>
