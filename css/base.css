@@ -4,14 +4,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     margin: 0;
     padding: 0;
 }
-body 
-{
-	font-family: Monospace;
-	font-weight: bold;
-	background-color: #ccccff;
-	margin: 0px;
-	overflow: hidden;
-}
+
 pre {
     background-color: #eee;
     font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,sans-serif;
