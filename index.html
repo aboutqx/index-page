@@ -4,6 +4,7 @@
 <title>
 for some link
 </title>
+<link rel=stylesheet href="css/base.css">
 </head>
 <body>
 <h1>about</h1>
@@ -11,5 +12,23 @@ for some link
 <h2>some links</h1>
 <p>展示使用three.js时，如何在立方体geometry的一个面上使用多个拼接的texture，用于载入高质量图时分块载入图片</p>
 <a href="multipleTexture.html">multiple Textures for one cube face in three.js</a>
+<p>
+main code:
+<pre>
+<code>
+ var a= [new THREE.Vector2(0,1),new THREE.Vector2(0,0), new THREE.Vector2(1,1) ];
+  var b= [new THREE.Vector2(0,0),new THREE.Vector2(1,0), new THREE.Vector2(1,1) ];
+  for(var i=0;i<48;i=i+2){
+    cubeGeometry.faceVertexUvs[0][i] = a;
+    cubeGeometry.faceVertexUvs[0][i+1] = b;
+
+    var randomIndex=Math.round(Math.random()*8);
+    cubeGeometry.faces[i].materialIndex=randomIndex;
+    cubeGeometry.faces[i+1].materialIndex=randomIndex;
+  }
+
+</code>
+</pre>
+</p>
 </body>
 </html>
