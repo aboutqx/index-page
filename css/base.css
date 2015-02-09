@@ -6,9 +6,9 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 }
 
 pre {
-    background-color: #eee;
+   
     font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,sans-serif;
-    font-size: 13px;
+    font-size: 18px;
     margin-bottom: 1em;
     max-height: 600px;
     overflow: auto;
@@ -27,4 +27,14 @@ code {
 code {
     background-color: #eee;
     font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,sans-serif;
+}
+body{
+    font-size:24px;
+}
+section{
+    padding-top:10px;
+	}
+
+h1,h2{
+    padding-bottom:10px;
 }
