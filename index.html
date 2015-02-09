@@ -28,8 +28,9 @@ h1{
 <body>
 
 <section id="main">
-<div>
 <h1>some links</h1>
+<div>
+
 <p>展示使用three.js时，如何在立方体geometry的一个面上使用多个拼接的texture，用于载入高质量图时分块载入图片</p>
 <a href="multipleTexture.html">multiple Textures for one cube face in three.js</a>
 <p>
@@ -53,8 +54,44 @@ main code:
 </div>
 
 <div>
+<p>如何将整张图片作为texture映射到一个立方体上</p>
+<a href="http://solutiondesign.com/webgl-and-three-js-texture-mapping/">http://solutiondesign.com/webgl-and-three-js-texture-mapping/</a>
+<h3>观念：uvmapping</h3>
+<p>
+将整个texture作为map映射到object上，u，v代表横竖坐标<img src="images/cube10.png"><br>
+在threejs中，每个正方形面是两个三角形拼成的<img src="images/cube11.png"
+</p>
+<p>
+main code:
+</p>
+<pre>
+<code class="js">
+  var bricks = [new THREE.Vector2(0, .666), new THREE.Vector2(.5, .666), new THREE.Vector2(.5, 1), new THREE.Vector2(0, 1)];
+  var clouds = [new THREE.Vector2(.5, .666), new THREE.Vector2(1, .666), new THREE.Vector2(1, 1), new THREE.Vector2(.5, 1)];
+  var crate = [new THREE.Vector2(0, .333), new THREE.Vector2(.5, .333), new THREE.Vector2(.5, .666), new THREE.Vector2(0, .666)];
+  var stone = [new THREE.Vector2(.5, .333), new THREE.Vector2(1, .333), new THREE.Vector2(1, .666), new THREE.Vector2(.5, .666)];
+  var water = [new THREE.Vector2(0, 0), new THREE.Vector2(.5, 0), new THREE.Vector2(.5, .333), new THREE.Vector2(0, .333)];
+  var wood = [new THREE.Vector2(.5, 0), new THREE.Vector2(1, 0), new THREE.Vector2(1, .333), new THREE.Vector2(.5, .333)];
+    
+  geometry.faceVertexUvs[0][0] = [ bricks[0], bricks[1], bricks[3] ];
+  geometry.faceVertexUvs[0][1] = [ bricks[1], bricks[2], bricks[3] ];
 
+  geometry.faceVertexUvs[0][2] = [ clouds[0], clouds[1], clouds[3] ];
+  geometry.faceVertexUvs[0][3] = [ clouds[1], clouds[2], clouds[3] ];
 
+  geometry.faceVertexUvs[0][4] = [ crate[0], crate[1], crate[3] ];
+  geometry.faceVertexUvs[0][5] = [ crate[1], crate[2], crate[3] ];
+
+  geometry.faceVertexUvs[0][6] = [ stone[0], stone[1], stone[3] ];
+  geometry.faceVertexUvs[0][7] = [ stone[1], stone[2], stone[3] ];
+
+  geometry.faceVertexUvs[0][8] = [ water[0], water[1], water[3] ];
+  geometry.faceVertexUvs[0][9] = [ water[1], water[2], water[3] ];
+
+  geometry.faceVertexUvs[0][10] = [ wood[0], wood[1], wood[3] ];
+  geometry.faceVertexUvs[0][11] = [ wood[1], wood[2], wood[3] ];
+</code>
+</pre>
 </div>
 </section>
 

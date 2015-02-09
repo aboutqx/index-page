@@ -38,3 +38,8 @@ section{
 h1,h2{
     padding-bottom:10px;
 }
+
+#main div {
+   border-bottom:1px solid #ccc;
+   margin-top:10px;
+}
