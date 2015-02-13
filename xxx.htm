@@ -1,0 +1,34 @@
+   <!DOCTYPE HTML>
+    <html>
+       <header>
+            <script src="jquery-1.11.1.js"></script>
+       </header>
+       <body>
+            <div id="searchContainer">
+                <div class="searchMainTitle">Search Schedules</div>
+                    <div class="searchSubTitle">
+                <p>Enter any information you wish, this will search all schedule fields.</p>
+                </div>
+            <form role="form" method="post">
+                <input type="text" class="form-control" size="100%" placeholder="Enter Search Term(s) Here" id="keyword" />
+            </form>
+                    <ul id="liveSearch"></ul>       
+
+        </div>
+        <script type="text/javascript">
+        $(document).ready(function() {
+        $('#keyword').on('input', function() {
+            var searchKeyword = $(this).val();
+            if (searchKeyword.length >= 3) {
+        $.post('upload.php', { keywords: searchKeyword }, function(data) {
+                    $('ul#liveSearch').empty()
+                    $.each(data, function() {
+                    $('ul#liveSearch').append('<li><a href="schedPopup.php?id=' + this.foo + '">' + this.bar + '</a></li>');  
+                    });
+                }, "json"); 
+            }
+        });
+    }); 
+        </script> 
+    </body>
+</html>
