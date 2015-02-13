@@ -20,7 +20,7 @@
         $('#keyword').on('input', function() {
             var searchKeyword = $(this).val();
             if (searchKeyword.length >= 3) {
-        $.post('upload.php', { keywords: searchKeyword }, function(data) {
+        $.post('upload.json', { keywords: searchKeyword }, function(data) {
                     $('ul#liveSearch').empty()
                     $.each(data, function() {
                     $('ul#liveSearch').append('<li><a href="schedPopup.php?id=' + this.foo + '">' + this.bar + '</a></li>');  
