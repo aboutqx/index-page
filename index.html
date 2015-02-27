@@ -16,10 +16,10 @@ body{
   margin-left:30px;
 }
 h1{
-  font-size:32px;
+  font-size:30px;
   }
  h2{
-  font-size:30px;
+  font-size:26px;
   }
  a{
    text-decoration:none;
@@ -36,9 +36,9 @@ h1{
 
 <section id="main">
 <h1>some links</h1>
-<div>
+<div class="post">
 
-<p>展示使用three.js时，如何在立方体geometry的一个面上使用多个拼接的texture，用于载入高质量图时分块载入图片</p>
+<h2>展示使用three.js时，如何在立方体geometry的一个面上使用多个拼接的texture，用于载入高质量图时分块载入图片</h2>
 <a href="multipleTexture.html">multiple Textures for one cube face in three.js</a>
 <p>
 main code:
@@ -60,8 +60,8 @@ main code:
 </pre>
 </div>
 
-<div>
-<p>如何将整张图片作为texture映射到一个立方体上</p>
+<div class="post">
+<h2>如何将整张图片作为texture映射到一个立方体上</h2>
 <a href="http://solutiondesign.com/webgl-and-three-js-texture-mapping/">http://solutiondesign.com/webgl-and-three-js-texture-mapping/</a>
 <h3>观念：uvmapping</h3>
 <p>
@@ -101,8 +101,8 @@ main code:
 </pre>
 </div>
 
-<div>
-<p>使用react.js生成一个当前页面模块的组件</p>
+<div class="post">
+<h2>使用react.js生成一个当前页面模块的组件</h2>
 <a href="linkcomponent.html">linkcomponent.html </a>
 <p>
  
@@ -116,19 +116,72 @@ main code:
 </p>
 </div>
 
-<div>
-<p>one line for one component</p>
+<div class="post">
+<h2>one line for one component</h2>
 
 </div>
 
-<div>
+<div class="post">
+<h2>plupload 使用演示</h2>
+<a href="pluploaddemo.html">pluploaddemo.html</a>
+<p>
+1.plupload采用优先级为html5,flash,sliverlight,html4的方式<br>
+2.支持以拖拽的方式来选取要上传的文件<br>
+3.支持图片的预览，客户端的图片的resizing<br>
+4.支持分块的上传<a href="http://plupload.com/docs/Chunking">http://plupload.com/docs/Chunking</a><br>
+5.本地化语言支持<br>
+link <a href="http://www.cnblogs.com/2050/p/3913184.html">http://www.cnblogs.com/2050/p/3913184.html</a>
+</p>
 
+<p>
+main code:
+</p>
+<pre>
+<code >
+$(function() {
+	$("#uploader").plupload({
+
+		runtimes : 'html5,flash,silverlight,html4',
+		url : 'plupload/upload.php',
+
+		max_file_count: 20,  //最大上传数量
+		chunk_size: '1mb',
+		resize : {
+			width : 200, //压缩后的宽
+			height : 200, //压缩后的高
+			quality : 90, //压缩后图片的质量
+			crop: true  //是否剪切
+		},		
+		filters : {
+			max_file_size : '1000mb',
+			mime_types: [
+				{title : "files", extensions : "*"},
+				
+			]
+		},
+
+		rename: true,
+		sortable: true,
+		dragdrop: true,
+
+		views: {
+			list: true,
+			thumbs: true, 
+			active: 'thumbs'
+		},
+
+		flash_swf_url : 'plupload/js/Moxie.swf',
+		silverlight_xap_url : 'plupload/js/Moxie.xap'
+	});
+
+</code>
+</pre>
 </div>
 </section>
 
 
 <footer>
-<h2>about</h2>
+<h1>about</h1>
 <p>Hi,i'm a programmer from HuBei.China,living in beijing.Here are some demo or just test pages for sharing or showing to solve some problems.</p>
 </footer>
 </body>

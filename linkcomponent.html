@@ -34,7 +34,7 @@ var LinkPart = React.createClass({
   render: function() {
     
     return (
-      <div>
+      <div className="post">
 	  <LinkTitle title="aa"/>
 	  <LinkLink link="abc.html"/>
 		<LinkDesprition head="ada" desprition="abcc"/>
@@ -46,7 +46,7 @@ var LinkPart = React.createClass({
 var LinkTitle=React.createClass({
   render:function(){
 	 return  (
-	   <p>{this.props.title}</p>
+	   <h2>{this.props.title}</h2>
 	 )
   }
 });
