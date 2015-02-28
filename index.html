@@ -30,11 +30,17 @@ h1{
 </style>
 <link rel="stylesheet" href="css/styles/monokai_sublime.css">
 <script src="js/highlight.pack.js"></script>
+    <script src="shared/thirdparty/es5-shim.min.js"></script>
+    <script src="shared/thirdparty/es5-sham.min.js"></script>
+    <script src="shared/thirdparty/console-polyfill.js"></script>
+    <script src="build/react.js"></script>
+		<script src="jquery-1.11.1.js"></script>
+	  <script src="build/JSXTransformer.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 </head>
 <body>
 
-<section id="main">
+<section class="main">
 <h1>some links</h1>
 <div class="post">
 
@@ -106,8 +112,9 @@ main code:
 <a href="linkcomponent.html">linkcomponent.html </a>
 <p>
  
-<a href="http://facebook.github.io/react/">react.js</a>是用于创建组件化UI的javascript类库。在react中，数据是很重要的一部分，它的初衷就是处理数据更新频繁的页面。创建一个react组件的方式是从界面出发，将界面分为各个组件，每个组件拥有自己的数据，并且只需要各自的数据就能被生成。
-
+<a href="http://facebook.github.io/react/">react.js</a>是用于创建组件化UI的javascript类库。在react中，数据是很重要的一部分，它的初衷就是处理数据更新频繁的页面。创建一个react组件的方式是从界面出发，将界面分为各个组件，每个组件拥有自己的数据，并且只需要各自的数据就能被生成。<br>
+<br>
+目前已经将linkcomponent组件放入了当前页面，接下来是做一个提供数据的编辑器。
 </p>
 
 
@@ -186,8 +193,10 @@ $(function() {
 </pre>
 </div>
 </section>
+<div id="container">
+</div>
 
-
+<script type="text/jsx;harmony=true" src="linkcomponent.js"></script>
 <footer>
 <h1>about</h1>
 <p>Hi,i'm a programmer from HuBei.China,living in beijing.Here are some demo or just test pages for sharing or showing to solve some problems.</p>
