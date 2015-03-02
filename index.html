@@ -51,15 +51,23 @@ main code:
 </p>
 <pre>
 <code >
-  var a= [new THREE.Vector2(0,1),new THREE.Vector2(0,0), new THREE.Vector2(1,1) ];
-  var b= [new THREE.Vector2(0,0),new THREE.Vector2(1,0), new THREE.Vector2(1,1) ];
-  for(var i=0;i<48;i=i+2){
-    cubeGeometry.faceVertexUvs[0][i] = a;
-    cubeGeometry.faceVertexUvs[0][i+1] = b;
+  vertices.forEach(function(v){
+    geom.vertices.push(new THREE.Vector3(v[0],v[1],v[2]));
+  });
+  faces.forEach(function(v){
+    geom.faces.push( new THREE.Face3( v[0],v[1],v[2] ) );
+  });
+ var a= [new THREE.Vector2(0,1),new THREE.Vector2(0,0), new THREE.Vector2(1,1) ];
+ var b= [new THREE.Vector2(0,0),new THREE.Vector2(1,0), new THREE.Vector2(1,1) ];
 
-    var randomIndex=Math.round(Math.random()*8);
-    cubeGeometry.faces[i].materialIndex=randomIndex;
-    cubeGeometry.faces[i+1].materialIndex=randomIndex;
+
+  for(var i=0;i<48;i=i+2) {
+    geom.faceVertexUvs[0][i] = a;
+    geom.faceVertexUvs[0][i + 1] = b;
+    
+		var randomIndex=Math.round(Math.random()*8);
+    geom.faces[i].materialIndex = randomIndex;
+    geom.faces[i+ 1].materialIndex = randomIndex;
   }
 
 </code>
