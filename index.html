@@ -43,6 +43,36 @@ h1{
 <section class="main">
 <h1>some links</h1>
 
+<div class="post">
+<h2>sencha touch first experience</h2>
+<a href="touch/startApp.html">startApp.html</a>
+<h3>start app</h3>
+<p>
+
+</p>
+<p>
+main code:
+</p>
+<pre>
+<code class="js">
+                   {
+                        title: 'chart',
+                        iconCls: 'home',
+                        cls: 'home',
+                        html: [
+                            '&lt;img width="260" src="http://staging.sencha.com/img/sencha.png" /&gt;',
+                            '&lt;h1&gt;Welcome to Sencha Touch&lt;/h1&gt;',
+                            "&lt;p&gt;We're creating the Getting Started app, which demonstrates how ",
+                            "to use tabs, lists, and forms to create a simple app.&lt;/p&gt;",
+                            '&lt;h2>Sencha Touch&lt;/h2&gt;'
+                        ].join("")
+                    }  
+
+ 
+</code>
+</pre>
+</div>
+
 
 <div class="post">
 <h2>如何将整张图片作为texture映射到一个立方体上</h2>
@@ -102,7 +132,7 @@ main code:
 <pre>
 <code>
 React.render(
-  <LinkPart />,
+  &lt;LinkPart url="linkcomponent/posts.json"/&gt;,
   document.getElementById('container')
 );
 </code>
