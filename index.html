@@ -157,48 +157,19 @@ React.render(
 5.本地化语言支持<br>
 [link] <a href="http://www.cnblogs.com/2050/p/3913184.html">http://www.cnblogs.com/2050/p/3913184.html</a>
 </p>
-
+<p>
+示例展示了如何只允许上传1个文件，设置max_file_count为1，添加complete的响应事件
+</p>
 <p>
 main code:
 </p>
 <pre>
 <code >
-$(function() {
-	$("#uploader").plupload({
+complete:function(event,args){
+      $('#uploader').plupload('disable');
 
-		runtimes : 'html5,flash,silverlight,html4',
-		url : 'plupload/upload.php',
-
-		max_file_count: 20,  //最大上传数量
-		chunk_size: '1mb',
-		resize : {
-			width : 200, //压缩后的宽
-			height : 200, //压缩后的高
-			quality : 90, //压缩后图片的质量
-			crop: true  //是否剪切
-		},		
-		filters : {
-			max_file_size : '1000mb',
-			mime_types: [
-				{title : "files", extensions : "*"},
-				
-			]
-		},
-
-		rename: true,  //是否支持重命名
-		sortable: true,
-		dragdrop: true,  //是否支持拖拽上传
-
-		views: {
-			list: true,
-			thumbs: true, 
-			active: 'thumbs'
-		},
-
-		flash_swf_url : 'plupload/js/Moxie.swf',
-		silverlight_xap_url : 'plupload/js/Moxie.xap'
-	});
-
+		  console.log(args.files[0].name);
+		}
 </code>
 </pre>
 </div>

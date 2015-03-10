@@ -45,7 +45,7 @@ $(function() {
 		url : 'plupload/upload.php',
 
 		// User can upload no more then 20 files in one go (sets multiple_queues to false)
-		max_file_count: 20,
+		max_file_count: 1,
 		
 		chunk_size: '1mb',
 
@@ -87,7 +87,13 @@ $(function() {
 		flash_swf_url : 'plupload/js/Moxie.swf',
 
 		// Silverlight settings
-		silverlight_xap_url : 'plupload/js/Moxie.xap'
+		silverlight_xap_url : 'plupload/js/Moxie.xap',
+
+		complete:function(event,args){
+      $('#uploader').plupload('disable');
+
+		  console.log(args.files[0].name);
+		}
 	});
 
 
