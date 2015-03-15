@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7]>  <html class="ie ie6 lte9 lte8 lte7" lang="zh-cmn-Hans"> <![endif]-->
+<!--[if IE 7]>     <html class="ie ie7 lte9 lte8 lte7" lang="zh-cmn-Hans"> <![endif]-->
+<!--[if IE 8]>     <html class="ie ie8 lte9 lte8" lang="zh-cmn-Hans"> <![endif]-->
+<!--[if IE 9]>     <html class="ie ie9 lte9" lang="zh-cmn-Hans"> <![endif]-->
+<!--[if gt IE 9]>  <html lang="zh-cmn-Hans"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="zh-cmn-Hans">
+<!--<![endif]-->
+<head>
+    <meta charset="UTF-8">
+
+    <title>History API example - Dive Into HTML5</title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+<body>
+<script>
+
+    function supports_history_api() {
+        return !!(window.history && history.pushState);
+    }
+
+    function swapPhoto(href) {
+        var req = new XMLHttpRequest();
+        req.open("GET",
+                "http://diveintohtml5.info/examples/history/gallery/" +
+                href.split("/").pop(),
+                false);
+        req.send(null);
+        if (req.status == 200) {
+            document.getElementById("gallery").innerHTML = req.responseText;
+            setupHistoryClicks();
+            return true;
+        }
+        return false;
+    }
+
+    function addClicker(link) {
+        link.addEventListener("click", function(e) {
+            if (swapPhoto(link.href)) {
+                history.pushState(null, null, link.href);
+                e.preventDefault();
+            }
+        }, true);
+    }
+
+    function setupHistoryClicks() {
+        addClicker(document.getElementById("photonext"));
+        addClicker(document.getElementById("photoprev"));
+    }
+
+    window.onload = function() {
+        if (!supports_history_api()) { return; }
+        setupHistoryClicks();
+        window.setTimeout(function() {
+            window.addEventListener("popstate", function(e) {
+                swapPhoto(location.pathname);
+            }, false);
+        }, 1);
+    }
+</script>
+
+<div>
+    
+</div>
+</body>
+</html>
