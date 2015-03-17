@@ -16,17 +16,24 @@
 
         </div>
         <script type="text/javascript">
+				var add=false;
         $(document).ready(function() {
         $('#keyword').on('input', function() {
             var searchKeyword = $(this).val();
             if (searchKeyword.length >= 3) {
+							/*
         $.get('upload.json', function(data) {
                     $('ul#liveSearch').empty()
                     $.each(data, function() {
                     $('ul#liveSearch').append('<li><a href="schedPopup.php?id=' + this.foo + '">' + this.bar + '</a></li>');  
                     });
                 }, "json"); 
-            }
+								*/
+								if(!add){
+								$(this).val(searchKeyword+'aaa');
+                add=true;
+								}
+						}
         });
     }); 
         </script> 
