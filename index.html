@@ -47,8 +47,23 @@ h1{
 <h1>some links</h1>
 
 <div class="post">
-<h2><h2>
-
+<h2>html5 history demo</h2>
+<a href="http://diveintohtml5.info/examples/history/fer.html">diveintohtml5 history demo</a>
+<p>
+利用html5的history api我们可以改变浏览器的历史记录，处理back键所导航的地址，从而使ajax请求下的back键不会失效<br>
+配合router的话能定义单一的资源
+</p>
+<p>main code:</p>
+<pre>
+<code>
+link.addEventListener("click", function(e) {
+    if (swapPhoto(link.href)) {
+      history.pushState(null, null, link.href);
+      e.preventDefault();
+    }
+  }, true);
+</code>
+</pre>
 </div>
 
 <div class="post">
