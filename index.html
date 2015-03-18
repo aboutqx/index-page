@@ -233,6 +233,36 @@ var _hmt = _hmt || [];
   s.parentNode.insertBefore(hm, s);
 })();
 </script>
+<script>
+//设置元素的透明度，从0-100
+function setOpacity(elem,level){
+	//ie的方法
+	if(elem.filters)
+		elem.style.filters='alpha(opacity='+level+')';
+	//w3c的opacity属性
+	else elem.style.opacity=level/100;
+}
 
+ function fadeIn( elem ) {
+     //透明度从零开始
+     setOpacity(elem,0);
+     //显示元素(但是你看不到它，因为透明度为零)
+
+     //我们将做一个在一秒钟内播放的20"帧"的动画
+     for ( var i = 0; i <= 100; i += 5 ) {
+
+         //保证我们有一个正确的i的闭包
+         (function(){
+             var pos = i;
+             //设置未来特定时间的定时器
+             setTimeout(function(){
+                 //设置元素的新的透明度
+                 setOpacity(elem,pos);
+             }, ( pos + 1 ) * 10 );
+         })();
+     }
+ }
+fadeIn(document.body);
+</script>
 </body>
 </html>
