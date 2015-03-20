@@ -74,7 +74,8 @@ var Router = {
     navigate: function(path) {
         path = path ? path : '';
         if(this.mode === 'history') {
-            history.pushState(null, null, this.root + this.clearSlashes(path));
+            //history.pushState(null, null, this.root + this.clearSlashes(path));
+			history.pushState(null, null, path);
         } else {
             window.location.href.match(/#(.*)$/);
             window.location.href = window.location.href.replace(/#(.*)$/, '') + '#' + path;
@@ -87,7 +88,7 @@ var Router = {
 Router.config({ mode: 'history'});
 
 // returning the user to the initial state
-Router.navigate();
+//Router.navigate();
 
 // adding routes
 Router
@@ -103,4 +104,4 @@ Router
 .check('/products/12/edit/22').listen();
 
 // forwarding
-Router.navigate('/about');
+	Router.navigate('/about');
