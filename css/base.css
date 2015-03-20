@@ -47,3 +47,42 @@ footer{
    padding-top:10px;
    margin-bottom:48px;
    }
+
+   .landing {
+  background: #FFF;
+  overflow: hidden;
+}
+.landing video {
+  transition: all 2000ms;
+  -webkit-transition: all 2000ms;
+  -moz-transition: all 2000ms;
+  -ms-transition: all 2000ms;
+  -o-transition: all 2000ms;
+  filter: alpha(opacity=0);
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+  opacity: 0;
+  -moz-opacity: 0;
+  -khtml-opacity: 0;
+  z-index: -999;
+  overflow: hidden;
+  position: absolute;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  bottom: 0;
+  right: 0;
+}
+.landing .video-overlay {
+  filter: alpha(opacity=0);
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+  opacity: 0;
+  -moz-opacity: 0;
+  -khtml-opacity: 0;
+  position: absolute;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  background: url(/public/img/landing-bg.png);
+}
