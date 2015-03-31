@@ -47,7 +47,37 @@ h1{
 
 <section class="main">
 <h1>some links</h1>
+<div class="post">
 
+<h2>展示使用three.js时，如何在立方体geometry的一个面上使用多个拼接的texture，用于载入高质量图时分块载入图片</h2>
+<a href="multipleTexture.html">multiple Textures for one cube face in three.js</a>
+<p>
+main code:
+</p>
+<pre>
+<code >
+  vertices.forEach(function(v){
+    geom.vertices.push(new THREE.Vector3(v[0],v[1],v[2]));
+  });
+  faces.forEach(function(v){
+    geom.faces.push( new THREE.Face3( v[0],v[1],v[2] ) );
+  });
+ var a= [new THREE.Vector2(0,1),new THREE.Vector2(0,0), new THREE.Vector2(1,1) ];
+ var b= [new THREE.Vector2(0,0),new THREE.Vector2(1,0), new THREE.Vector2(1,1) ];
+
+
+  for(var i=0;i<48;i=i+2) {
+    geom.faceVertexUvs[0][i] = a;
+    geom.faceVertexUvs[0][i + 1] = b;
+    
+		var randomIndex=Math.round(Math.random()*8);
+    geom.faces[i].materialIndex = randomIndex;
+    geom.faces[i+ 1].materialIndex = randomIndex;
+  }
+
+</code>
+</pre>
+</div>
 <div class="post">
 <h2>css arrowbox</h2>
 <a href="cssarrowbox.html">css arrowbox.html</a>
