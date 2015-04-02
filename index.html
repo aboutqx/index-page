@@ -49,6 +49,32 @@ h1{
 <h1>some links</h1>
 <div class="post">
 
+<h2>canvas 示例</h2>
+<a href="insectsmoving.html">insectsmoving.html</a>
+<p>
+main code:
+</p>
+<pre>
+<code >
+         ctx.beginPath();
+        ctx.arc(bird.x, bird.y, 10, 0, Math.PI * 2, false);
+        ctx.closePath();
+        ctx.fillStyle = '#ffff60';
+        ctx.fill();
+
+        ctx.beginPath();
+
+        var front_pos = 8,
+        side_pos = 5;
+
+        ctx.fillStyle = 'black';
+        ctx.arc(bird.x + dx * front_pos - dy * side_pos, bird.y + dy * front_pos + dx * side_pos, 2, 0, Math.PI * 2, false);
+        ctx.closePath();
+</code>
+</pre>
+</div>
+<div class="post">
+
 <h2>展示使用three.js时，如何在立方体geometry的一个面上使用多个拼接的texture，用于载入高质量图时分块载入图片</h2>
 <a href="multipleTexture.html">multiple Textures for one cube face in three.js</a>
 <p>
