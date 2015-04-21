@@ -28,7 +28,15 @@ h1{
    text-decoration:none;
  }
  a:hover,a:focus{
-   text-decoration:underline;
+    text-decoration:underline;
+ }
+ .previewbutton{
+    background:#ccc;
+    border:none;
+    box-shadow:2px 2px 4px #000;
+    position:relative;
+    left:4px;
+    top:-2px;
  }
 </style>
 <link rel="stylesheet" href="css/styles/monokai_sublime.css">
@@ -47,6 +55,36 @@ h1{
 
 <section class="main">
 <h1>some links</h1>
+
+
+<div class="post">
+
+<h2>canvas 示例</h2>
+<a href="insectsmoving.html">insectsmoving.html</a>
+<button class="previewbutton">预览</button>
+<p>
+main code:
+</p>
+<pre>
+<code >
+         ctx.beginPath();
+        ctx.arc(bird.x, bird.y, 10, 0, Math.PI * 2, false);
+        ctx.closePath();
+        ctx.fillStyle = '#ffff60';
+        ctx.fill();
+
+        ctx.beginPath();
+
+        var front_pos = 8,
+        side_pos = 5;
+
+        ctx.fillStyle = 'black';
+        ctx.arc(bird.x + dx * front_pos - dy * side_pos, bird.y + dy * front_pos + dx * side_pos, 2, 0, Math.PI * 2, false);
+        ctx.closePath();
+</code>
+</pre>
+</div>
+
 <div class="post">
 
 <h2>canvas 示例</h2>
@@ -77,6 +115,7 @@ main code:
 
 <h2>展示使用three.js时，如何在立方体geometry的一个面上使用多个拼接的texture，用于载入高质量图时分块载入图片</h2>
 <a href="multipleTexture.html">multiple Textures for one cube face in three.js</a>
+<button class="previewbutton">预览</button>
 <p>
 main code:
 </p>
@@ -107,6 +146,7 @@ main code:
 <div class="post">
 <h2>css arrowbox</h2>
 <a href="cssarrowbox.html">css arrowbox.html</a>
+<button class="previewbutton">预览</button>
 <p>
 <iframe width="400px" height="280px" src="cssarrowbox.html" scrolling="no" style="display:block"></iframe>
 改变arrow:after 和arrow:before中的 border-width，margin-left值来改变箭头的大小，改变.arrow_box:before中的top和left值来改变箭头的位置
@@ -118,10 +158,11 @@ main code:
 .arrow_box:after, .arrow_box:before { top: 100%; left: 50%; border: solid transparent; content: " "; height: 0; width: 0; position: absolute; pointer-events: none; } .arrow_box:after { border-color: rgba(136, 183, 213, 0); border-top-color: #88b7d5; border-width: 35px; margin-left: -35px; } .arrow_box:before { border-color: rgba(194, 225, 245, 0); border-top-color: #c2e1f5; border-width: 41px; margin-left: -41px; }
 </code>
 </pre>
-
+</div>
 <div class="post">
 <h2>qunit demo</h2>
 <a href="qunit/exam.html">qunit exam.html</a>
+<button class="previewbutton">预览</button>
 <p>
 
 </p>
@@ -141,7 +182,9 @@ QUnit.test( "equal test", function( assert ) {
 </div>
 <div class="post">
 <h2>html5 history demo</h2>
+
 <a href="http://diveintohtml5.info/examples/history/fer.html">diveintohtml5 history demo</a>
+<button class="previewbutton">预览</button>
 <p>
 利用html5的history api我们可以改变浏览器的历史记录，处理back键所导航的地址，从而使ajax请求下的back键不会失效<br>
 配合router的话能定义单一的资源
@@ -162,6 +205,7 @@ link.addEventListener("click", function(e) {
 <div class="post">
 <h2>sencha touch first experience</h2>
 <a href="touch/startApp.html">startApp.html</a>
+<button class="previewbutton">预览</button>
 <h3>start app</h3>
 <p>
 
@@ -192,10 +236,11 @@ main code:
 <div class="post">
 <h2>如何将整张图片作为texture映射到一个立方体上</h2>
 <a href="http://solutiondesign.com/webgl-and-three-js-texture-mapping/">http://solutiondesign.com/webgl-and-three-js-texture-mapping/</a>
+<button class="previewbutton">预览</button>
 <h3>观念：uvmapping</h3>
 <p>
 将整个texture作为map映射到object上，u，v代表横竖坐标<img src="images/cube10.png"><br>
-在threejs中，每个正方形面是两个三角形拼成的<img src="images/cube11.png"
+在threejs中，每个正方形面是两个三角形拼成的<img src="images/cube11.png">
 </p>
 <p>
 main code:
@@ -233,6 +278,7 @@ main code:
 <div class="post">
 <h2>使用react.js生成一个当前页面模块的组件</h2>
 <a href="linkcomponent.html">linkcomponent.html </a>
+<button class="previewbutton">预览</button>
 <p>
  
 <a href="http://facebook.github.io/react/">react.js</a>是用于创建组件化UI的javascript类库。在react中，数据是很重要的一部分，它的初衷就是处理数据更新频繁的页面。创建一个react组件的方式是从界面出发，将界面分为各个组件，每个组件拥有自己的数据，并且只需要各自的数据就能被生成。<br>
@@ -256,12 +302,13 @@ React.render(
 
 <div class="post">
 <h2>one line for one component</h2>
-
+<button class="previewbutton">预览</button>
 </div>
 
 <div class="post">
 <h2>plupload 使用演示</h2>
 <a href="pluploaddemo.html">pluploaddemo.html</a>
+<button class="previewbutton">预览</button>
 <p>
 1.plupload采用优先级为html5,flash,sliverlight,html4的方式<br>
 2.支持以拖拽的方式来选取要上传的文件<br>
@@ -307,6 +354,7 @@ var _hmt = _hmt || [];
   s.parentNode.insertBefore(hm, s);
 })();
 </script>
+<script src="js/jquery.colorbox-min.js"></script>
 <script>
 //设置元素的透明度，从0-100
 function setOpacity(elem,level){
@@ -337,6 +385,10 @@ function setOpacity(elem,level){
      }
  }
 fadeIn(document.body);
+$('.previewbutton').click(function(){
+  $.colorbox({href:$(this).prev().attr('href')})
+})
+
 </script>
 <div id="disqus_thread"></div>
 <script type="text/javascript">
@@ -349,6 +401,7 @@ fadeIn(document.body);
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
+
 </script>
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 </body>
