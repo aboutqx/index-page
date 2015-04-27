@@ -362,7 +362,21 @@ function setOpacity(elem,level){
 fadeIn(document.body);
 
 
-
+$('.previewbutton').click(function(e){
+	e.stopPropagation();
+	if(!$('#preIframe')[0]){
+		var iframe=$('<iframe id="preIframe"></iframe>')
+		iframe.css({'position':'fixed','width':'60%','height':'80%',left:'10%','top':'10%',border:'1px solid #ccc','border-radius':'2px','box-shadow': '2px -2px 10px #ddd'}).appendTo($('body'));
+	}
+	$('#preIframe').attr('src',$(this).prev().attr('href'));
+	$('#preIframe').on('load',function(){$('#preIframe').slideDown()});
+})
+$('#preIframe').click(function(e){
+  e.stopPropagation();
+})
+$(document).click(function(){
+  $('#preIframe').hide();
+})
 </script>
 <div id="disqus_thread"></div>
 <script type="text/javascript">
