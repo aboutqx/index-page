@@ -59,6 +59,31 @@ h1{
 
 <div class="post">
 
+<h2>点状云</h2>
+<a href="pointClouds.html">pointClouds.html</a>
+<button class="previewbutton">预览</button>
+<p>修改自http://stackoverflow.com/questions/29909192/dynamically-change-point-color-in-three-js-pointclouod</p>
+<p>
+main code:
+</p>
+<pre>
+<code >
+          var intensity = Math.random(0,( y + 0.1 ) * 8);
+            colors[ 3 * k ] = color.r * intensity;
+            colors[ 3 * k + 1 ] = color.g * intensity;
+            colors[ 3 * k + 2 ] = color.b * intensity;
+
+            geometry.vertices.push( v );
+            //colors[ k ] = ( color.clone().multiplyScalar( intensity ) );
+                        colors[ k ] = color.clone().setRGB(colors[ 3 * k ],colors[ 3 * k +1 ],colors[ 3 * k +2 ])
+            k++;
+</code>
+</pre>
+</div>
+
+
+<div class="post">
+
 <h2>canvas 示例</h2>
 <a href="insectsmoving.html">insectsmoving.html</a>
 <button class="previewbutton">预览</button>
