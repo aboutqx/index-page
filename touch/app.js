@@ -13,7 +13,7 @@
                         iconCls: 'home',
                         cls: 'home',
                         html: [
-                            '<img width="260" src="http://staging.sencha.com/img/sencha.png" />',
+                            '<img width="260" src="http://www.sencha.com/img/sencha.png" />',
                             '<h1>Welcome to Sencha Touch</h1>',
                             "<p>We're creating the Getting Started app, which demonstrates how ",
                             "to use tabs, lists, and forms to create a simple app.</p>",
