@@ -38,6 +38,17 @@ h1{
     left:4px;
     top:-2px;
  }
+ .overlay{
+  position:absolute;
+  width:100%;
+  height:100%;
+  left:0;
+  top:0;
+  background-color:#000; 
+  filter:alpha(opacity=50); 
+  -moz-opacity:0.5; 
+  opacity:0.5; 
+ }
 </style>
 <link rel="stylesheet" href="css/styles/monokai_sublime.css">
 <script src="js/highlight.pack.js"></script>
@@ -336,7 +347,7 @@ complete:function(event,args){
 </section>
 <div id="container">
 </div>
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="http://music.163.com/outchain/player?type=2&id=25643236&auto=1&height=66" style="position:absolute;left:75%;top:25%;"></iframe>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="http://music.163.com/outchain/player?type=2&id=25643236&auto=0&height=66" style="position:absolute;left:75%;top:25%;"></iframe>
 <script type="text/jsx;harmony=true" src="linkcomponent.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <footer>
@@ -390,16 +401,20 @@ fadeIn(document.body);
 $('.previewbutton').click(function(e){
 	e.stopPropagation();
 	if(!$('#preIframe')[0]){
-		var iframe=$('<iframe id="preIframe"></iframe>')
-		iframe.css({'position':'fixed','width':'60%','height':'80%',left:'10%','top':'10%',border:'1px solid #ccc','border-radius':'2px','box-shadow': '2px -2px 10px #ddd'}).appendTo($('body'));
+		var tmp=$('<iframe id="preIframe"></iframe>')
+		tmp.css({'position':'fixed','width':'60%','height':'80%',left:'19%','top':'10%',border:'1px solid #ccc','border-radius':'2px','box-shadow': '2px -2px 10px #ddd','z-index':300})
+    tmp.appendTo($('body'));
+    $('body').append($('<div class="overlay"></div>'));
 	}
-	$('#preIframe').attr('src',$(this).prev().attr('href'));
-	$('#preIframe').on('load',function(){$('#preIframe').slideDown()});
+	$('#preIframe').attr('src',$(this).prev().attr('href')).on('load',function(){
+    $(this).show()});
+	$('.overlay').css({'height':$(document).height()}).show();
 })
 $('#preIframe').click(function(e){
   e.stopPropagation();
 })
 $(document).click(function(){
+  $('.overlay').hide();
   $('#preIframe').hide();
 })
 </script>
