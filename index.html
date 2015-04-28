@@ -395,7 +395,7 @@ function setOpacity(elem,level){
          })();
      }
  }
-//fadeIn(document.body);
+fadeIn(document.body);
 
 
 $('.previewbutton').click(function(e){
@@ -413,38 +413,10 @@ $('.previewbutton').click(function(e){
 $('#preIframe').click(function(e){
   e.stopPropagation();
 })
-var timer;
-
-  setTimeout(function(){
-    $(document).click(function(){
-      $('.overlay').hide();
-      $('#preIframe').hide();
-      clearInterval(timer);
-      document.body.style['-webkit-transform']='rotate(0deg)';
-      document.body.style['transform']='rotate(0deg)';
-    })
-  },4000)
-  
-
-
-var flag=true;
-timer=setInterval(function(){
-  $('body').css({'-webkit-transform-origin':'60px 30px 0','transform-origin':'60px 30px 0',
-'transition-duration': '1s','-webkit-transition-duration': '1s'
-    
-});
-  
-  if(flag){
-    document.body.style['-webkit-transform']='rotate(-20deg)';
-    document.body.style['transform']='rotate(-20deg)';
-    flag=false;
-  } else{
-    document.body.style['-webkit-transform']='rotate(20deg)';
-    document.body.style['transform']='rotate(20deg)';
-    flag=true;
-  }
-},1000);
-//clearInterval(timer);
+$(document).click(function(){
+  $('.overlay').hide();
+  $('#preIframe').hide();
+})
 </script>
 <div id="disqus_thread"></div>
 <script type="text/javascript">
