@@ -16,6 +16,7 @@
         margin: 0px;
         overflow: hidden;
     }
+    
     #info {
         color: #fff;
         position: absolute;
@@ -38,7 +39,7 @@ var renderer, scene, camera, stats;
 			var clock;
 
 			var threshold = 0.5;
-			var pointSize = 0.2;
+			var pointSize = 0.4;
 			var width = 50;
 			var length = 50;
 			var rotateY = new THREE.Matrix4().makeRotationX( 0.005 );
@@ -99,7 +100,7 @@ var renderer, scene, camera, stats;
 
 				clock = new THREE.Clock();
 
-				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
+				camera = new THREE.PerspectiveCamera( 33, window.innerWidth / window.innerHeight, 1, 10000 );
 				camera.applyMatrix( new THREE.Matrix4().makeTranslation( 0,0,15 ) );
 				camera.applyMatrix( new THREE.Matrix4().makeRotationX( Math.PI/2 ) );
 
