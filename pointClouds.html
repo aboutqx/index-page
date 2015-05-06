@@ -180,4 +180,20 @@ var renderer, scene, camera, stats;
 				renderer.render( scene, camera );
 
 			}
+
+			document.addEventListener('click',function(e){
+         
+				var i=Math.round(pointclouds[0].geometry.colors.length/4*Math.random());
+
+				var r=Math.round(Math.random()*255),g=Math.round((Math.random()*255)),b=Math.round((Math.random()*255));
+				
+				
+					var tmp=pointclouds[0].geometry.colors[i];
+					
+					tmp.set('rgb('+r+','+g+','+b+')');
+					pointclouds[0].geometry.colors[i+1].set('rgb('+r+','+g+','+b+')');
+			    pointclouds[0].geometry.colors[i+2].set('rgb('+r+','+g+','+b+')');
+        pointclouds[0].geometry.colorsNeedUpdate=true;                                          
+      })
+
 </script>
