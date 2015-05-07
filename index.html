@@ -12,8 +12,14 @@ for some link
 <link rel="stylesheet" href="shared/css/base.css" />
 <style>
 body{
-  width:960px;
-  margin-left:30px;
+  background-position: 9% 0%;
+  width: 960px;
+  margin-left: 30px;
+  background-repeat: no-repeat;
+  background-size: 1024px 622px;
+  margin-top: 200px;
+  background-origin: border-box;
+  padding-top: 300px;
 }
 h1{
   font-size:30px;
@@ -416,7 +422,15 @@ $('#preIframe').click(function(e){
 $(document).click(function(){
   $('.overlay').hide();
   $('#preIframe').hide();
-})
+});
+$(function(){
+
+	var bgurl=['kotirinta_list_large.jpg','kapa_list_large.jpg'];
+  var i=Math.round(Math.random());
+  document.body.style.backgroundImage='url("'+bgurl[1]+'")'
+});
+
+
 </script>
 <div id="disqus_thread"></div>
 <script type="text/javascript">
