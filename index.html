@@ -27,7 +27,27 @@ body{
 }
 
 @media only screen and (max-width: 600px) {
-   
+   header ul{display:none;}
+   div.svgmenu{
+     display: block;
+   }
+}
+header ul{
+  list-style: none;
+  float: right;
+  background-color: bisque;
+}
+header li{
+  display:inline-block;
+  text-transform: lowercase;
+}
+header .veggieburger {
+  fill: blue;
+  height: 20px;
+  width: 24px;
+}
+section.main{
+  clear: right;
 }
 h1{
   font-size:30px;
@@ -43,6 +63,13 @@ h1{
  }
  a:hover,a:focus{
     text-decoration:underline;
+ }
+ h1 a{
+   color:#000000;
+
+ }
+ h1 a:hover,a:focus{
+   text-decoration:none;
  }
  .previewbutton{
    background-color: lightgray;
@@ -75,6 +102,11 @@ h1{
   -moz-opacity:0.5; 
   opacity:0.5; 
  }
+  .svgmenu{
+    cursor: pointer;
+    padding: 20px;
+    display: none;
+  }
 </style>
 <link rel="stylesheet" href="css/styles/monokai_sublime.css">
 <script src="js/highlight.pack.js"></script>
@@ -89,15 +121,29 @@ h1{
 <body class="land">
 <!--<video preload="auto" autoplay="true" loop="loop" muted="muted" volume="0" src="images/cells.mp4"><source src="images/cells.mp4" type="video/mp4"></video>
 -->
-
+<header>
+  <div class="svgmenu">
+    <svg class="veggieburger"><rect y="0" width="24" height="4"></rect><rect y="8" width="24" height="4"></rect><rect y="16" width="24" height="4"></rect></svg>
+  </div>
+  <nav>
+    <ul>
+      <li>
+        <a href="#main">main</a>
+      </li>
+      <li>
+        <a href="#aboutme">about me</a>
+      </li>
+    </ul>
+  </nav>
+</header>
 <section class="main">
-<h1>some links</h1>
+<h1><a name="main">some links</a></h1>
 
 <div class="post">
 
 <h2>随设备大小改变而变化的图片:&lt;picture &gt;标签</h2>
 
-<a href="http://googlechrome.github.io/samples/picture-element/">picture-element</a>
+<a href="http://googlechrome.github.io/samples/picture-element/" >picture-element</a>
   <button class="previewbutton">预览</button>
 <p>缩小浏览器或在手机上看会发现小猫的动作变化了，也可以用media query</p>
 <p>
@@ -403,11 +449,11 @@ complete:function(event,args){
 </section>
 <div id="container">
 </div>
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="http://music.163.com/outchain/player?type=2&id=25643236&auto=0&height=66" style="position:absolute;left:75%;top:25%;"></iframe>
+
 <script type="text/jsx;harmony=true" src="linkcomponent.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
-<footer>
-<h1>about </h1>
+<footer >
+<h1><a name="aboutme">about me</a> </h1>
 <p>Hi,i'm a programmer from HuBei.China,living in beijing.Here are some demo or just test pages for sharing or showing to solve some problems. </p>
 <span><a href="mailto:1004945442@qq.com">Get in touch</a></span>&nbsp;&nbsp; 
  <span><a href="http://stackoverflow.com/users/4216907/aboutqx"> StackOverflow</a></span>
