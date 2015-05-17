@@ -1,0 +1,570 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="个人博客,web前端技术文章">
+	<meta name="keywords" content="web前端,HTML5,CSS3,jQuery,Three.js" />
+	<meta name="author" content="aboutqx" />
+<title>
+Github blog
+</title>
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel=stylesheet href="css/base.css">
+<link rel="stylesheet" href="shared/css/base.css" />
+<style>
+body{
+  background-position: 9% 0%;
+  max-width: 960px;
+  margin-left: 3%;
+  background-repeat: no-repeat;
+  background-size: 1024px 622px;
+  margin-top: 200px;
+  background-origin: border-box;
+  padding-top: 300px;
+}
+
+
+  header ul {
+    list-style: none;
+    float: right;
+    background-color: bisque;
+  }
+
+  header li {
+    display: inline-block;
+    text-transform: lowercase;
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
+header .veggieburger {
+  fill: blue;
+  height: 20px;
+  width: 24px;
+}
+section.main{
+  clear: right;
+}
+h1{
+  font-size:30px;
+  }
+ h2{
+  font-size:26px;
+  }
+	h3{
+  font-size:22px;
+	}
+ a{
+   text-decoration:none;
+ }
+ a:hover,a:focus{
+    text-decoration:underline;
+ }
+ h1 a{
+   color:#000000;
+
+ }
+ h1 a:hover,a:focus{
+   text-decoration:none;
+ }
+ .previewbutton{
+   background-color: lightgray;
+   border: none;
+   box-shadow: 1px 1px 4px #000;
+   position: relative;
+   margin-right: 36px;
+   font-size: 15px;
+   font-family: "microsoft yahei";
+   border-radius: 3px;
+   padding: 1px 7px;
+   left:16px;
+
+ }
+
+ .previewbutton:hover{
+
+   background: lightblue;
+   cursor: pointer;
+ }
+
+ .overlay{
+  position:absolute;
+  width:100%;
+  height:100%;
+  left:0;
+  top:0;
+  background-color:#000; 
+  filter:alpha(opacity=50); 
+  -moz-opacity:0.5; 
+  opacity:0.5; 
+ }
+  .svgmenu{
+    cursor: pointer;
+    display: none;
+  }
+header ul.active{
+  display: block;
+}
+@media  screen and (max-width: 600px) {
+  header ul{
+    display:none;
+    float:none;
+  }
+  header li,header a{
+    display:block;
+    width: 100%;
+   font-size: 18px;
+  }
+
+  div.svgmenu{
+    display: block;
+  }
+
+}
+
+</style>
+<link rel="stylesheet" href="css/styles/monokai_sublime.css">
+<script src="js/highlight.pack.js"></script>
+    <script src="shared/thirdparty/es5-shim.min.js"></script>
+    <script src="shared/thirdparty/es5-sham.min.js"></script>
+    <script src="shared/thirdparty/console-polyfill.js"></script>
+    <script src="build/react.js"></script>
+		<script src="jquery-1.11.1.js"></script>
+	  <script src="build/JSXTransformer.js"></script>
+
+</head>
+<body class="land">
+
+<!--<video preload="auto" autoplay="true" loop="loop" muted="muted" volume="0" src="images/cells.mp4"><source src="images/cells.mp4" type="video/mp4"></video>
+-->
+<header>
+  <div class="svgmenu">
+    <svg class="veggieburger"><rect y="0" width="24" height="4"></rect><rect y="8" width="24" height="4"></rect><rect y="16" width="24" height="4"></rect></svg>
+  </div>
+
+  <nav>
+    <ul>
+      <li>
+        <a href="#main">main</a>
+      </li>
+      <li>
+        <a href="#aboutme">about me</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+<section class="main">
+<h1><a name="main">some links</a></h1>
+
+<div class="post">
+
+<h2>随设备大小改变而变化的图片:&lt;picture &gt;标签</h2>
+
+<a href="http://googlechrome.github.io/samples/picture-element/" >picture-element</a>
+  <button class="previewbutton">预览</button>
+<p>缩小浏览器或在手机上看会发现小猫的动作变化了，也可以用media query</p>
+<p>
+main code:
+</p>
+<pre>
+<code >
+          &lt;picture&gt;
+        &lt;source media="(min-width: 650px)" srcset="images/kitten-large.png"&gt;
+        &lt;source media="(min-width: 465px)" srcset="images/kitten-medium.png"&gt;
+        &lt;img src="images/kitten-small.png" alt="a cute kitten"&gt;
+      &lt;/picture&gt;
+</code>
+</pre>
+</div>
+
+<div class="post">
+
+<h2>点状云</h2>
+
+<a href="pointClouds.html">pointClouds.html</a>
+  <button class="previewbutton">预览</button>
+<p>修改自http://stackoverflow.com/questions/29909192/dynamically-change-point-color-in-three-js-pointclouod</p>
+<p>
+main code:
+</p>
+<pre>
+<code >
+          var intensity = Math.random(0,( y + 0.1 ) * 8);
+            colors[ 3 * k ] = color.r * intensity;
+            colors[ 3 * k + 1 ] = color.g * intensity;
+            colors[ 3 * k + 2 ] = color.b * intensity;
+
+            geometry.vertices.push( v );
+            //colors[ k ] = ( color.clone().multiplyScalar( intensity ) );
+                        colors[ k ] = color.clone().setRGB(colors[ 3 * k ],colors[ 3 * k +1 ],colors[ 3 * k +2 ])
+            k++;
+</code>
+</pre>
+</div>
+
+
+<div class="post">
+
+<h2>canvas 示例</h2>
+
+<a href="insectsmoving.html">insectsmoving.html</a>
+  <button class="previewbutton">预览</button>
+<p>
+main code:
+</p>
+<pre>
+<code >
+         ctx.beginPath();
+        ctx.arc(bird.x, bird.y, 10, 0, Math.PI * 2, false);
+        ctx.closePath();
+        ctx.fillStyle = '#ffff60';
+        ctx.fill();
+
+        ctx.beginPath();
+
+        var front_pos = 8,
+        side_pos = 5;
+
+        ctx.fillStyle = 'black';
+        ctx.arc(bird.x + dx * front_pos - dy * side_pos, bird.y + dy * front_pos + dx * side_pos, 2, 0, Math.PI * 2, false);
+        ctx.closePath();
+</code>
+</pre>
+</div>
+
+
+<div class="post">
+
+<h2>展示使用three.js时，如何在立方体geometry的一个面上使用多个拼接的texture，用于载入高质量图时分块载入图片</h2>
+
+  <a href="multipleTexture.html">multiple Textures for one cube face in three.js</a>
+  <button class="previewbutton">预览</button>
+<p>
+main code:
+</p>
+<pre>
+<code >
+  vertices.forEach(function(v){
+    geom.vertices.push(new THREE.Vector3(v[0],v[1],v[2]));
+  });
+  faces.forEach(function(v){
+    geom.faces.push( new THREE.Face3( v[0],v[1],v[2] ) );
+  });
+ var a= [new THREE.Vector2(0,1),new THREE.Vector2(0,0), new THREE.Vector2(1,1) ];
+ var b= [new THREE.Vector2(0,0),new THREE.Vector2(1,0), new THREE.Vector2(1,1) ];
+
+
+  for(var i=0;i<48;i=i+2) {
+    geom.faceVertexUvs[0][i] = a;
+    geom.faceVertexUvs[0][i + 1] = b;
+    
+		var randomIndex=Math.round(Math.random()*8);
+    geom.faces[i].materialIndex = randomIndex;
+    geom.faces[i+ 1].materialIndex = randomIndex;
+  }
+
+</code>
+</pre>
+</div>
+<div class="post">
+<h2>css arrowbox</h2>
+
+<a href="cssarrowbox.html">css arrowbox.html</a>
+  <button class="previewbutton">预览</button>
+<p>
+<iframe width="400px" height="280px" src="cssarrowbox.html" scrolling="no" style="display:block"></iframe>
+改变arrow:after 和arrow:before中的 border-width，margin-left值来改变箭头的大小，改变.arrow_box:before中的top和left值来改变箭头的位置
+
+</p>
+<p>main code:</p>
+<pre>
+<code>
+.arrow_box:after, .arrow_box:before { top: 100%; left: 50%; border: solid transparent; content: " "; height: 0; width: 0; position: absolute; pointer-events: none; } .arrow_box:after { border-color: rgba(136, 183, 213, 0); border-top-color: #88b7d5; border-width: 35px; margin-left: -35px; } .arrow_box:before { border-color: rgba(194, 225, 245, 0); border-top-color: #c2e1f5; border-width: 41px; margin-left: -41px; }
+</code>
+</pre>
+</div>
+<div class="post">
+<h2>qunit demo</h2>
+
+<a href="qunit/exam.html">qunit exam.html</a>
+  <button class="previewbutton">预览</button>
+<p>
+
+</p>
+<p>main code:</p>
+<pre>
+<code>
+QUnit.test( "equal test", function( assert ) {
+	assert.equal( 0, 0, "Zero, Zero; equal succeeds" );
+	assert.equal( "", 0, "Empty, Zero; equal succeeds" );
+	assert.equal( "", "", "Empty, Empty; equal succeeds" );
+	assert.equal( 0, false, "Zero, false; equal succeeds" );
+	assert.equal( "three", 3, "Three, 3; equal fails" );
+	assert.equal( null, false, "null, false; equal fails" );
+});
+</code>
+</pre>
+</div>
+<div class="post">
+<h2>html5 history demo</h2>
+
+<a href="http://diveintohtml5.info/examples/history/fer.html">diveintohtml5 history demo</a>
+  <button class="previewbutton">预览</button>
+<p>
+利用html5的history api我们可以改变浏览器的历史记录，处理back键所导航的地址，从而使ajax请求下的back键不会失效<br>
+配合router的话能定义单一的资源
+</p>
+<p>main code:</p>
+<pre>
+<code>
+link.addEventListener("click", function(e) {
+    if (swapPhoto(link.href)) {
+      history.pushState(null, null, link.href);
+      e.preventDefault();
+    }
+  }, true);
+</code>
+</pre>
+</div>
+
+<div class="post">
+<h2>sencha touch first experience</h2>
+
+<a href="touch/startApp.html">startApp.html</a>
+  <button class="previewbutton">预览</button>
+<h3>start app</h3>
+<p>
+
+</p>
+<p>
+main code:
+</p>
+<pre>
+<code class="js">
+ {
+	title: 'chart',
+	iconCls: 'home',
+	cls: 'home',
+	html: [
+		'&lt;img width="260" src="http://staging.sencha.com/img/sencha.png" /&gt;',
+		'&lt;h1&gt;Welcome to Sencha Touch&lt;/h1&gt;',
+		"&lt;p&gt;We're creating the Getting Started app, which demonstrates how ",
+		"to use tabs, lists, and forms to create a simple app.&lt;/p&gt;",
+		'&lt;h2>Sencha Touch&lt;/h2&gt;'
+	].join("")
+ }  
+ 
+</code>
+</pre>
+</div>
+
+
+<div class="post">
+<h2>如何将整张图片作为texture映射到一个立方体上</h2>
+
+<a href="http://solutiondesign.com/webgl-and-three-js-texture-mapping/">http://solutiondesign.com/webgl-and-three-js-texture-mapping/</a>
+  <button class="previewbutton">预览</button>
+<h3>观念：uvmapping</h3>
+<p>
+将整个texture作为map映射到object上，u，v代表横竖坐标<img src="images/cube10.png"><br>
+在threejs中，每个正方形面是两个三角形拼成的<img src="images/cube11.png">
+</p>
+<p>
+main code:
+</p>
+<pre>
+<code class="js">
+  var bricks = [new THREE.Vector2(0, .666), new THREE.Vector2(.5, .666), new THREE.Vector2(.5, 1), new THREE.Vector2(0, 1)];
+  var clouds = [new THREE.Vector2(.5, .666), new THREE.Vector2(1, .666), new THREE.Vector2(1, 1), new THREE.Vector2(.5, 1)];
+  var crate = [new THREE.Vector2(0, .333), new THREE.Vector2(.5, .333), new THREE.Vector2(.5, .666), new THREE.Vector2(0, .666)];
+  var stone = [new THREE.Vector2(.5, .333), new THREE.Vector2(1, .333), new THREE.Vector2(1, .666), new THREE.Vector2(.5, .666)];
+  var water = [new THREE.Vector2(0, 0), new THREE.Vector2(.5, 0), new THREE.Vector2(.5, .333), new THREE.Vector2(0, .333)];
+  var wood = [new THREE.Vector2(.5, 0), new THREE.Vector2(1, 0), new THREE.Vector2(1, .333), new THREE.Vector2(.5, .333)];
+    
+  geometry.faceVertexUvs[0][0] = [ bricks[0], bricks[1], bricks[3] ];
+  geometry.faceVertexUvs[0][1] = [ bricks[1], bricks[2], bricks[3] ];
+
+  geometry.faceVertexUvs[0][2] = [ clouds[0], clouds[1], clouds[3] ];
+  geometry.faceVertexUvs[0][3] = [ clouds[1], clouds[2], clouds[3] ];
+
+  geometry.faceVertexUvs[0][4] = [ crate[0], crate[1], crate[3] ];
+  geometry.faceVertexUvs[0][5] = [ crate[1], crate[2], crate[3] ];
+
+  geometry.faceVertexUvs[0][6] = [ stone[0], stone[1], stone[3] ];
+  geometry.faceVertexUvs[0][7] = [ stone[1], stone[2], stone[3] ];
+
+  geometry.faceVertexUvs[0][8] = [ water[0], water[1], water[3] ];
+  geometry.faceVertexUvs[0][9] = [ water[1], water[2], water[3] ];
+
+  geometry.faceVertexUvs[0][10] = [ wood[0], wood[1], wood[3] ];
+  geometry.faceVertexUvs[0][11] = [ wood[1], wood[2], wood[3] ];
+</code>
+</pre>
+</div>
+
+<div class="post">
+<h2>使用react.js生成一个当前页面模块的组件</h2>
+
+<a href="linkcomponent.html">linkcomponent.html </a>
+  <button class="previewbutton">预览</button>
+<p>
+ 
+<a href="http://facebook.github.io/react/">react.js</a>是用于创建组件化UI的javascript类库。在react中，数据是很重要的一部分，它的初衷就是处理数据更新频繁的页面。创建一个react组件的方式是从界面出发，将界面分为各个组件，每个组件拥有自己的数据，并且只需要各自的数据就能被生成。<br>
+<br>
+目前已经将linkcomponent组件放入了当前页面，接下来是做一个提供数据的编辑器。
+</p>
+
+
+<p>
+main code:
+</p>
+<pre>
+<code>
+React.render(
+  &lt;LinkPart url="linkcomponent/posts.json"/&gt;,
+  document.getElementById('container')
+);
+</code>
+</pre>
+</div>
+
+<div class="post">
+
+<h2>one line for one component</h2>
+  <button class="previewbutton">预览</button>
+</div>
+
+<div class="post">
+<h2>plupload 使用演示</h2>
+
+<a href="pluploaddemo.html">pluploaddemo.html</a>
+  <button class="previewbutton">预览</button>
+<p>
+1.plupload采用优先级为html5,flash,sliverlight,html4的方式<br>
+2.支持以拖拽的方式来选取要上传的文件<br>
+3.支持图片的预览，客户端的图片的resizing<br>
+4.支持分块的上传<a href="http://plupload.com/docs/Chunking">http://plupload.com/docs/Chunking</a><br>
+5.本地化语言支持<br>
+[link] <a href="http://www.cnblogs.com/2050/p/3913184.html">http://www.cnblogs.com/2050/p/3913184.html</a>
+</p>
+<p>
+示例展示了如何只允许上传1个文件，设置max_file_count为1，添加complete的响应事件
+</p>
+<p>
+main code:
+</p>
+<pre>
+<code >
+complete:function(event,args){
+      $('#uploader').plupload('disable');
+
+		  console.log(args.files[0].name);
+		}
+</code>
+</pre>
+</div>
+</section>
+<div id="container">
+</div>
+
+<script type="text/jsx;harmony=true" src="linkcomponent.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<footer >
+<h1><a name="aboutme">about me</a> </h1>
+<p>Hi,i'm a programmer from HuBei.China,living in beijing.Here are some demo or just test pages for sharing or showing to solve some problems. </p>
+<span><a href="mailto:1004945442@qq.com">Get in touch</a></span>&nbsp;&nbsp; 
+ <span><a href="http://stackoverflow.com/users/4216907/aboutqx"> StackOverflow</a></span>
+</footer>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?14477adbfac6547eb550adaea5cc3d48";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<script>
+//设置元素的透明度，从0-100
+function setOpacity(elem,level){
+	//ie的方法
+	if(elem.filters)
+		elem.style.filters='alpha(opacity='+level+')';
+	//w3c的opacity属性
+	else elem.style.opacity=level/100;
+}
+
+ function fadeIn( elem ) {
+     //透明度从零开始
+     setOpacity(elem,0);
+     //显示元素(但是你看不到它，因为透明度为零)
+
+     //我们将做一个在一秒钟内播放的20"帧"的动画
+     for ( var i = 0; i <= 100; i += 5 ) {
+
+         //保证我们有一个正确的i的闭包
+         (function(){
+             var pos = i;
+             //设置未来特定时间的定时器
+             setTimeout(function(){
+                 //设置元素的新的透明度
+                 setOpacity(elem,pos);
+             }, ( pos + 1 ) * 10 );
+         })();
+     }
+ }
+fadeIn(document.body);
+
+
+$('.previewbutton').click(function(e){
+	e.stopPropagation();
+	if(!$('#preIframe')[0]){
+		var tmp=$('<iframe id="preIframe"></iframe>')
+		tmp.css({'position':'fixed','width':'60%','height':'80%',left:'19%','top':'10%',border:'1px solid #ccc','border-radius':'2px','box-shadow': '2px -2px 10px #ddd','z-index':300})
+    tmp.appendTo($('body'));
+    $('body').append($('<div class="overlay"></div>'));
+	}
+	$('#preIframe').attr('src',$(this).prev().attr('href')).on('load',function(){
+    $(this).show()});
+	$('.overlay').css({'height':$(document).height()}).show();
+})
+$('#preIframe').click(function(e){
+  e.stopPropagation();
+})
+$(document).click(function(){
+  $('.overlay').hide();
+  $('#preIframe').hide();
+});
+$(function(){
+
+	var bgurl=['kotirinta_list_large.jpg','kapa_list_large.jpg'];
+  var i=Math.round(Math.random());
+  document.body.style.backgroundImage='url("'+bgurl[1]+'")'
+
+  $('.svgmenu').click(function(){
+    $('header ul').toggleClass('active');
+
+  })
+});
+
+</script>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'aboutqx';
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+</body>
+</html>
