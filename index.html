@@ -105,7 +105,9 @@ h1{
     cursor: pointer;
     display: none;
   }
-
+header ul.active{
+  display: block;
+}
 @media  screen and (max-width: 600px) {
   header ul{
     display:none;
@@ -540,7 +542,7 @@ $(function(){
   document.body.style.backgroundImage='url("'+bgurl[1]+'")'
 
   $('.svgmenu').click(function(){
-    $('header ul').toggle('slow');
+    $('header ul').toggleClass('active');
 
   })
 });
