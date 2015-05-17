@@ -26,23 +26,20 @@ body{
   padding-top: 300px;
 }
 
-@media only screen and (max-width: 600px) {
-   header ul{display:none;}
-   div.svgmenu{
-     display: block;
-   }
-}
-header ul{
-  list-style: none;
-  float: right;
-  background-color: bisque;
-}
-header li{
-  display:inline-block;
-  text-transform: lowercase;
-  padding-left: 4px;
-  padding-right: 4px;
-}
+
+  header ul {
+    list-style: none;
+    float: right;
+    background-color: bisque;
+  }
+
+  header li {
+    display: inline-block;
+    text-transform: lowercase;
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
 header .veggieburger {
   fill: blue;
   height: 20px;
@@ -106,9 +103,23 @@ h1{
  }
   .svgmenu{
     cursor: pointer;
-    padding: 20px;
     display: none;
   }
+
+@media  screen and (max-width: 600px) {
+  header ul{
+    display:none;
+    float:none;
+  }
+  header li,a{
+    display:block;
+    width: 100%;
+  }
+
+  div.svgmenu{
+    display: block;
+  }
+}
 </style>
 <link rel="stylesheet" href="css/styles/monokai_sublime.css">
 <script src="js/highlight.pack.js"></script>
@@ -127,6 +138,7 @@ h1{
   <div class="svgmenu">
     <svg class="veggieburger"><rect y="0" width="24" height="4"></rect><rect y="8" width="24" height="4"></rect><rect y="16" width="24" height="4"></rect></svg>
   </div>
+
   <nav>
     <ul>
       <li>
@@ -526,6 +538,11 @@ $(function(){
 	var bgurl=['kotirinta_list_large.jpg','kapa_list_large.jpg'];
   var i=Math.round(Math.random());
   document.body.style.backgroundImage='url("'+bgurl[1]+'")'
+
+  $('.svgmenu').click(function(){
+    $('header ul').toggle('slow');
+
+  })
 });
 
 </script>
