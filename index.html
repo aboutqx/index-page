@@ -8,7 +8,7 @@
   <meta name="keywords" content="web前端,HTML5,CSS3,jQuery,Three.js" />
   <meta name="author" content="aboutqx" />
   <title>
-    Github blog
+    home
   </title>
 
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -21,25 +21,32 @@
       width: 100%;
       height:100%;
       background: lightblue;
-      color: white;
+
       left:0;
       top:0;
       display: flex;
     }
-    span.welcome{
+    .main{
       margin: auto;
-      font-size:88px;
       height:180px;
+    }
+    span.welcome{
+
+      font-size:88px;
+
+      text-shadow: 0px 0px 40px rgba(0, 191, 243, 0.6);
+      color: rgba(255, 255, 255, 1.0);
+      font-family:  Helvetica, sans-serif;
     }
     footer{
 
 
     }
     span.go a{
-      position: absolute;
-      left: 874px;
-      top: 355px;
-      color:white;
+      position: relative;
+      left: 0;
+      top: 0;
+      color: rgba(255, 255, 255, 1.0);
     }
     .go a:hover{
       color: indianred;
@@ -51,35 +58,47 @@
 </head>
 <body class="land">
 <div class="startup">
+  <div class="main">
+
   <span class="welcome">welcome there</span>
-  <span class="go"><a href="codeAndDemo.html">&gt;&gt;go ahead</a></span>
-</div>
-<!--<video preload="auto" autoplay="true" loop="loop" muted="muted" volume="0" src="images/cells.mp4"><source src="images/cells.mp4" type="video/mp4"></video>
--->
-<header>
-  <div class="svgmenu">
-    <svg class="veggieburger"><rect y="0" width="24" height="4"></rect><rect y="8" width="24" height="4"></rect><rect y="16" width="24" height="4"></rect></svg>
+    <span class="go"><a href="codeAndDemo.html">&gt;&gt;go ahead</a></span>
   </div>
+</div>
+  <!--
+    <div>
+      <ul>
+        <li>
+          <a><img src=""></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <video preload="auto" autoplay="true" loop="loop" muted="muted" volume="0" src="images/cells.mp4"><source src="images/cells.mp4" type="video/mp4"></video>
 
-  <nav>
-    <ul>
-      <li>
-        <a href="#main">main</a>
-      </li>
-      <li>
-        <a href="#aboutme">about me</a>
-      </li>
-    </ul>
+  <header>
+    <div class="svgmenu">
+      <svg class="veggieburger"><rect y="0" width="24" height="4"></rect><rect y="8" width="24" height="4"></rect><rect y="16" width="24" height="4"></rect></svg>
+    </div>
 
-</nav>
-  </header>
+    <nav>
+      <ul>
+        <li>
+          <a href="#main">main</a>
+        </li>
+        <li>
+          <a href="#aboutme">about me</a>
+        </li>
+      </ul>
 
-<footer >
-  <h1><a name="aboutme">about me</a> </h1>
-  <p>Hi,i'm a programmer from HuBei.China,living in beijing.Here are some demo or just test pages for sharing or showing to solve some problems. </p>
-  <span><a href="mailto:1004945442@qq.com">Get in touch</a></span>&nbsp;&nbsp;
-  <span><a href="http://stackoverflow.com/users/4216907/aboutqx"> StackOverflow</a></span>
-</footer>
+  </nav>
+    </header>
+
+  <footer >
+    <h1><a name="aboutme">about me</a> </h1>
+    <p>Hi,i'm a programmer from HuBei.China,living in beijing.Here are some demo or just test pages for sharing or showing to solve some problems. </p>
+    <span><a href="mailto:1004945442@qq.com">Get in touch</a></span>&nbsp;&nbsp;
+    <span><a href="http://stackoverflow.com/users/4216907/aboutqx"> StackOverflow</a></span>
+  </footer>-->
 <script>
   var _hmt = _hmt || [];
   (function() {
