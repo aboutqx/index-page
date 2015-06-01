@@ -20,10 +20,14 @@
 
       width: 100%;
       height:100%;
-      background: lightblue;
+      
 
       left:0;
       top:0;
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
       display: flex;
     }
     .main{
@@ -52,53 +56,63 @@
       color: indianred;
       text-decoration: none;
     }
+    .background-view{
+      position: absolute;
+      width: 100%;
+      height:100%;
+      left:0;
+      top:0;
+    }
+    .view1{
+      background: #000;
+
+    }
+    a:hover,a:active{
+      text-decoration: none;
+    }
+    .welcome a:hover{
+      -webkit-transform:rotateX(360deg);
+      transform:rotateX(360deg);
+    }
+      .welcome a{
+      transition: all 1.5s ease;
+      -moz-transition: all 1.5s ease;  
+      -webkit-transition: all 1.5s ease; 
+      -o-transition: all 1.5s ease; 
+    }
   </style>
 
 
 </head>
-<body class="land">
+<body>
+<div class="background-view view1"> </div>
 <div class="startup">
   <div class="main">
 
-  <span class="welcome">welcome there</span>
+  <span class="welcome"><a href="#w">w</a>
+  <a href="#w">e</a>
+  <a href="#w">l</a>
+  <a href="#w">c</a>
+  <a href="#w">o</a>
+  <a href="#w">m</a>
+  <a href="#w">e</a>
+  &nbsp;
+  <a href="#w">t</a>
+  <a href="#w">h</a> 
+  <a href="#w">e</a>
+  <a href="#w">r</a>
+  <a href="#w">e</a></span>
     <span class="go"><a href="codeAndDemo.html">&gt;&gt;go ahead</a></span>
   </div>
-</div>
-  <!--
-    <div>
-      <ul>
-        <li>
-          <a><img src=""></a>
-        </li>
-      </ul>
-    </div>
+  <div>
+  
   </div>
-  <video preload="auto" autoplay="true" loop="loop" muted="muted" volume="0" src="images/cells.mp4"><source src="images/cells.mp4" type="video/mp4"></video>
+</div>
 
-  <header>
-    <div class="svgmenu">
-      <svg class="veggieburger"><rect y="0" width="24" height="4"></rect><rect y="8" width="24" height="4"></rect><rect y="16" width="24" height="4"></rect></svg>
-    </div>
+<script>
+  
 
-    <nav>
-      <ul>
-        <li>
-          <a href="#main">main</a>
-        </li>
-        <li>
-          <a href="#aboutme">about me</a>
-        </li>
-      </ul>
-
-  </nav>
-    </header>
-
-  <footer >
-    <h1><a name="aboutme">about me</a> </h1>
-    <p>Hi,i'm a programmer from HuBei.China,living in beijing.Here are some demo or just test pages for sharing or showing to solve some problems. </p>
-    <span><a href="mailto:1004945442@qq.com">Get in touch</a></span>&nbsp;&nbsp;
-    <span><a href="http://stackoverflow.com/users/4216907/aboutqx"> StackOverflow</a></span>
-  </footer>-->
+</script>
 <script>
   var _hmt = _hmt || [];
   (function() {
