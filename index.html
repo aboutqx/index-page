@@ -16,7 +16,6 @@
   <link rel="stylesheet" href="shared/css/base.css" />
   <style>
     div.startup {
-      z-index: 100;
       display: -webkit-box;
       display: -moz-box;
       display: -ms-flexbox;
@@ -26,6 +25,7 @@
     .main{
       margin: auto;
       height:180px;
+      z-index:100;
     }
     span.welcome{
 
@@ -51,10 +51,10 @@
       height:100%;
       left:0;
       top:0;
-
+      color: rgba(255, 255, 255, 1.0);
     }
     .background-view .timestamp{
-      color: rgba(255, 255, 255, 1.0);
+      
       position: relative;
       left:80%;
       top:80%;
@@ -78,7 +78,25 @@
       -webkit-transition: all 1.5s ease; 
       -o-transition: all 1.5s ease; 
     }
+    .clip-wrap {
 
+  position: absolute;
+  display: inline-block;
+  vertical-align: top;
+  padding: 0;
+  margin: 0 20px;
+  left:0;
+  top:0;
+}
+.clip-wrap a{
+  color: rgba(255, 255, 255, 1.0);
+}
+.codeclip{
+left:20px;
+}
+.blogclip{
+  left:80px;
+}
   </style>
 
 
@@ -106,7 +124,8 @@
  
 </div>
 <div class="background-view">
-  
+<div class="codeclip clip-wrap"><a href="codeAndDemo.html">code</a></div>
+<div class="blogclip clip-wrap"><a href="techBlog.html">blog</a></div>
 <span class="timestamp">first visited: </span>
 </div>
 
