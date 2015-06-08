@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>your line</title>
+    <style>
+        .container{
+
+            display: -webkit-box;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            height:100%;
+            width:100%;
+            position: absolute;
+        }
+        .content{
+            margin: auto;
+            height:300px;
+            width:500px;
+            border: 1px solid #ccccff;
+            box-shadow: 2px 2px 10px #ccccff;
+            text-align: center;
+            line-height: 300px;
+        }
+        .content img{
+            width:100%;
+            height:100%;
+
+        }
+        .musiccontent{
+            position: absolute;
+            left:30%;
+            top:80%;
+        }
+        .musiccontent input[type=text]{
+            width:300px;
+            margin-left: 15px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+  <section class="content">拖拽图片到此处</section>
+    <section class="musiccontent">
+<div><label for="music">添加音乐</label><input type="text" name="music">
+<input type="submit" >
+</div>
+    </section>
+</div>
+<script>
+    var container=document.querySelector('.container'),
+            content=container.querySelector('.content');
+    container.addEventListener( 'dragover', function ( event ) {
+
+        event.preventDefault();
+        event.dataTransfer.dropEffect = 'copy';
+
+    }, false );
+
+    container.addEventListener( 'dragenter', function ( event ) {
+
+        container.style.opacity = 0.5;
+
+    }, false );
+
+    container.addEventListener( 'dragleave', function ( event ) {
+
+        container.style.opacity = 1;
+
+    }, false );
+
+    container.addEventListener( 'drop', function ( event ) {
+
+        event.preventDefault();
+
+        var reader = new FileReader();
+        reader.addEventListener( 'load', function ( event ) {
+            var imageNode=new Image();
+            imageNode.setAttribute('draggable',false);
+            imageNode.src= event.target.result;
+            content.innerHTML="";
+            content.appendChild(imageNode);
+            localStorage.setItem('image',imageNode.src);
+        }, false );
+        try{reader.readAsDataURL( event.dataTransfer.files[ 0 ] );} catch(e){}
+        container.style.opacity = 1;
+
+    }, false );
+    if(localStorage.getItem('image')) {
+        var imageNode=new Image();
+        imageNode.setAttribute('draggable',false);
+        imageNode.src= localStorage.getItem('image');
+        content.innerHTML="";
+        content.appendChild(imageNode);
+    } else {
+
+    }
+    document.querySelector('input[type=submit]').addEventListener('click',function(){
+
+
+    })
+
+</script>
+</body>
+</html>
