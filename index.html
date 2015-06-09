@@ -183,6 +183,57 @@ function switchToTime(second){
   return result;
 }
 getStorage();
+
+  function loadBuffer(url){
+
+    var request = new XMLHttpRequest();
+    request.open("GET", url, true);
+    request.responseType = "arraybuffer";
+
+
+    request.onload = function() {
+      defaultaduiomgr=new audioMgr();
+      defaultaduiomgr.play(request.response);
+
+    }
+
+    request.onerror = function() {
+      alert('BufferLoader: XHR error');
+    }
+
+    request.send();
+
+  }
+
+  var audioMgr=function() {
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    this.context = new AudioContext();
+    this.source=this.context.createBufferSource();
+
+  }
+  audioMgr.prototype.play=function(arrayBuffer){
+    var self=this;
+    this.context.decodeAudioData(
+            arrayBuffer,
+            function(buffer) {
+              if (!buffer) {
+                alert('error decoding file data: ' + url);
+                return;
+              }
+              self.source.buffer = buffer;
+
+              self.source.connect(self.context.destination);
+              self.source.loop = true;
+              self.source.start(0);
+            },
+            function(error) {
+              console.error('decodeAudioData error', error);
+            }
+    );
+
+  }
+  loadBuffer('0.mp3')
+
 </script>
 
 

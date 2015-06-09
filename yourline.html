@@ -44,8 +44,8 @@
 <div class="container">
   <section class="content">拖拽图片到此处</section>
     <section class="musiccontent">
-<div><label for="music">添加音乐</label><input type="text" name="music">
-<input type="submit" >
+<div><label for="music">添加音乐</label><input type="file" name="music">
+
 </div>
     </section>
 </div>
@@ -97,11 +97,70 @@
     } else {
 
     }
-    document.querySelector('input[type=submit]').addEventListener('click',function(){
+    var defaultaduiomgr;
+    document.querySelector('input[name=music]').addEventListener('change',function(){
+      if(this.files.length!=0) {
 
-
+          var filereader=new FileReader();
+          filereader.onload=function(e){
+            var fileresult= e.target.result;
+            var audiomgr=new audioMgr();
+            defaultaduiomgr&&defaultaduiomgr.source.stop(0);
+            audiomgr.play(fileresult);
+          }
+          filereader.readAsArrayBuffer(this.files[0])
+      }
     })
 
+    function loadBuffer(url){
+
+        var request = new XMLHttpRequest();
+        request.open("GET", url, true);
+        request.responseType = "arraybuffer";
+
+
+        request.onload = function() {
+            defaultaduiomgr=new audioMgr();
+            defaultaduiomgr.play(request.response);
+
+        }
+
+        request.onerror = function() {
+            alert('BufferLoader: XHR error');
+        }
+
+        request.send();
+
+    }
+
+var audioMgr=function() {
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    this.context = new AudioContext();
+    this.source=this.context.createBufferSource();
+
+}
+    audioMgr.prototype.play=function(arrayBuffer){
+        var self=this;
+        this.context.decodeAudioData(
+                arrayBuffer,
+                function(buffer) {
+                    if (!buffer) {
+                        alert('error decoding file data: ' + url);
+                        return;
+                    }
+                    self.source.buffer = buffer;
+
+                    self.source.connect(self.context.destination);
+                    self.source.loop = true;
+                    self.source.start(0);
+                },
+                function(error) {
+                    console.error('decodeAudioData error', error);
+                }
+        );
+
+    }
+    loadBuffer('CaliforniaDream.mp3')
 </script>
 </body>
 </html>
