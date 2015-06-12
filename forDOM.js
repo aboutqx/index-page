@@ -6,14 +6,12 @@ function tag(name,elem){
 	return (elem||document).getElementsByTagName(name);
 }
 function prev(elem){
-    elem=elem.previousSibling;
 	do{
 		elem=elem.previousSibling;
 	}while(elem&&elem.nodeType!=1);
 	return elem;
 } 
 function next(elem){
-    elem=elem.nextSibling;
 	do{
 		elem=elem.nextSibling;
 	}while(elem&&elem.nodeType!=1);

@@ -1,9 +1,81 @@
-working on this.
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <!-- Place favicon.ico in the root directory -->
+
+        <link rel="stylesheet" href="css/normalize.css">
+        <style>
+         pre{
+         	background:rgb(245, 242, 240);
+         	padding-left:18px;
+         	width:62%;
+         	margin-left:5px;
+         	border-left:1px solid #ccc;
+         	overflow: auto;
+         }
+         pre code{
+         	font-family: "Bitstream Vera Sans Mono", Consolas, Courier, monospace;
+            font-size: 14px;
+         }
+         body{
+         	max-width: 960px;
+         	margin: 0 auto;
+         }
+        p{
+        	line-height: 1.4em;
+        }
+        .compareCode{
+          display: -webkit-box;
+	      display: -moz-box;
+	      display: -ms-flexbox;
+	      display: -webkit-flex;
+	      display: flex;
+        }
+        .compareCode pre{
+        	flex:1;
+
+        }
+        menu.main{
+        	position:relative;
+        	left:-140px;
+            
+        }
+        </style>
+
+    </head>
+<body>
+<menu class="main">
+working on this.<br>
+<ul>
 1.web components and reactjs <br>
 2.web audio api #https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Using_Web_Audio_API<br>
 3.threejs texture and css3d 2D object
 <br>
 4.XMLHttpRequest for blob <br>
 5.flexbox <br>
-6.js inherit <br>
+<li><a href="#" data-src="jsinherit.html">6.js inherit 2015/06/12</a></li>
+</ul>
+</menu>
+<section id="container"></section>
+<script>
+var container=document.getElementById('container');
+document.querySelector('a').addEventListener('click',function(e){
+	e.preventDefault();
+	var url=this.getAttribute('data-src');
+	var request=new XMLHttpRequest();
+	request.open('GET',url);
+	request.send();
+	request.onload=function(){
+      container.innerHTML=request.response;
+	}
+})
+</script>
+</body>
+</html>
