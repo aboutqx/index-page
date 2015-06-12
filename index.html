@@ -181,7 +181,7 @@ function switchToTime(second){
   return result;
 }
 getStorage();
-
+var defaultaduiomgr;
   function loadBuffer(url){
 
     var request = new XMLHttpRequest();
@@ -241,15 +241,23 @@ getStorage();
     this.source.loop = true;
     this.source.start(0);
   }
-  loadBuffer('0.mp3')
-
+  
+  if(!localStorage.getItem('musicPrefer')||localStorage.getItem('musicPrefer')=='yes')
+    loadBuffer('0.mp3')
+  else document.querySelector('.controlmusic').innerHTML='play music'
+    
 document.querySelector('.controlmusic').addEventListener('click',function(){
   if(this.innerHTML=='stop music'){
     defaultaduiomgr.stop();
-    this.innerHTML='play music'
+    this.innerHTML='play music';
+    
+    localStorage.setItem('musicPrefer','no')
   } else {
-    defaultaduiomgr.start();
-    this.innerHTML='stop music'
+    if(!defaultaduiomgr) loadBuffer('0.mp3')
+     else defaultaduiomgr.start();
+    this.innerHTML='stop music';
+    
+    localStorage.setItem('musicPrefer','yes')
   }
 })
 </script>
