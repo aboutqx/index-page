@@ -86,7 +86,7 @@
   padding: 0;
   margin: 0 20px;
   left:0;
-  top:0;
+  top:1%;
 }
 .clip-wrap a{
   color: rgba(255, 255, 255, 1.0);
@@ -102,6 +102,12 @@ left:20px;
 }
 .movieclip{
   left :200px;
+}
+.controlmusic{
+  position: absolute;
+  left:85%;
+  top:1%;
+  cursor: pointer;
 }
   </style>
 
@@ -135,6 +141,7 @@ left:20px;
 <div class="hackclip clip-wrap"><a href="hack.html">hack</a></div>
 <div class="movieclip clip-wrap"><a href="movie.html">movie</a></div>
 <span class="timestamp">first visited: </span>
+<span class="controlmusic">stop music</span>
 </div>
 
 <script>
@@ -220,6 +227,7 @@ getStorage();
                 alert('error decoding file data: ' + url);
                 return;
               }
+              self.buffer=buffer;
               self.source.buffer = buffer;
 
               self.source.connect(self.context.destination);
@@ -232,8 +240,27 @@ getStorage();
     );
 
   }
+  audioMgr.prototype.stop=function(){
+    this.source.stop(0);
+  }
+  audioMgr.prototype.start=function() {
+    this.source=this.context.createBufferSource();
+    this.source.buffer = this.buffer;
+    this.source.connect(this.context.destination);
+    this.source.loop = true;
+    this.source.start(0);
+  }
   loadBuffer('0.mp3')
 
+document.querySelector('.controlmusic').addEventListener('click',function(){
+  if(this.innerHTML=='stop music'){
+    defaultaduiomgr.stop();
+    this.innerHTML='play music'
+  } else {
+    defaultaduiomgr.start();
+    this.innerHTML='stop music'
+  }
+})
 </script>
 
 
