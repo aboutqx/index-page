@@ -153,29 +153,29 @@ function getStorage(){
     span.innerHTML+="just now"
   } else {
     delta = ((new Date()).getTime() - (new Date()).setTime(localStorage.getItem('timestamp'))) / 1000;
-    //span.innerHTML+=switchToTime(delta);
-    span.innerHTML+=Math.ceil(delta)+'s ago';
+    span.innerHTML+=switchToTime(delta);
+    //span.innerHTML+=Math.floor(delta)+'s ago';
   }
 }
 function switchToTime(second){
-  var tmp,suffix=' ago',units=['s','min','hour','month','year'],multiple=[1,60,60*60,60*60*24,60*60*24*30],
-  limits=[60,60,24,30,365],result;
+  var tmp,suffix=' ago',units=['s','min','hour','day','month','year'],multiple=[1,60,60*60,60*60*24,60*60*24*30,60*60*24*360],
+  limits=[60,60,24,30,12,100],result;
   
   for(var i=0;i<multiple.length;i++){
     tmp=second/multiple[i];
+    
     if(tmp<limits[i]){
-      
-      if(tmp==1) {
+      tmp=Math.floor(tmp);
+      if(tmp==1||i==0) {
         suffix=units[i]+suffix;
-        result='1'+suffix;
+        result=tmp+suffix;
         break;
       }
-      else if(!i==0) {
-        suffix=units[i]+suffix;
-        result=Math.ceil(tmp)+suffix;
+      else {
+        suffix=units[i]+'s'+suffix;
+        result=tmp+suffix;
         break;
-      }
-
+      } 
     } 
   }
   return result;
