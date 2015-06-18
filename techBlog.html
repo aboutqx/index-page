@@ -73,16 +73,19 @@ working on this.<br>
 <footer></footer>
 <script>
 var container=document.getElementById('container');
-document.querySelector('a').addEventListener('click',function(e){
-	e.preventDefault();
-	var url=this.getAttribute('data-src');
-	var request=new XMLHttpRequest();
-	request.open('GET',url);
-	request.send();
-	request.onload=function(){
-      container.innerHTML=request.response;
-	}
-})
+var links=document.querySelectorAll('a')
+for(var i=0;i<links.length;i++){
+    links[i].addEventListener('click',function(e){
+    	e.preventDefault();
+    	var url=this.getAttribute('data-src');
+    	var request=new XMLHttpRequest();
+    	request.open('GET',url);
+    	request.send();
+    	request.onload=function(){
+          container.innerHTML=request.response;
+    	}
+    })
+}
 </script>
 </body>
 </html>
