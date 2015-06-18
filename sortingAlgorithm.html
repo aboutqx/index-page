@@ -116,7 +116,26 @@ function selectionSort(items){
 </pre>
 </div>
 <p>时间复杂度:</p>
-<h4>关联的</h4>
+<h4>关联的Partial selection sort:选出K 个最小的值</h4>
+<pre>
+<code>
+
+function selectKSmallest(items,k){
+  var length=items.length;
+  for(var i=0;i < k;i++){
+    min=i;
+    for(var j=i+1;j < length;j++){
+      if(items[min] > items[j])
+        min=j
+    }
+    if(i!=min) swap(items,i,min)
+  }
+  return items.slice(0,k);
+}
+
+
+</code>
+</pre>
 <h3>Insertion sort </h3>
 <pre>
 <code>
@@ -147,7 +166,17 @@ function insertionSort(items) {
 
 </code>
 </pre>
+<h4>关联的Partial selection sort:选出K 个最小的值</h4>
+<pre>
+<code>
 
+function selectKSmallest(items,k){
+  todo
+}
+
+
+</code>
+</pre>
 <p>时间复杂度:</p>
 <h3>Merge sort </h3>
 <pre>
