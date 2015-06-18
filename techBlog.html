@@ -63,8 +63,8 @@ working on this.<br>
 <br>
 4.XMLHttpRequest for blob <br>
 5.flexbox in depth<br>
-<li><a href="#" data-src="jsinherit.html">6.js inherit 2015/06/12</a></li>
-<li><a href="#" data-src="sortingAlgorithm.html">7.sorting algorithm 2015/06/18 tbc</a></li>
+<li><a href="jsinherit.html" >6.js inherit 2015/06/12</a></li>
+<li><a href="sortingAlgorithm.html" >7.sorting algorithm 2015/06/18 tbc</a></li>
 8.css layout concept
 9.html new semantic elements
 10.RESTful api
@@ -78,7 +78,7 @@ var links=document.querySelectorAll('a')
 for(var i=0;i<links.length;i++){
     links[i].addEventListener('click',function(e){
     	e.preventDefault();
-    	var url=this.getAttribute('data-src');
+    	var url=this.getAttribute('href');
     	var request=new XMLHttpRequest();
     	request.open('GET',url);
     	request.send();
