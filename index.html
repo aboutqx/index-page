@@ -23,16 +23,21 @@
       display: flex;
     }
     .main{
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
       margin: auto;
-      height:180px;
       z-index:100;
+      flex-wrap:wrap;
     }
-    span.welcome{
+    .main a{
 
       font-size:5em;
 
       text-shadow: 0px 0px 40px rgba(0, 191, 243, 0.6);
-      color: rgba(255, 255, 255, 1.0);
+      color: #4183c4;
       font-family:  Helvetica, sans-serif;
     }
 
@@ -59,41 +64,28 @@
     a:hover,a:active{
       text-decoration: none;
     }
-    .welcome a:hover{
+    .main a:hover{
       -webkit-transform:rotateX(360deg);
       transform:rotateX(360deg);
     }
-      .welcome a{
-      transition: all 1.5s ease;
-      -moz-transition: all 1.5s ease;  
-      -webkit-transition: all 1.5s ease; 
-      -o-transition: all 1.5s ease; 
+      .main a{
+      transition: all 1.2s ease;
+      -moz-transition: all 1.2s ease;  
+      -webkit-transition: all 1.2s ease; 
+      -o-transition: all 1.2s ease; 
     }
     .clip-wrap {
-
-  position: absolute;
-  display: inline-block;
   vertical-align: top;
   padding: 0;
-  margin: 0 20px;
-  left:0;
-  top:1%;
+  margin: 0 ;
+  -webkit-box-flex: 1 50%;
+  -moz-box-flex: 1 50%;
+  -webkit-flex: 1 50%;
+  -ms-flex: 1 50%;
+  flex:1 50%;
+  text-align: center;
 }
-.clip-wrap a{
-  color: rgba(255, 255, 255, 1.0);
-}
-.codeclip{
-left:20px;
-}
-.blogclip{
-  left:80px;
-}
-.hackclip{
-  left:140px;
-}
-.movieclip{
-  left :200px;
-}
+
 .controlmusic{
   position: absolute;
   left:85%;
@@ -109,28 +101,16 @@ left:20px;
 <div class="startup background-view">
   <div class="main">
 
-  <span class="welcome"><a href="#w">w</a>
-  <a href="#w">e</a>
-  <a href="#w">l</a>
-  <a href="#w">c</a>
-  <a href="#w">o</a>
-  <a href="#w">m</a>
-  <a href="#w">e</a>
-  &nbsp;
-  <a href="#w">t</a>
-  <a href="#w">h</a> 
-  <a href="#w">e</a>
-  <a href="#w">r</a>
-  <a href="#w">e</a></span>
+  <div class="codeclip clip-wrap"><a href="codeAndDemo.html">code</a></div>
+<div class="blogclip clip-wrap"><a href="techBlog.html">blog</a></div>
+<div class="hackclip clip-wrap"><a href="hack.html">hack</a></div>
+<div class="movieclip clip-wrap"><a href="movie.html">movie</a></div>
     
   </div>
  
 </div>
 <div class="background-view">
-<div class="codeclip clip-wrap"><a href="codeAndDemo.html">code</a></div>
-<div class="blogclip clip-wrap"><a href="techBlog.html">blog</a></div>
-<div class="hackclip clip-wrap"><a href="hack.html">hack</a></div>
-<div class="movieclip clip-wrap"><a href="movie.html">movie</a></div>
+
 <span class="timestamp">first visited: </span>
 <span class="controlmusic">stop music</span>
 </div>
@@ -260,6 +240,8 @@ document.querySelector('.controlmusic').addEventListener('click',function(){
     localStorage.setItem('musicPrefer','yes')
   }
 })
+
+
 </script>
 
 

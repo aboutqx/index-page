@@ -1,0 +1,121 @@
+<style>
+         pre{
+          background:rgb(245, 242, 240);
+          padding-left:18px;
+          width:62%;
+          margin-left:5px;
+          border-left:1px solid #ccc;
+          overflow: auto;
+         }
+         pre code{
+          font-family: "Bitstream Vera Sans Mono", Consolas, Courier, monospace;
+            font-size: 14px;
+         }
+         body{
+          max-width: 960px;
+          margin: 0 auto;
+         }
+        p{
+          line-height: 1.4em;
+        }
+        .compareCode{
+          display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        }
+        .compareCode pre{
+          flex:1;
+
+        }
+        menu.main{
+          position:relative;
+          left:-140px;
+            
+        }
+        footer{
+          padding-bottom: 45px;
+        }
+        #container{
+            padding-bottom: 35px;
+
+        }
+        </style>
+
+<h1>Html5 new semantic elements </h1>
+<nav>
+
+</nav>
+<p>
+html5 定义了一些新的语义化的标签，包括<code>&lt;section&gt;</code>，<code>&lt;article&gt;</code> ,<code>&lt;nav&gt;</code>,<code>&lt;header&gt;</code>,<code>&lt;aside&gt;</code>,<code>&lt;hgroup&gt;</code>,<code>&lt;footer&gt;</code>,<code>&lt;time&gt;</code>,<code>&lt;mark&gt;</code>       
+</p>
+
+<section>
+<h2>如何兼容地使用这些标签</h2>
+
+<p>
+在ie9以前的ie浏览器上，新增的标签存在两个问题：
+<ol><li>
+ie8及以前的ie浏览器不会识别section等新标签，对于这些不识别的标签会创建一个没有子节点的空节点。所以html结构中的section的标签的子元素将会实际上被当作它的姐妹元素。</li>
+<li>ie及以前ie浏览器对于不识别的标签不会应用任何样式，section这些元素也不会被当作block-level element，而是应用不识别元素的初始样式inline。</li>
+
+</ol>
+
+像Paul Irish写的:<a href="http://www.paulirish.com/2011/the-history-of-the-html5-shiv/">the new elements cannot hold children and are unaffected by CSS.</a>
+</p>
+<h3>
+使用html5 shiv来解决：
+</h3>
+
+<pre>
+<code>
+&lt;!--[if lt IE 9]&gt;
+&lt;script&gt;
+// html5shiv (lite) | @afarkas @jdalton @jon_neal @rem | MIT/GPL2
+
+// shiv elements on the document
+"abbr article aside audio bdi canvas data datalist details figcaption figure footer header hgroup mark meter nav output progress section subline summary time video".replace(/\w+/g, function (nodeName) {
+  document.createElement(nodeName);
+});
+
+// prepend html5 styles to the document
+(function (element) {
+  element.innerHTML = "x&lt;style&gt;article,aside,details,figcaption,figure,footer,header,hgroup,nav,section,subline,summary{display:block}audio,canvas,video{display:inline-block}audio:not([controls]){display:none;height:0}[hidden]{display:none}&lt;/style&gt;";
+
+  document.documentElement.insertBefore(element.lastChild, document.documentElement.firstChild);
+})(document.createElement("x"));
+&lt;/script&gt;
+&lt;![endif]--&gt;
+</code>
+</pre>
+<p>html5 shiv 还包括monkeypatches for document.createElement and document.createDocumentFragment for IE6-8,解决了元素的innerHTML不识别新元素的问题，详见<a href="https://github.com/afarkas/html5shiv">github:html5shiv</a>。<br>
+注意：html5 shiv需要应用在页头，这样才确保起作用。
+
+</p>
+</section>
+
+
+<h2>新标签的semantics</h2>
+<dl class="col">
+<dt><a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/sections.html#the-section-element"><code>&lt;section&gt;</code></a>
+</dt><dd> <code>section</code> 代表了一片普通文档或者程序的区块。 一个section是内容的主题部分，通常包含一个heading。section的例子有章节，tabbed 对话框的各个内容，或者论文的带数标的块。 一个网站的主页能被分成介绍，新闻条目，联系信息这些sections。 
+</dd><dt><a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/sections.html#the-nav-element"><code>&lt;nav&gt;</code></a>
+</dt><dd> <code>nav</code> 代表了页面链接到其他页面或者当前页面的其他部分的区块：包含导航链接的区块。 不是所有链接组合需要被放在 <code>nav</code> 元素里 — 仅仅包含主要导航块的适合 <code>nav</code> . 特别地, 页尾会包含一个网站的链接列表, 里面有服务条款，主页，版权页，<code>footer</code> 元素是足够的，而不需要<code>nav</code> .
+</dd><dt><a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/sections.html#the-article-element"><code>&lt;article&gt;</code></a>
+</dt><dd><code>article</code> element represents a component of a page that consists of a self-contained composition in a document, page, application, or site and that is intended to be independently distributable or reusable, e.g. in syndication. This could be a forum post, a magazine or newspaper article, a Web log entry, a user-submitted comment, an interactive widget or gadget, or any other independent item of content.
+</dd><dt><a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/sections.html#the-aside-element"><code>&lt;aside&gt;</code></a>
+</dt><dd>The <code>aside</code> element represents a section of a page that consists of content that is tangentially related to the content around the <code>aside</code> element, and which could be considered separate from that content. Such sections are often represented as sidebars in printed typography. The element can be used for typographical effects like pull quotes or sidebars, for advertising, for groups of <code>nav</code> elements, and for other content that is considered separate from the main content of the page.
+</dd><dt><a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/sections.html#the-hgroup-element"><code>&lt;hgroup&gt;</code></a>
+</dt><dd>The <code>hgroup</code> element represents the heading of a section. The element is used to group a set of <code>h1</code>–<code>h6</code> elements when the heading has multiple levels, such as subheadings, alternative titles, or taglines.
+</dd><dt><a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/sections.html#the-header-element"><code>&lt;header&gt;</code></a>
+</dt><dd>The <code>header</code> element represents a group of introductory or navigational aids. A <code>header</code> element is intended to usually contain the section’s heading (an <code>h1</code>–<code>h6</code> element or an <code>hgroup</code> element), but this is not required. The <code>header</code> element can also be used to wrap a section’s table of contents, a search form, or any relevant logos.
+</dd><dt><a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/sections.html#the-footer-element"><code>&lt;footer&gt;</code></a>
+</dt><dd>The <code>footer</code> element represents a footer for its nearest ancestor sectioning content or sectioning root element. A footer typically contains information about its section such as who wrote it, links to related documents, copyright data, and the like. Footers don’t necessarily have to appear at the end of a section, though they usually do. When the <code>footer</code> element contains entire sections, they represent appendices, indexes, long colophons, verbose license agreements, and other such content.
+</dd><dt><a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/text-level-semantics.html#the-time-element"><code>&lt;time&gt;</code></a>
+</dt><dd><code>time</code> element represents either a time on a 24 hour clock, or a precise date in the proleptic Gregorian calendar, optionally with a time and a time-zone offset.
+</dd><dt><a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/text-level-semantics.html#the-mark-element"><code>&lt;mark&gt;</code></a>
+</dt><dd><code>mark</code> 元素代表了一份文档中被标记或高亮来作为引用的一系列文字。
+</dd></dl>
+<span> reference: <a href="http://diveintohtml5.info/semantics.html">Dive into html5:what does it all mean</a>
+</span>
