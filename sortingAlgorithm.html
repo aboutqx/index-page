@@ -18,7 +18,7 @@
 <h3>Selection sort 基于的思想或方法:selection.</h3>
 此算法将输入的list分为两部分，一部分已经排好序，由list从左向右建立的sublist，一部分剩下的未排序的list部分。开始，排好序的sublist是空，剩下的未排序的是整个list。算法每次push未排好序的sublist的第一个值到排好序的sublist里，循环比较未排好序的sublist里剩下的值，交换选择最小的值，从而保证向排好序的sublist里push了未排序的sublist里最小的值。进行n-2次循环就能使排好序的sublist里是从小到大的list里的值。
 <h3>Insertion sort 基于的思想或方法:insertion.</h3>
-插入排序将list考虑为一个input流,每次迭代处理list的一个元素，将这个元素push到一个 sorted list。每次迭代，插入排序移出list的一个元素，找到它在sorted list中的位置，插入它。重复直到list里的元素被处理完。
+插入排序将list考虑为一个input流,每次迭代处理list的一个元素，将这个元素push到一个 sorted list。每次迭代，插入排序移出unsorted list的一个元素，找到它在sorted list中的位置，插入它。重复直到list里的元素被处理完。
 <h3>Merge sort 基于的思想或方法：merge</h3>
 合并排序有两个步骤
 <ol>
@@ -70,7 +70,7 @@ function bubbleSort(items){
 </code>
 </pre>
 
-<p>时间复杂度:</p>
+<p>平均时间复杂度:n²</p>
 
 <h3>Selection sort </h3>
 <div class="compareCode">
@@ -115,7 +115,7 @@ function selectionSort(items){
 </code>
 </pre>
 </div>
-<p>时间复杂度:</p>
+<p>平均时间复杂度:n²</p>
 <h4>关联的Partial selection sort:选出K 个最小的值</h4>
 <pre>
 <code>
@@ -166,19 +166,20 @@ function insertionSort(items) {
 
 </code>
 </pre>
-<h4>关联的Partial selection sort:选出K 个最小的值</h4>
+<h4>关联的Partial insertion sort:选出K 个最小的值</h4>
 <p>适用于已有部分排好序的，例如先增后减的list，最好的时间复杂度为o(n)</p>
 <pre>
 <code>
 
 function selectKSmallest(items,k){
-  todo
+  insertionSort(items);
+  return items.slice(0,k)
 }
 
 
 </code>
 </pre>
-<p>时间复杂度:</p>
+<p>平均时间复杂度:n²</p>
 <h3>Merge sort </h3>
 <pre>
 <code>
@@ -191,7 +192,7 @@ function mergeSort(items){
 </code>
 </pre>
 
-<p>时间复杂度:</p>
+<p>平均时间复杂度:</p>
 <h3>Quick sort </h3>
 <pre>
 <code>
