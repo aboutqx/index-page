@@ -28,9 +28,11 @@
 
     }
     footer{
-        margin: 0 auto;
+        margin-left: -200px;
         width:400px;
-
+        position: absolute;
+        bottom: 60px;
+        left:50%;
     }
     #content {
         padding:10px;
@@ -42,6 +44,7 @@
         height:540px;
         border: 1px solid #660066;
         position: relative;
+        float: left;
     }
     nav h2{
         display: inline-block;
@@ -63,23 +66,46 @@
         border: 1px dashed #660066;
     }
 </style>
+    <script src="js/underscore-min.js"></script>
 </head>
 
 <body>
 <h1>任务清单</h1>
-<section id="content">
-    <nav><h2 class="all-task">已有任务</h2><h2 class="add-task">新建任务</h2></nav>
-<article>
-    <h3>任务名称</h3>
-<ul></ul>
-<span class="delete-task">删除任务</span>
-</article>
-</section>
+<nav><h2 class="all-task">已有任务</h2><h2 class="add-task">新建任务</h2><h2 class="history-task">历史清单</h2></nav>
+<section id="content"></section>
 
 <footer> made with love by aaa,2015</footer>
-<script src="js/jquery-1.9.1.js"></script>
-<script>
 
+<script src="js/jquery-1.9.1.js"></script>
+
+<script>
+    var fakeData=[{
+        title:'需要买的东西',
+        dept:'最近需要在网上买的东西',
+        list:['口罩','U盘','键盘']
+    },{},{}];
+    $('.all-task').click(function(){
+      var data=fakeData[0];
+      var container=$('#content');
+      var templateString='<article class="doing"><h3><%= task.title %></h3><p><%= task.dept %></p><ul><% _.each(task.list,function(v){\
+                if(!(_.isArray(v))){ %><li><%= v %></li><% } })%></ul><span class="delete-task">删除任务</span></article>';
+      var template= _.template(templateString);
+      container.empty().append(template({task:data}));
+      console.log(template({task:data}));
+      data.forEach(function(v,i){
+
+      })
+    });
+    $('.add-task').click(function(){
+        var container=$('#content');
+        var templateString='<article class="doing"><h3><%= task.title %></h3><p><%= task.dept %></p><ul><% _.each(task.list,function(v){\
+                if(!(_.isArray(v))){ %><li><%= v %></li><% } })%></ul><a href="#" class="delete-task">删除任务</a></article>';
+        var template= _.template(templateString);
+        container.prepend(template({task:data}));
+    });
+    $('.delete-task').click(function(){
+
+    })
 </script>
 </body>
 </html>
