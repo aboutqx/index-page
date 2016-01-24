@@ -209,29 +209,36 @@ tmp.forEach(function(v,i){
     var tmpDate=new Date();
     var tParam=tmpDate.getFullYear()+""+(tmpDate.getMonth()+1)+tmpDate.getDate()+tmpDate.getTime();
     var movieInfoLink='http://api.mtime.com/Service/Video.api?Ajax_CallBack=true&Ajax_CallBackType=Mtime.Api.Pages.VideoService&Ajax_CallBackMethod=GetVideoInfo&Ajax_CrossDomain=1&Ajax_RequestUrl=http://http://video.mtime.com/'+videoId+'/?mid='+movieId+'&t='+tParam+'&Ajax_CallBackArgument0='+videoId;
-    
+    /*
     fetch(movieInfoLink,{mode:'cors'}).then(function(response){
         return response.text().then(function(text){
           eval(''+text+'');
-          var movieSrc=getVideoInfoResult.value.mp4URL;
-          movies.push({movieSrc:movieSrc,dept:dept,imgSrc:imgSrc});
           
-          var item=document.createElement('div');
-          item.className='item';
-          container.appendChild(item);
-          var p=document.createElement('p');
-          p.innerHTML=dept;
-          item.appendChild(p);
-          var img=new Image();
-          img.src=imgSrc;
-          var a=document.createElement('a');
-          a.href=movieSrc;
-          a.appendChild(img);
-          item.insertBefore(a,p);
-          console.log(movies);
         })
     })
-
+    )*/
+    var tmpScript=document.createElement('script');
+    tmpScript.src=movieInfoLink;
+    document.body.appendChild(tmpScript);
+    
+    tmpScript.onload=function(){
+      var movieSrc=getVideoInfoResult.value.mp4URL;
+	  movies.push({movieSrc:movieSrc,dept:dept,imgSrc:imgSrc});
+	  
+	  var item=document.createElement('div');
+	  item.className='item';
+	  container.appendChild(item);
+	  var p=document.createElement('p');
+	  p.innerHTML=dept;
+	  item.appendChild(p);
+	  var img=new Image();
+	  img.src=imgSrc;
+	  var a=document.createElement('a');
+	  a.href=movieSrc;
+	  a.appendChild(img);
+	  item.insertBefore(a,p);
+	  console.log(movies);
+	}
 })
 function addMoviesDom(){
 
