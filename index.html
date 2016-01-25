@@ -1,4 +1,4 @@
-<!doctype html>
+`<!doctype html>
 <html>
 <head>
   <meta charset="utf-8">
@@ -16,21 +16,19 @@
   <link rel="stylesheet" href="shared/css/base.css" />
   <style>
     div.startup {
-      display: -webkit-box;
-      display: -moz-box;
       display: -ms-flexbox;
       display: -webkit-flex;
       display: flex;
     }
     .main{
-      display: -webkit-box;
-      display: -moz-box;
       display: -ms-flexbox;
       display: -webkit-flex;
       display: flex;
       margin: auto;
       z-index:100;
-      flex-wrap:wrap;
+      -webkit-flex-wrap:wrap;
+          -ms-flex-wrap:wrap;
+              flex-wrap:wrap;
       width:50%;
       height:50%;
     }
@@ -80,8 +78,6 @@
  
   padding: 0;
   margin: 0 ;
-  -webkit-box-flex: 1 1 50%;
-  -moz-box-flex: 1 1 50%;
   -webkit-flex: 1 1 50%;
   -ms-flex: 1 1 50%;
   flex:1 1 50%;
