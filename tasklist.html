@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-<title>ÄãµÄÈÎÎñÇåµ¥</title>
+<title>ä½ çš„ä»»åŠ¡æ¸…å•</title>
 <link rel="stylesheet" href="css/reset.css">
     <!--[if lt IE 9]>
     <script>
@@ -21,6 +21,7 @@
     </script>
     <![endif]-->
 <style>
+
     h1{
         margin-top: 20px;
         margin-left: 150px;
@@ -33,6 +34,7 @@
         position: absolute;
         bottom: 60px;
         left:50%;
+        font: 14px "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;;
     }
     #content {
         padding:10px;
@@ -65,30 +67,34 @@
     article h3{
         border: 1px dashed #660066;
     }
+    footer span{
+        
+
+    }
 </style>
     <script src="js/underscore-min.js"></script>
 </head>
 
 <body>
-<h1>ÈÎÎñÇåµ¥</h1>
-<nav><h2 class="all-task">ÒÑÓĞÈÎÎñ</h2><h2 class="add-task">ĞÂ½¨ÈÎÎñ</h2><h2 class="history-task">ÀúÊ·Çåµ¥</h2></nav>
+<h1>ä»»åŠ¡æ¸…å•</h1>
+<nav><h2 class="all-task">å·²æœ‰ä»»åŠ¡</h2><h2 class="add-task">æ–°å»ºä»»åŠ¡</h2><h2 class="history-task">å†å²æ¸…å•</h2></nav>
 <section id="content"></section>
 
-<footer> made with love by aaa,2015</footer>
+<footer> made  by aaa with <span>â™¥</span>,2015</footer>
 
 <script src="js/jquery-1.9.1.js"></script>
 
 <script>
     var fakeData=[{
-        title:'ĞèÒªÂòµÄ¶«Î÷',
-        dept:'×î½üĞèÒªÔÚÍøÉÏÂòµÄ¶«Î÷',
-        list:['¿ÚÕÖ','UÅÌ','¼üÅÌ']
+        title:'éœ€è¦ä¹°çš„ä¸œè¥¿',
+        dept:'æœ€è¿‘éœ€è¦åœ¨ç½‘ä¸Šä¹°çš„ä¸œè¥¿',
+        list:['å£ç½©','Uç›˜','é”®ç›˜']
     },{},{}];
     $('.all-task').click(function(){
       var data=fakeData[0];
       var container=$('#content');
       var templateString='<article class="doing"><h3><%= task.title %></h3><p><%= task.dept %></p><ul><% _.each(task.list,function(v){\
-                if(!(_.isArray(v))){ %><li><%= v %></li><% } })%></ul><span class="delete-task">É¾³ıÈÎÎñ</span></article>';
+                if(!(_.isArray(v))){ %><li><%= v %></li><% } })%></ul><span class="delete-task">åˆ é™¤ä»»åŠ¡</span></article>';
       var template= _.template(templateString);
       container.empty().append(template({task:data}));
       console.log(template({task:data}));
@@ -99,7 +105,7 @@
     $('.add-task').click(function(){
         var container=$('#content');
         var templateString='<article class="doing"><h3><%= task.title %></h3><p><%= task.dept %></p><ul><% _.each(task.list,function(v){\
-                if(!(_.isArray(v))){ %><li><%= v %></li><% } })%></ul><a href="#" class="delete-task">É¾³ıÈÎÎñ</a></article>';
+                if(!(_.isArray(v))){ %><li><%= v %></li><% } })%></ul><a href="#" class="delete-task">åˆ é™¤ä»»åŠ¡</a></article>';
         var template= _.template(templateString);
         container.prepend(template({task:data}));
     });
