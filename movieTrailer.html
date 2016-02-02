@@ -213,15 +213,16 @@ tmp.forEach(function(v,i){
     fetch(movieInfoLink,{credentials: 'include'}).then(function(response){
         return response.text().then(function(text){
           eval(''+text+'');
-          
+          load();
         })
     })
-    
+    /*
     var tmpScript=document.createElement('script');
     tmpScript.src=movieInfoLink;
     document.body.appendChild(tmpScript);
-    
-    tmpScript.onload=function(){
+    */
+    tmpScript.onload=load;
+    function load(){
       var movieSrc=getVideoInfoResult.value.mp4URL;
 	  movies.push({movieSrc:movieSrc,dept:dept,imgSrc:imgSrc});
 	  
