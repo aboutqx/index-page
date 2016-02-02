@@ -209,14 +209,14 @@ tmp.forEach(function(v,i){
     var tmpDate=new Date();
     var tParam=tmpDate.getFullYear()+""+(tmpDate.getMonth()+1)+tmpDate.getDate()+tmpDate.getTime();
     var movieInfoLink='http://api.mtime.com/Service/Video.api?Ajax_CallBack=true&Ajax_CallBackType=Mtime.Api.Pages.VideoService&Ajax_CallBackMethod=GetVideoInfo&Ajax_CrossDomain=1&Ajax_RequestUrl=http://http://video.mtime.com/'+videoId+'/?mid='+movieId+'&t='+tParam+'&Ajax_CallBackArgument0='+videoId;
-    /*
-    fetch(movieInfoLink,{mode:'cors'}).then(function(response){
+    
+    fetch(movieInfoLink,{credentials: 'include'}).then(function(response){
         return response.text().then(function(text){
           eval(''+text+'');
           
         })
     })
-    )*/
+    
     var tmpScript=document.createElement('script');
     tmpScript.src=movieInfoLink;
     document.body.appendChild(tmpScript);
