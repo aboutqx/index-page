@@ -210,7 +210,7 @@ tmp.forEach(function(v,i){
     var tParam=tmpDate.getFullYear()+""+(tmpDate.getMonth()+1)+tmpDate.getDate()+tmpDate.getTime();
     var movieInfoLink='http://api.mtime.com/Service/Video.api?Ajax_CallBack=true&Ajax_CallBackType=Mtime.Api.Pages.VideoService&Ajax_CallBackMethod=GetVideoInfo&Ajax_CrossDomain=1&Ajax_RequestUrl=http://http://video.mtime.com/'+videoId+'/?mid='+movieId+'&t='+tParam+'&Ajax_CallBackArgument0='+videoId;
     
-    fetch(movieInfoLink,{credentials: 'include'}).then(function(response){
+    fetch(movieInfoLink,{credentials: 'include', mode: 'no-cors' }).then(function(response){
         return response.text().then(function(text){
           eval(''+text+'');
           load();
@@ -221,7 +221,7 @@ tmp.forEach(function(v,i){
     tmpScript.src=movieInfoLink;
     document.body.appendChild(tmpScript);
     */
-    tmpScript.onload=load;
+    //tmpScript.onload=load;
     function load(){
       var movieSrc=getVideoInfoResult.value.mp4URL;
 	  movies.push({movieSrc:movieSrc,dept:dept,imgSrc:imgSrc});
