@@ -1,3 +1,6 @@
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="css/normalize.css">
+<link rel="stylesheet" type="text/css" href="css/main.css">
 <style>
     *{
         margin: 0;
@@ -21,23 +24,13 @@
         
         font-family: "Open Sans", sans-serif;
         font-size: 18px;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-        -webkit-box-shadow: none;
-        -moz-box-shadow: none;
-        box-shadow: none;
-        -webkit-border-radius: none;
-        -moz-border-radius: none;
-        -ms-border-radius: none;
-        -o-border-radius: none;
-        border-radius: none;
+
     }
     .editing textarea{
         font-family: "Open Sans", sans-serif;
         font-size: 18px;
         display: block;
-        margin-left: 4px;
+        margin-left:12px;
         height:100px;
         resize: vertical;
         max-height: 186px;
@@ -46,9 +39,9 @@
         border:none;
         border-bottom: solid 2px #c9c9c9;
         padding:10px;
-        width:100%;
+        width:230px;
     }
-    input.title,input.item{
+    input.item-title,input.item{
         display: block;
         padding: 10px;
         border: none;
@@ -56,9 +49,7 @@
         box-shadow: none;
         margin: 0 0 10px 12px;
         
-        -webkit-transition: border 0.3s; */
-        -moz-transition: border 0.3s;
-        -o-transition: border 0.3s;
+        -webkit-transition: border 0.3s; 
         transition: border 0.3s; 
 
     }
@@ -72,24 +63,67 @@
         overflow: hidden;
         padding: 6px 8px 4px;
     }
-    button{
-        border:1px solid #ccc;
-        padding: 4px 10px;
-        border-radius: 4px;
+    .button {
+        background: #cdd2d4;
+        background: -webkit-linear-gradient(top, #cdd2d4 0, #c4c9cc 100%);
+        background: linear-gradient(to bottom, #cdd2d4 0, #c4c9cc 100%);
+        border-radius: .3em;
+        box-shadow: 0 2px 0 #4d4d4d;
+        color: #4d4d4d;
+        display: inline-block;
+        font-weight: bold;
+        margin-bottom: .8em;
+        padding: .3em 1.0em;
+        position: relative;
+        text-decoration: none;
+        border: 0
     }
+    .button-green {
+        background: #61bd4f;
+        background: -webkit-linear-gradient(top, #61bd4f 0, #5aac44 100%);
+        background: linear-gradient(to bottom, #61bd4f 0, #5aac44 100%);
+        box-shadow: 0 2px 0 #3f6f21;
+        color: #fff
+    }
+    .button:not([disabled]):active {
+        background: #5aac44;
+        background: -webkit-linear-gradient(top, #5aac44 0, #519839 100%);
+        background: linear-gradient(to bottom, #5aac44 0, #519839 100%);
+        color: #fff;
+
+    }
+    button{
+        -webkit-user-select: text;
+    }
+    button,html input[type="button"],input[type="reset"],input[type="submit"] {
+    -webkit-appearance: button;
+    cursor: pointer
+    }
+    button::-moz-focus-inner, input::-moz-focus-inner {
+    border: 0 none;
+    padding: 0;
+}
+    input[type="button"]:focus, input[type="submit"]:focus,button:focus {
+      outline: medium none;
+    }
+    textarea:focus, input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, input[type="number"]:focus {
+    border-color: #a5acb0;
+    box-shadow: 0 0 6px #cdd2d4;
+    outline: medium none;
+    }
+
+
 </style>
 <script src="js/jquery-1.9.1.js"></script>
-<article class="editing"><input type="text" placeholder="无标题" class="title">
-    <div class="dept">
-      <textarea placeholder="无描述"></textarea><ul></ul>
-    </div>
-    <input type="text" class="item">
-    <button>添加</button>
-    <a href="#" class="add-item">添加条目</a><a href="#" class="delete-task">删除任务</a></article>
+<article class="editing"><input type="text" placeholder="无标题" class="item-title">
+    
+    <textarea placeholder="无描述"></textarea>
+    
+    <input type="datetime-local" class="item">
+    <button class="button-green button" >添加提醒</button>
+    <button class="button-green button">删除提醒</button></article>
 
 <script>
 
-    $('.add-item').click(function(){
 
-    });
 </script>

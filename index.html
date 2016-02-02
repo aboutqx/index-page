@@ -12,29 +12,25 @@
   </title>
 
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel=stylesheet href="css/base.css">
+  <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="shared/css/base.css" />
   <style>
     div.startup {
-      display: -ms-flexbox;
-      display: -webkit-flex;
-      display: flex;
+      
     }
     .main{
-      display: -ms-flexbox;
-      display: -webkit-flex;
-      display: flex;
-      margin: auto;
+
+      margin-left:40px;
+      margin-top: 15px;
       z-index:100;
-      -webkit-flex-wrap:wrap;
-          -ms-flex-wrap:wrap;
-              flex-wrap:wrap;
-      width:50%;
-      height:50%;
+      position: relative;
+      width:400px;
+      height:auto;
+      display: flex;
     }
     .main a{
 
-      font-size:5em;
+      font-size:1em;
   
       text-shadow: 0px 0px 40px rgba(0, 191, 243, 0.6);
       color: #4183c4;
@@ -47,7 +43,7 @@
       height:100%;
       left:0;
       top:0;
-      color: rgba(255, 255, 255, 1.0);
+      
     }
     .background-view .timestamp{
       
@@ -58,7 +54,7 @@
       font-size: 0.8em;
     }
     .view1{
-      background: #000;
+      background: #ccc;
       
     }
     a:hover,a:active{
@@ -75,12 +71,10 @@
       -o-transition: all 1.2s ease; 
     }
     .clip-wrap {
- 
+  flex:1;
   padding: 0;
   margin: 0 ;
-  -webkit-flex: 1 1 50%;
-  -ms-flex: 1 1 50%;
-  flex:1 1 50%;
+
   text-align: center;
 }
 
@@ -89,6 +83,10 @@
   left:85%;
   top:1%;
   cursor: pointer;
+}
+.dept{
+  margin-left: 80px;
+  margin-top: 30px;
 }
   </style>
 
@@ -99,13 +97,13 @@
 <div class="startup background-view">
   <div class="main">
 
-  <div class="codeclip clip-wrap"><a href="codeAndDemo.html">code</a></div>
-<div class="blogclip clip-wrap"><a href="techBlog.html">blog</a></div>
-<div class="hackclip clip-wrap"><a href="hack.html">hack</a></div>
-<div class="movieclip clip-wrap"><a href="movie.html">movie</a></div>
+    <div class="codeclip clip-wrap"><a href="codeAndDemo.html">code</a></div>
+    <div class="blogclip clip-wrap"><a href="techBlog.html">blog</a></div>
+    <div class="hackclip clip-wrap"><a href="hack.html">hack</a></div>
+    <div class="movieclip clip-wrap"><a href="movie.html">movie</a></div>
     
   </div>
- 
+  <div class="dept">你好各位，这是我的github demo站点</div>
 </div>
 <div class="background-view">
 
