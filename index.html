@@ -93,6 +93,7 @@
 .dept{
   margin-left: 80px;
   margin-top: 30px;
+  font-family: 'NotoSans-Regular',sans-serif;
 }
 /* -- Ripple-effect ----------------------------------- */
 .ripple-effect {
@@ -171,10 +172,10 @@
 <div class="startup background-view">
   <div class="main">
 
-    <a href="codeAndDemo.html" class="codeclip clip-wrap ripple-effect">code</a>
-    <a href="techBlog.html" class="blogclip clip-wrap ripple-effect">blog</a>
-    <a href="hack.html" class="hackclip clip-wrap ripple-effect">hack</a>
-    <a href="movie.html" class="movieclip clip-wrap ripple-effect">movie</a>
+    <a href="codeAndDemo.html" class="codeclip clip-wrap ripple-effect">Code</a>
+    <a href="techBlog.html" class="blogclip clip-wrap ripple-effect">Blog</a>
+    <a href="hack.html" class="hackclip clip-wrap ripple-effect">Hack</a>
+    <a href="movie.html" class="movieclip clip-wrap ripple-effect">Movie</a>
     
   </div>
   <div class="dept">你好各位，这是我的github demo站点</div>
@@ -182,7 +183,7 @@
 <div class="background-view">
 
 <span class="timestamp">first visited: </span>
-<a class="controlmusic ripple-effect" href="#">stop music</a>
+<a class="controlmusic ripple-effect" href="#">Stop Music</a>
 </div>
 <script src="js/jquery-1.9.1.js"></script>
 <script>
@@ -296,16 +297,17 @@ var defaultaduiomgr;
     loadBuffer('0.mp3')
   else document.querySelector('.controlmusic').innerHTML='play music'
     
-document.querySelector('.controlmusic').addEventListener('click',function(){
-  if(this.innerHTML=='stop music'){
+document.querySelector('.controlmusic').addEventListener('click',function(e){
+  e.preventDefault();
+  if(this.innerHTML=='Stop Music'){
     defaultaduiomgr.stop();
-    this.innerHTML='play music';
+    this.innerHTML='Play Music';
     
     localStorage.setItem('musicPrefer','no')
   } else {
     if(!defaultaduiomgr) loadBuffer('0.mp3')
      else defaultaduiomgr.start();
-    this.innerHTML='stop music';
+    this.innerHTML='Stop Music';
     
     localStorage.setItem('musicPrefer','yes')
   }
