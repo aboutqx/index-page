@@ -1,4 +1,4 @@
-`<!doctype html>
+<!doctype html>
 <html>
 <head>
   <meta charset="utf-8">
@@ -15,8 +15,16 @@
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="shared/css/base.css" />
   <style>
-    div.startup {
-      
+* {
+    box-sizing: border-box;
+}
+    @font-face {
+    font-family: 'NotoSans-Regular';
+    src: url('YourWebFontName.eot'); /* IE9 Compat Modes */
+    src: url('YourWebFontName.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('YourWebFontName.woff') format('woff'), /* Modern Browsers */
+       url('NotoSans-Regular.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('YourWebFontName.svg#YourWebFontName') format('svg'); /* Legacy iOS */
     }
     .main{
 
@@ -24,19 +32,27 @@
       margin-top: 15px;
       z-index:100;
       position: relative;
-      width:400px;
+      width:440px;
       height:auto;
+      display: -webkit-flex;
+      display: -ms-flexbox;
       display: flex;
     }
-    .main a{
+    .main .clip-wrap{
 
       font-size:1em;
-  
-      text-shadow: 0px 0px 40px rgba(0, 191, 243, 0.6);
-      color: #4183c4;
+      display: block;
+      color: white;
+      background-color: #2196F3;
+      -webkit-flex:1;
+          -ms-flex:1;
+              flex:1;
+      margin-right: 10px;
+      padding:5px 0 5px 0;
+      text-align: center;
       font-family:  Helvetica, sans-serif;
+      box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
     }
-
     .background-view{
       position: absolute;
       width: 100%;
@@ -50,7 +66,7 @@
       position: absolute;
       left:80%;
       top:80%;
-      font-family: Microsoft YaHei;
+      font-family: 'NotoSans-Regular',sans-serif;
       font-size: 0.8em;
     }
     .view1{
@@ -60,33 +76,91 @@
     a:hover,a:active{
       text-decoration: none;
     }
-    .main a:hover{
-      -webkit-transform:rotateX(360deg);
-      transform:rotateX(360deg);
-    }
-      .main a{
-      transition: all 1.2s ease;
-      -moz-transition: all 1.2s ease;  
-      -webkit-transition: all 1.2s ease; 
-      -o-transition: all 1.2s ease; 
-    }
-    .clip-wrap {
-  flex:1;
-  padding: 0;
-  margin: 0 ;
 
-  text-align: center;
-}
 
 .controlmusic{
   position: absolute;
   left:85%;
   top:1%;
   cursor: pointer;
+  padding: 10px;
+  display: inline-block;
+  color: black;
+}
+.controlmusic:hover{
+  background-color: rgba(158,158,158,0.2);
 }
 .dept{
   margin-left: 80px;
   margin-top: 30px;
+}
+/* -- Ripple-effect ----------------------------------- */
+.ripple-effect {
+  position: relative;
+  overflow: hidden;
+  -webkit-transform: translatez(0);
+}
+.ink {
+  display: block;
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+  transform: scale(0);
+}
+.ink {
+  background: #fff;
+  opacity: 1;
+}
+.ink.animate {
+  -webkit-animation: ripple-effect 0.5s linear;
+  -o-animation: ripple-effect 0.5s linear;
+  animation: ripple-effect 0.5s linear;
+}
+
+@keyframes ripple-effect {
+  100% {
+    opacity: 0;
+    -webkit-transform: scale(2.5);
+    -ms-transform: scale(2.5);
+    -o-transform: scale(2.5);
+    transform: scale(2.5);
+  }
+}
+@-webkit-keyframes ripple-effect {
+  100% {
+    opacity: 0;
+    -webkit-transform: scale(2.5);
+    -ms-transform: scale(2.5);
+    -o-transform: scale(2.5);
+    transform: scale(2.5);
+  }
+}
+@-moz-keyframes ripple-effect {
+  100% {
+    opacity: 0;
+    -webkit-transform: scale(2.5);
+    -ms-transform: scale(2.5);
+    -o-transform: scale(2.5);
+    transform: scale(2.5);
+  }
+}
+@-ms-keyframes ripple-effect {
+  100% {
+    opacity: 0;
+    -webkit-transform: scale(2.5);
+    -ms-transform: scale(2.5);
+    -o-transform: scale(2.5);
+    transform: scale(2.5);
+  }
+}
+@-o-keyframes ripple-effect {
+  100% {
+    opacity: 0;
+    -webkit-transform: scale(2.5);
+    -ms-transform: scale(2.5);
+    -o-transform: scale(2.5);
+    transform: scale(2.5);
+  }
 }
   </style>
 
@@ -97,10 +171,10 @@
 <div class="startup background-view">
   <div class="main">
 
-    <div class="codeclip clip-wrap"><a href="codeAndDemo.html">code</a></div>
-    <div class="blogclip clip-wrap"><a href="techBlog.html">blog</a></div>
-    <div class="hackclip clip-wrap"><a href="hack.html">hack</a></div>
-    <div class="movieclip clip-wrap"><a href="movie.html">movie</a></div>
+    <a href="codeAndDemo.html" class="codeclip clip-wrap ripple-effect">code</a>
+    <a href="techBlog.html" class="blogclip clip-wrap ripple-effect">blog</a>
+    <a href="hack.html" class="hackclip clip-wrap ripple-effect">hack</a>
+    <a href="movie.html" class="movieclip clip-wrap ripple-effect">movie</a>
     
   </div>
   <div class="dept">你好各位，这是我的github demo站点</div>
@@ -108,9 +182,9 @@
 <div class="background-view">
 
 <span class="timestamp">first visited: </span>
-<span class="controlmusic">stop music</span>
+<a class="controlmusic ripple-effect" href="#">stop music</a>
 </div>
-
+<script src="js/jquery-1.9.1.js"></script>
 <script>
   var _hmt = _hmt || [];
   (function() {
@@ -235,9 +309,40 @@ document.querySelector('.controlmusic').addEventListener('click',function(){
     
     localStorage.setItem('musicPrefer','yes')
   }
-})
+});
+!(function($) {
+    $(".ripple-effect").click(function(e){
+        var rippler = $(this);
 
+        // create .ink element if it doesn't exist
+        if(rippler.find(".ink").length == 0) {
+            rippler.append("<span class='ink'></span>");
+        }
 
+        var ink = rippler.find(".ink");
+
+        // prevent quick double clicks
+        ink.removeClass("animate");
+
+        // set .ink diametr
+        if(!ink.height() && !ink.width())
+        {
+            var d = Math.max(rippler.outerWidth(), rippler.outerHeight());
+            ink.css({height: d, width: d});
+        }
+
+        // get click coordinates
+        var x = e.pageX - rippler.offset().left - ink.width()/2;
+        var y = e.pageY - rippler.offset().top - ink.height()/2;
+
+        // set .ink position and add class .animate
+        ink.css({
+            top: y+'px',
+            left:x+'px'
+        }).addClass("animate");
+        e.preventDefault();
+    })
+})(jQuery);
 </script>
 
 
