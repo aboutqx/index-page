@@ -1,0 +1,91 @@
+<style>
+.hierarchical-timing{
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	width:440px;
+	-webkit-flex-flow:row wrap;
+	    -ms-flex-flow:row wrap;
+	        flex-flow:row wrap;
+}
+.hierarchical-timing .item{
+	-webkit-flex:1 0 100px;
+	    -ms-flex:1 0 100px;
+	        flex:1 0 100px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	height:100px;
+	background-color: #5677fc;
+	line-height: 100px;
+	text-align: center;
+	color: white;
+}
+.hierarchical-timing .item {
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+  opacity: 1;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  -webkit-perspective: 1000;
+          perspective: 1000;
+  transition: all 0.3s cubic-bezier(0.55, 0, 0.1, 1);
+}
+.hierarchical-timing > .hidden {
+
+  -webkit-transform: scale(0);
+  -ms-transform: scale(0);
+  transform: scale(0);
+  opacity: 1;
+}
+
+</style>
+
+<div class="hierarchical-timing">
+  <div class="item"></div>
+  <div class="item"></div>
+  <div class="item"></div>
+  <div class="item"></div>
+  <div class="item"></div>
+  <div class="item"></div>
+  <div class="item"></div>
+  <div class="item"></div>
+</div>
+<script src="../js/jquery-1.9.1.js"></script>
+<script>
+(function($) {
+  var speed = 600;
+  var container =  $('.hierarchical-timing');  
+  container.each(function() {   
+    var elements = $(this).children();
+    var delta=$(this).height()/$(this).width();
+
+    elements.each(function() {      
+      var elementOffset = $(this).offset(); 
+      var offset = elementOffset.left*delta + elementOffset.top;
+      var delay = parseFloat(offset/speed).toFixed(2);
+      $(this)
+        .html(delay)
+        .css("-webkit-transition-delay", delay+'s')
+        .css("-o-transition-delay", delay+'s')
+        .css("transition-delay", delay+'s')
+      var self=this;
+      var appear=function(){
+		  	setTimeout(function(){
+		      $(self).removeClass('hidden');
+		      return disappear();
+		  	},1500)
+		  }
+		  var disappear=function(){
+		  	setTimeout(function(){
+		      $(self).addClass('hidden');
+		      return appear();
+		  	},1500)
+		  }
+      disappear();
+    });
+  });
+
+  
+})(jQuery);
+</script>
