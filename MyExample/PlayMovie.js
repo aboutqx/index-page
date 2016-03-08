@@ -34,7 +34,7 @@ const PlayMovie=React.createClass({
     Orientation.lockToLandscape();
   },
   componentWillUnmount: function() {
-    Orientation.lockToPortrait();
+    
   },
   onLoad: function(data) {
     this.setState({duration: data.duration});

@@ -105,6 +105,7 @@ var MyExample=React.createClass({
       return true;
     }
     if(this.canback){
+      Orientation.lockToPortrait();
       this.navigator.pop();
       return true;
     }
