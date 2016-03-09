@@ -1,11 +1,13 @@
 <style>
   .container{
   	display: flex;
-  	width: 400px;
+  	width: 440px;
   	height:600px;
   	justify-content:center;
   	margin: 0 auto;
   	align-items:center;
+  	position: relative;
+    flex-flow:row wrap;
   }
   .balls{
   	flex:0 0 280px;
@@ -20,16 +22,76 @@
   }
   .cubes{
 
+    display: flex;
+    width: 360px;
+    
   }
   .cube{
   	background-color: #F49707;
+  	height:80px;
+  	opacity: 0;
+  	flex:1 0 80px;
+  	margin-right: 10px;
+  	transform:translate3d(0,120px,0);
+  	transition:all .5s cubic-bezier(0.55, 0, 0.1, 1);
+  	opacity: 0;
+  }
+  .cube.move{
+  	transform:translate3d(0,0,0);
+  	opacity: 1;
+  }
+  .ink-container{
+  	position: absolute;
+  	top:0;
+  	left:0;
+  	width:100%;
+  	height:50%;
+  }
+  .item.hide{
+  	opacity: 0;
+  	transform:scale(0);
+    transition:all .3s ;
+  }
+  .item:nth-child(1).move{
+    transform:translate3d(70px,-50px,0);
+    transition:all .3s;
   }
 </style>
 <div class="container">
+	<div class="ink-container">
+    <div class="ink"></div>
+  </div>
 	<div class="balls">
 	  <div class="item"></div>
 	  <div class="item"></div>
 	  <div class="item"></div>
 	  <div class="item"></div>
 	</div>
+	<div class="cubes">
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+	</div>
 </div>
+<script src="../js/jquery-1.9.1.js"></script>
+<script>
+setTimeout(function(){
+  $('.cube').each(function(){
+  	var speed=900;
+  	var offset=$(this).offset().left;
+  	var delay = parseFloat(offset/speed).toFixed(2)*0.7;
+  	console.log(delay)
+  	$(this)
+      .css("-webkit-transition-delay", delay+'s')
+      .css("-o-transition-delay", delay+'s')
+      .css("transition-delay", delay+'s')
+  	  .addClass('move');
+  });
+
+  $('.item').each(function(i,v){
+    if(i==0) $(this).addClass('move');
+    else $(this).addClass('hide');
+  });
+},1)
+</script>

@@ -1,0 +1,12 @@
+<h1>一些GL note</h1>
+<h2>glFrontFace</h2><p>Specifies the orientation of front-facing polygons. GL_CW and GL_CCW are accepted. The initial value is GL_CCW.
+即默认face winding order 为逆时针的面为正面。一个面确定了winding order，则从两面看的winding order是相反的，考虑一个cubeface，设置face的点的顺序即确定了正反面。
+反面texture时贴图会水平翻转(teture flip)
+</p>
+<h2>texture</h2><p>默认贴图是从上往下，从左往右</p>
+<h2>map aliasing</h2><p>
+ As the GPU rasterizes the triangle it interpolates the texture coordinates across the triangle face and in the fragment shader the developer maps these coordindates to the texture. This action is known as 'sampling' and the result of sampling is a texel (a pixel in a texture). 
+For example, if the texture coordinate is [0.5,0.1] and the texture has a width of 320 and a height of 200 the texel location will be (160,20) (0.5 * 320 = 160 and 0.1 * 200 = 20).
+当取样为非整数时，既要确定到底是取哪一个像素。
+a texel at (152.34,745.14)? The trivial answer is to round this down to (152,745). Well, this works and provides adequate results but in some cases won't look very good. A better approach is to get the 2 by 2 quad of texels ( (152,745), (153,745), (152,744) and (153,744) ) and do some linear interpolation between their colors.
+ </p>

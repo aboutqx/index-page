@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<title>Hello World (Three.js)</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel=stylesheet href="css/base.css"/>
+	<style>
+	body 
+   {
+	font-family: Monospace;
+	font-weight: bold;
+	background-color: #ccccff;
+	margin: 0px;
+	overflow: hidden;
+    }
+	</style>
+</head>
+<body>
+
+<script src="js/three.min.js"></script>
+<script src="js/Detector.js"></script>
+<script src="js/Stats.js"></script>
+<script src="js/OrbitControls.js"></script>
+<script src="js/THREEx.KeyboardState.js"></script>
+<script src="js/THREEx.FullScreen.js"></script>
+<script src="js/THREEx.WindowResize.js"></script>
+
+<!-- jQuery code to display an information button and box when clicked. -->
+<script src="js/jquery-1.9.1.js"></script>
+<script src="js/jquery-ui.js"></script>
+<link rel=stylesheet href="css/jquery-ui.css" />
+<link rel=stylesheet href="css/info.css"/>
+<script src="js/info.js"></script>
+<div id="infoButton"></div>
+<div id="infoBox" title="Demo Information">
+This three.js demo is changed from 
+<a href="http://stemkoski.github.io/Three.js/">http://stemkoski.github.io/Three.js/</a>
+</div>
+<!-- ------------------------------------------------------------ -->
+
+<div id="ThreeJS" style="z-index: 1; position: absolute; left:0px; top:0px"></div>
+<script>
+/*
+	Three.js "tutorials by example"
+	Author: Lee Stemkoski
+	Date: July 2013 (three.js v59dev)
+ */
+
+	
+//////////	
+// MAIN //
+//////////
+
+// standard global variables
+var container, scene, camera, renderer, controls, stats,geometry;
+var keyboard = new THREEx.KeyboardState();
+var clock = new THREE.Clock();
+
+// custom global variables
+var cube;
+
+// initialization
+init();
+
+// animation loop / game loop
+animate();
+
+///////////////
+// FUNCTIONS //
+///////////////
+			
+function init() 
+{
+	///////////
+	// SCENE //
+	///////////
+	scene = new THREE.Scene();
+
+	////////////
+	// CAMERA //
+	////////////
+	
+	// set the view size in pixels (custom or according to window size)
+	// var SCREEN_WIDTH = 400, SCREEN_HEIGHT = 300;
+	var SCREEN_WIDTH = window.innerWidth, SCREEN_HEIGHT = window.innerHeight;	
+	// camera attributes
+	var VIEW_ANGLE = 45, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.1, FAR = 20000;
+	// set up camera
+	camera = new THREE.PerspectiveCamera( VIEW_ANGLE, ASPECT, NEAR, FAR);
+	// add the camera to the scene
+	scene.add(camera);
+	// the camera defaults to position (0,0,0)
+	// 	so pull it back (z = 400) and up (y = 100) and set the angle towards the scene origin
+	camera.position.set(0,150,400);
+	camera.lookAt(scene.position);	
+	
+	//////////////
+	// RENDERER //
+	//////////////
+	
+	// create and start the renderer; choose antialias setting.
+	if ( Detector.webgl )
+		renderer = new THREE.WebGLRenderer( {antialias:true} );
+	else
+		renderer = new THREE.CanvasRenderer(); 
+	
+	renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+	
+	// attach div element to variable to contain the renderer
+	container = document.getElementById( 'ThreeJS' );
+	// alternatively: to create the div at runtime, use:
+	//   container = document.createElement( 'div' );
+	//    document.body.appendChild( container );
+	
+	// attach renderer to the container div
+	container.appendChild( renderer.domElement );
+	
+	////////////
+	// EVENTS //
+	////////////
+
+	// automatically resize renderer
+	THREEx.WindowResize(renderer, camera);
+	// toggle full-screen on given key press
+	THREEx.FullScreen.bindKey({ charCode : 'm'.charCodeAt(0) });
+	
+	//////////////
+	// CONTROLS //
+	//////////////
+
+	// move mouse and: left   click to rotate, 
+	//                 middle click to zoom, 
+	//                 right  click to pan
+	controls = new THREE.OrbitControls( camera, renderer.domElement );
+	
+	///////////
+	// STATS //
+	///////////
+	
+	// displays current and past frames per second attained by scene
+	stats = new Stats();
+	stats.domElement.style.position = 'absolute';
+	stats.domElement.style.bottom = '0px';
+	stats.domElement.style.zIndex = 100;
+	container.appendChild( stats.domElement );
+	
+	///////////
+	// LIGHT //
+	///////////
+	
+	// create a light
+	var light = new THREE.PointLight(0xffffff);
+	light.position.set(0,250,0);
+	scene.add(light);
+	var ambientLight = new THREE.AmbientLight(0x111111);
+	// scene.add(ambientLight);
+	
+	//////////////
+	// GEOMETRY //
+	//////////////
+		
+	// most objects displayed are a "mesh":
+	//  a collection of points ("geometry") and
+	//  a set of surface parameters ("material")	
+  geometry= new THREE.PlaneGeometry(400,400,1,1);
+
+  var video=document.createElement('video');
+  video.src='images/cells.mp4';
+  var texture= new THREE.VideoTexture(video);
+  texture.minFilter= THREE.LinearFilter;
+	var material= new THREE.MeshBasicMaterial( { map: texture , side: THREE.FrontSide } );
+  
+  var geom=geometry;
+  //要让内贴图不翻转(flip)，需要将cube winding反转，让内侧面变为frontside(ccw，即逆时针winding的面为frontside)
+ // geometry.faces[0]=new THREE.Face3(1,3,0);
+ // geometry.faces[1]=new THREE.Face3(3,2,0);
+  geometry.elementsNeedUpdate=true;
+  var uvs=[new THREE.Vector2(0,0),new THREE.Vector2(1,0),new THREE.Vector2(1,1) ,new THREE.Vector2(0,1)]
+  var a= [3,0,2];
+  var b= [0,1,2];
+  for(var i=0;i<geom.faceVertexUvs[0].length;i=i+2) {
+      geom.faceVertexUvs[0][i] = [uvs[a[0]],uvs[a[1]],uvs[a[2]]];
+      geom.faceVertexUvs[0][i + 1] = [uvs[b[0]],uvs[b[1]],uvs[b[2]]];
+    }
+
+  object = new THREE.Mesh( geometry,material);
+
+var rectGeom = new THREE.Geometry();
+var v1 = new THREE.Vector3(0,0,0);
+var v2 = new THREE.Vector3(30,0,0);
+var v3 = new THREE.Vector3(30,30,0);
+
+console.log(rectGeom.vertices)
+rectGeom.vertices.push(v1);
+rectGeom.vertices.push(v2);
+rectGeom.vertices.push(v3);
+
+rectGeom.faces.push( new THREE.Face3( 0, 1, 2 ) );
+rectGeom.computeFaceNormals();
+
+new THREE.TextureLoader().load( "images/pano_u.jpg" ,function(t){
+  var rectTexture=t;
+  rectTexture.minFilter= THREE.LinearFilter;
+  var rectMesh = new THREE.Mesh( rectGeom, new THREE.MeshBasicMaterial( {map:rectTexture ,side:THREE.DoubleSide})) ;
+  console.log(rectMesh.material.map)
+  scene.add( rectMesh );
+});
+
+
+
+
+
+	object.position.set(-100, 50, -50);
+  scene.add(object);
+
+
+
+
+
+	// create a set of coordinate axes to help orient user
+	//    specify length in pixels in each direction
+	var axes = new THREE.AxisHelper(100);
+	scene.add( axes );
+	
+
+
+	
+	// fog must be added to scene before first render
+	scene.fog = new THREE.FogExp2( 0x9999ff, 0.00025 );
+}
+
+function animate() 
+{
+    requestAnimationFrame( animate );
+	render();		
+	update();
+}
+
+function update()
+{
+	// delta = change in time since last call (in seconds)
+	var delta = clock.getDelta(); 
+
+	// functionality provided by THREEx.KeyboardState.js
+	if ( keyboard.pressed("1") )
+		document.getElementById('message').innerHTML = ' Have a nice day! - 1';	
+	if ( keyboard.pressed("2") )
+		document.getElementById('message').innerHTML = ' Have a nice day! - 2 ';	
+		
+	controls.update();
+	stats.update();
+}
+
+function render() 
+{	
+	renderer.render( scene, camera );
+}
+
+</script>
+
+</body>
+</html>
