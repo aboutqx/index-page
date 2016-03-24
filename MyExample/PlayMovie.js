@@ -38,8 +38,14 @@ const PlayMovie=React.createClass({
   },
   onLoad: function(data) {
     this.setState({duration: data.duration});
+    
   },
-
+  onLoadStart:function(){
+    console.warn('loadstart');
+  },
+  onError:function(data){
+    console.warn(data);
+  },
   onProgress: function(data) {
     this.setState({currentTime: data.currentTime});
   },
@@ -65,7 +71,9 @@ const PlayMovie=React.createClass({
            muted={this.state.muted}
            resizeMode={this.state.resizeMode}
            onLoad={this.onLoad}
+           onLoadStart={this.onLoadStart}
            onProgress={this.onProgress}
+           onError={this.onError}
            onEnd={() => { console.log('Done!') }}
            repeat={true} />
       </TouchableOpacity>

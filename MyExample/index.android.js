@@ -74,7 +74,7 @@ var MyExample=React.createClass({
   },
   _renderScene:function(route,navigator){
     if(DEV) {
-      //return <PlayMovie navigator={navigator} movieSrc={'http://vfx.mtime.cn/Video/2016/02/22/mp4/160222100453401506.mp4'} />
+      //return <PlayMovie navigator={navigator} movieSrc={'http://111.206.109.109/youku/6571081C98D3882DAD584B49F9/030008010056E211083FC92EAFCF1C29E20C7D-9546-6C76-41E8-40C74BB46CB8.mp4'} />
       
     }
     this.canback=false;
