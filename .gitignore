@@ -25,6 +25,8 @@ project.xcworkspace
 /build/
 /Examples/**/android/app/build/
 /ReactAndroid/build/
+/MyApplication/app/build/
+/MyApplication/build/
 
 # Buck
 .buckd
@@ -45,3 +47,4 @@ node_modules
 
 # OS X
 .DS_Store
+MyApplication/build/intermediates/dex-cache/cache.xml
