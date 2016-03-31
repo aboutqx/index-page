@@ -97,11 +97,11 @@ public class VideoController extends FrameLayout implements SeekBar.OnSeekBarCha
 
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
-        mMediaControl.onProgressTurn(ProgressState.START, 0);
+        mMediaControl.onProgressTurn(ProgressState.STOP, 0);
     }
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
-        mMediaControl.onProgressTurn(ProgressState.STOP, 0);
+        mMediaControl.onProgressTurn(ProgressState.START, 0);
     }
     public void setPlayState(PlayState playState) {
         mPlayImg.setImageResource(playState.equals(PlayState.PLAY) ? R.drawable.biz_video_pause : R.drawable.biz_video_play);

@@ -112,9 +112,9 @@ public class VideoPlayer extends RelativeLayout {
         @Override
         public void onProgressTurn(VideoController.ProgressState state, int progress) {
             if (state.equals(VideoController.ProgressState.START)) {
-                mHandler.removeMessages(MSG_HIDE_CONTROLLER);
+                goOnPlay();
             } else if (state.equals(VideoController.ProgressState.STOP)) {
-                //resetHideTimer();
+                pausePlay(true);
             } else {
                 int time = progress * mSuperVideoView.getDuration() / 100;
                 mSuperVideoView.seekTo(time);
