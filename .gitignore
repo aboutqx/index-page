@@ -27,6 +27,8 @@ project.xcworkspace
 /ReactAndroid/build/
 /MyExample/android/app/build/
 /MyExample/android/build/
+/MyApplication/app/build/
+/MyApplication/build/
 
 # Buck
 .buckd
