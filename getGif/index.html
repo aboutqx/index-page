@@ -10,6 +10,8 @@
     box-sizing:border-box;
   }
   .workarea{
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
   }
   .container{
@@ -83,6 +85,23 @@
   }
   .tip{
     line-height: 290px;
+    
+  }
+  .tip,.img-wrapper{
+    -webkit-user-select:none;
+       -moz-user-select:none;
+        -ms-user-select:none;
+            user-select:none;
+  }
+  .presets-container{
+    width: 200px;
+    float: right;
+    position: relative;
+    top:-300px;
+    left: -374px;
+  }
+  .color-active{
+    border: 1px solid #d11;
   }
   </style>
 </head>
@@ -90,18 +109,18 @@
   <div class="container">
   <div class="workarea">
     <span class="info"></span>
-    <div class="img-wrapper" >
-      <span class="tip">拖放图片到此处</span>
+    <div class="img-wrapper" draggable="false">
+      <span class="tip" draggable="false">拖放图片到此处</span>
     </div>
-    <div class="img-wrapper" >
-      <span class="tip">拖放图片到此处</span>
+    <div class="img-wrapper" draggable="false">
+      <span class="tip" draggable="false">拖放图片到此处</span>
     </div>
   </div>
     <input type="text" class="interval" placeholder=0>
     <button class="go">go</button>
     <button class="clear">clear</button>
     <div class="result img-wrapper"><img></div>
-  </div>
+    <div class="presets-container"></div>
   <script src="../js/jquery-1.9.1.js"></script>
   <script src="vendor/gif.js"></script>
   <script>
@@ -174,21 +193,23 @@
       }
       
   }
+  var brushColor='#000';
   function addEvent(canvas){
     var ctx=canvas.getContext('2d');
-    ctx.strokeStyle='lightblue';
+    
     ctx.lineWidth=5;
 
     var mousedown=false,wScale=canvas.width/parseInt(getComputedStyle(canvas,'').getPropertyValue('width')),hScale=canvas.height/parseInt(getComputedStyle(canvas,'').getPropertyValue('height'));
     var offsetW=canvas.offsetLeft,offsetH=canvas.offsetTop;
     canvas.addEventListener('mousedown',function(e){
+      ctx.strokeStyle=brushColor;
       mousedown=true;
       ctx.beginPath();
-      ctx.moveTo((e.clientX-offsetW)*wScale,(e.clientY-offsetH)*hScale);
+      ctx.moveTo((e.clientX-offsetW)*wScale,(e.clientY-offsetH+e.target.parentNode.scrollTop+document.body.scrollTop)*hScale);
     });
     canvas.addEventListener('mousemove',function(e){
       if(!mousedown) return;
-      ctx.lineTo((e.clientX-offsetW)*wScale,(e.clientY-offsetH)*hScale);
+      ctx.lineTo((e.clientX-offsetW)*wScale,(e.clientY-offsetH+e.target.parentNode.scrollTop+document.body.scrollTop)*hScale);
       ctx.stroke();
     });
     document.addEventListener('mouseup',function(e){
@@ -223,8 +244,30 @@
   });
   $('.clear').on('click',function(){
     $('.result img').remove();
-
+    $('.img-wrapper').find('canvas').remove();
+    renderWidth=renderHeight=0;
   });
+  </script>
+  <script>
+  $(function(){
+    var typicalColor=['#F44336','#E91E63','#9C27B0','#673AB7','#3F51B5','#2196F3','#03A9F4','#00BCD4','#009688','#4CAF50','#8BC34A','#CDDC39','#FFEB3B','#FFC107','#fff','#607D8B','#FF5722','#795548','#000'];
+    typicalColor.forEach(function(v,i){
+      var div=document.createElement('div');
+      if(i==typicalColor.length-1) div.className='color-active'
+      div.style.backgroundColor=v;
+      div.style.width='40px';
+      div.style.height='40px';
+      div.style.display='inline-block';
+      $('.presets-container').append(div);
+    });
+    $('.presets-container').on('click','div',function(e){
+      window.brushColor=$(e.target).css('background-color');
+      $(e.delegateTarget).find('div').removeClass('color-active');
+      $(e.target).addClass('color-active');
+      
+    });
+    
+  })
   </script>
 </body>
 </html>
