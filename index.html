@@ -12,8 +12,7 @@
   </title>
 
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="shared/css/base.css" />
+  <link rel="stylesheet" href="css/normalize.css">
   <style>
 * {
     box-sizing: border-box;
@@ -69,18 +68,14 @@
       font-family: 'NotoSans-Regular',sans-serif;
       font-size: 0.8em;
     }
-    .view1{
-      background: #ccc;
-      
-    }
+
     a:hover,a:active{
       text-decoration: none;
     }
 
 
 .controlmusic{
-  position: absolute;
-  left:85%;
+
   top:1%;
   cursor: pointer;
   padding: 6px 10px;
@@ -172,19 +167,17 @@
 
 </head>
 <body>
-<div class="background-view view1"> </div>
-<div class="startup background-view">
-  <div class="main">
 
-    <a href="codeAndDemo.html" class="codeclip clip-wrap ripple-effect">Code</a>
-    <a href="techBlog.html" class="blogclip clip-wrap ripple-effect">Blog</a>
-    <a href="hack.html" class="hackclip clip-wrap ripple-effect">Hack</a>
-    <a href="movie.html" class="movieclip clip-wrap ripple-effect">Movie</a>
-    
-  </div>
-  <div class="dept">你好各位，这是我的github demo站点</div>
-</div>
-<div class="background-view">
+<nav class="nav">
+  <a href="codeAndDemo.html" class="codeclip clip-wrap ripple-effect">Code</a>
+  <a href="techBlog.html" class="blogclip clip-wrap ripple-effect">Blog</a>
+  <a href="movie.html" class="movieclip clip-wrap ripple-effect">Movie</a>
+</nav>
+<section class="works"></section>
+<section class=""></section>
+<footer>
+  <div class="location">中国,北京</div><div class="social"><ul><li></li></ul></div>
+</footer>
 
 <span class="timestamp">first visited: </span>
 <div class="ripple-effect controlmusic"><a class="" href="#">Stop Music</a></div>
