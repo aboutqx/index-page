@@ -23,7 +23,7 @@ var {
   BackAndroid,
 } = React;
 
-var DEV=true;
+var DEV=false;
 
 var SCREEN_WIDTH = require('Dimensions').get('window').width;
 var BaseConfig = Navigator.SceneConfigs.FloatFromRight;
@@ -74,7 +74,7 @@ var MyExample=React.createClass({
   },
   _renderScene:function(route,navigator){
     if(DEV) {
-      //return <PlayMovie navigator={navigator} movieSrc={'http://111.206.109.109/youku/6571081C98D3882DAD584B49F9/030008010056E211083FC92EAFCF1C29E20C7D-9546-6C76-41E8-40C74BB46CB8.mp4'} />
+      return <PlayMovie navigator={navigator} movieSrc={'http://download.wavetlan.com/SVV/Media/HTTP/3GP/Media-Convert/Media-Convert_test2_3GPv4_H263_xbit_352x288_AR1.22_24fps_KFx_327kbps_AAC-LC_Stereo_22050Hz_56.6kbps.3gp'} />
       
     }
     this.canback=false;
