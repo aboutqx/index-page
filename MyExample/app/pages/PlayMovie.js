@@ -12,6 +12,8 @@ const {
   TouchableOpacity,
   Dimensions,
   ToastAndroid,
+  ProgressBarAndroid,
+  StatusBar,
 } = React;
 import Orientation from 'react-native-orientation';
 
@@ -30,6 +32,7 @@ const PlayMovie=React.createClass({
       duration: 0.0,
       currentTime: 0.0,
       loading:1,
+      hidden:true,
     };
   },
   componentWillMount:function(){
@@ -57,8 +60,10 @@ const PlayMovie=React.createClass({
 
 		return (
 			<View style={styles.container}>
-		    
-		      {this.renderPlayMovie()}
+		     <StatusBar
+          hidden={this.state.hidden}
+        />
+		    {this.renderPlayMovie()}
 
 		  </View>
       );
@@ -68,7 +73,7 @@ const PlayMovie=React.createClass({
     return (
       <View style={styles.fullScreen}>
         <TouchableOpacity style={styles.fullScreen} onPress={() => {this.setState({paused: !this.state.paused})}}>
-          <Video source={{uri:  this.props.movieSrc}}
+          <Video source={{uri: this.props.movieSrc}}
              style={styles.fullScreen}
              rate={this.state.rate}
              paused={this.state.paused}
@@ -82,7 +87,7 @@ const PlayMovie=React.createClass({
              onEnd={() => { console.log('Done!') }}
              repeat={true} />
         </TouchableOpacity>
-        <View style={[styles.loading,{opacity:this.state.loading}]}><Text style={styles.text}>loading</Text></View>
+        <ProgressBarAndroid styleAttr="Inverse" style={[styles.loading,{opacity:this.state.loading}]} color="#e1e1e1"/>
       </View>
     );
   },
@@ -101,14 +106,13 @@ const styles=StyleSheet.create({
     height: 350,
   },
   loading:{
-    position:'absolute',
+    position: 'absolute',
     left: height/2,
     top: width/2,
     width:70,
-    height:20,
-    marginTop:-10,
+    height:70,
+    marginTop:-35,
     marginLeft:-35,
-    backgroundColor: 'blue',
   },
   srcText: {
   	color:'red'
