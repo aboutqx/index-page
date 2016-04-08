@@ -1,5 +1,0 @@
-rootProject.name = 'MyExample'
-
-include ':RCTVideo',':Orientation', ':app'
-project(':RCTVideo').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-video/android')
-project(':Orientation').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-orientation/android')
