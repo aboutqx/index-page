@@ -57,13 +57,17 @@ Scene.prototype = {
         try{
             this.composer = new THREE.EffectComposer(this.renderer);
             this.msaaRenderPass = new THREE.ManualMSAARenderPass(this.scene, this.camera);
-            this.msaaRenderPass.unbiased = false;
+            this.msaaRenderPass.unbiased = true;
             this.composer.addPass(this.msaaRenderPass);
             this.copyPass = new THREE.ShaderPass(THREE.CopyShader);
+
             this.copyPass.renderToScreen = true;
             this.composer.addPass(this.copyPass);
+
+            this.msaaRenderPass.sampleLevel = 1;
+
         }catch(e){
-            
+            console.warn("can't init Postprocessing")
         }
     },
     addLightHelpr: function() {
@@ -106,12 +110,14 @@ Scene.prototype = {
     animate: function() {
         var self = this;
         requestAnimationFrame(function() { self.animate() });
-        this.controls.update();
+        
         this.render();
     },
 
     render: function() {
         lightHelper && lightHelper.update(); // required
-        this.composer ? this.msaaRenderPass.sampleLevel = 1 && this.composer.render() : this.renderer.render(this.scene, this.camera);
+
+        this.controls.update();
+        this.composer ? this.composer.render() : this.renderer.render(this.scene, this.camera);
     }
 }

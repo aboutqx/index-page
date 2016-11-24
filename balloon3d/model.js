@@ -7,39 +7,12 @@ var Engine = Matter.Engine,
     Bodies = Matter.Bodies;
 var engine;
 var P=[];
-var B,R;
-var balloonPosition = [
-    [-474, -166, 5.6],
-    [-484, 75, 5.5],
-    [-219, 117, 5.2],
-    [-320, -6, 5.2],
-    [-475, 166, 5],
-    [-393, -181, 5],
-    [-246, 18, 4.9],
-    [-378, 180, 4.7],
-    [-490, -95, 4.3],
-    [-478, -20, 4.3],
-    [-280, -107, 4.2],
-    [-319, -176, 4.1],
-    [-293, 180, 4.1],
-    [-404, -9, 3.8],
-    [-4, 145, 5.7],
-    [-20, -185, 4.6],
-    [3, -26, 4.4],
-    [-30, 51, 4.3],
-    [210, -88, 6.1],
-    [265, 149, 5.2],
-    [273, -163, 5],
-    [435, 6, 5],
-    [211, 88, 4.8],
-    [499, 113, 4.7],
-    [353, 170, 4.7],
-    [344, -206, 4.6],
-    [466, -153, 4.5],
-    [435, 160, 4.4],
-    [501, 11, 4.3],
-    [177, 8, 4.3],
-    [410, -198, 3.6]
+var B,R,L={};
+var balloonPosition = [[-474, -166, 5.6],[-484, 75, 5.5],[-219, 117, 5.2],[-320, -6, 5.2],[-475, 166, 5],
+    [-393, -181, 5],[-246, 18, 4.9],[-378, 180, 4.7],[-490, -95, 4.3],[-478, -20, 4.3],[-280, -107, 4.2],[-319, -176, 4.1],
+    [-293, 180, 4.1],[-404, -9, 3.8],[-4, 145, 5.7],[-20, -185, 4.6],[3, -26, 4.4],[-30, 51, 4.3],
+    [210, -88, 6.1],[265, 149, 5.2],[273, -163, 5],[435, 6, 5],[211, 88, 4.8],[499, 113, 4.7],
+    [353, 170, 4.7],[344, -206, 4.6],[466, -153, 4.5],[435, 160, 4.4],[501, 11, 4.3],[177, 8, 4.3],[410, -198, 3.6]
 ];
 function isMobile(){
     var ua=navigator.userAgent.toLowerCase();
@@ -52,7 +25,6 @@ loadModel=function(modelParams) {
         this.objectLoader.load(modelParams.path, function(obj) {
             obj.name = modelParams.name;
             B=obj;
-            //B.children[0].material.visible=false;
             new balloonWorld().init();
         });
 }
@@ -62,21 +34,22 @@ var balloonWorld = function() {
     this.scene = new Scene(document.querySelector('.container'));
     this.scene.camera.position.set(0,0,830);
     this.scene.controls.enabled=false;
+
     this.onMouseMove=this._onMouseMove.bind(this),
     this.resize=this._resize.bind(this),
     this.onTouchMove = this._onTouchMove.bind(this);
     window.addEventListener("resize", this.resize), isMobile() ? (window.addEventListener("touchmove", this.onTouchMove), window.addEventListener("touchend", function() {
         L.x = -1, L.y = -1
     })) : window.addEventListener("mousemove", this.onMouseMove)
-    console.log(this.scene.camera)
+
 }
 balloonWorld.prototype = {
     init: function() {
         this.initPhysicsWorld(), this.addBalloons(), this.resize();
 
-        this.update()
+        this.update();
 
-        this.setDebug(15)
+        //this.setDebug(15)
 
     },
 
@@ -114,8 +87,16 @@ balloonWorld.prototype = {
     },
     addBalloons: function() {
         var self=this,t = (window.innerWidth,window.innerHeight,0);
-        balloonPosition.forEach(function(o, i) {
-            var r = B.clone(),
+        n=balloonPosition;
+        isMobile() && (n = balloonPosition.splice(0, 20))
+        n.forEach(function(n, i) {
+            var r = B.clone();
+            o = isMobile() ? [100 * Math.random() - 50, n[1] / 5, n[2] / 1.5] : n;
+            r.children[0].material=new THREE.MeshBasicMaterial({
+                color: 0x8329aa,
+                transparent:true,
+                opacity:.6
+            })
             a = new balloonGroup({
                 model: r,
                 position: [o[0], o[1]],
@@ -170,8 +151,8 @@ balloonWorld.prototype = {
         })
     },
     _onMouseMove: function(e) {
-        var L = {},
-            b = null;
+
+        b = null;
 
         L.x = e.pageX,
             L.y = e.pageY,
@@ -185,15 +166,18 @@ balloonWorld.prototype = {
             t.y *= this.scene.camera.position.z / -t.z,
             t.x = t.x + window.innerWidth / 2,
             t.y = -t.y + window.innerHeight / 2;
-        Body&Body.setPosition(R, t);
+        Body.setPosition(R, t);
         for (var n = 0; n < P.length; n++)
         P[n].updateMouseUniform(L)
 
     },
     _onTouchMove: function(e) {
-        L.x = event.targetTouches[0].clientX, L.y = event.targetTouches[0].clientY, O.position.x = event.targetTouches[0].clientX - window.innerWidth / 2, O.position.y = -1 * (event.targetTouches[0].clientY - window.innerHeight / 2);
+        L.x = e.targetTouches[0].clientX, L.y = e.targetTouches[0].clientY, 
+        this.scene.pointLight.position.x = e.targetTouches[0].clientX - window.innerWidth / 2, this.scene.pointLight.position.y = -1 * (e.targetTouches[0].clientY - window.innerHeight / 2);
         var t = new THREE.Vector3;
-        t.set(e.targetTouches[0].clientX / window.innerWidth * 2 - 1, 2 * -(e.targetTouches[0].clientY / window.innerHeight) + 1, .5), t.unproject(this.scene.camera), t.sub(this.scene.camera.position), t.x *= this.scene.camera.position.z / -t.z, t.y *= this.scene.camera.position.z / -t.z, t.x = t.x + window.innerWidth / 2, t.y = -t.y + window.innerHeight / 2, b.setPosition(R, t);
+        t.set(e.targetTouches[0].clientX / window.innerWidth * 2 - 1, 2 * -(e.targetTouches[0].clientY / window.innerHeight) + 1, .5), t.unproject(this.scene.camera), t.sub(this.scene.camera.position), 
+        t.x *= this.scene.camera.position.z / -t.z, t.y *= this.scene.camera.position.z / -t.z, t.x = t.x + window.innerWidth / 2, t.y = -t.y + window.innerHeight / 2,
+        Body.setPosition(R, t);
         for (var n = 0; n < P.length; n++) P[n].updateMouseUniform(L)
     },
     update:function(){
@@ -227,7 +211,56 @@ balloonGroup.prototype.initPhysics = function(t) {
         y: window.innerHeight/2 + this.opts.position[1]
     }
 }
+c = (new THREE.Raycaster, new THREE.Vector2(2, 2)),
+m = {
+    uMouse: {
+        type: "v2",
+        value: c
+    },
+    uResolution: {
+        type: "v2",
+        value: new THREE.Vector2(window.innerWidth, window.innerHeight)
+    },
+    uIsDebug: {
+        type: "f",
+        value: 0
+    },
+    uGlobalAlpha: {
+        type: "f",
+        value: 1
+    },
+    tDiffuse: {
+        type: "t",
+        value: THREE.ImageUtils.loadTexture("img/env_map6.jpg")
+    },
+    mRefractionRatio: {
+        type: "f",
+        value: 1.02
+    },
+    mFresnelBias: {
+        type: "f",
+        value: .1
+    },
+    mFresnelPower: {
+        type: "f",
+        value: 2
+    },
+    mFresnelScale: {
+        type: "f",
+        value: 1
+    },
+};
+m.tDiffuse.texture = THREE.ImageUtils.loadTexture("img/pano.jpg"), m.tDiffuse.texture.wrapT = THREE.RepeatWrapping, m.tDiffuse.texture.wrapS = THREE.RepeatWrapping, m.tDiffuse.texture.minFilter = THREE.LinearMipMapLinearFilter;
+vs = "#define GLSLIFY 1\nuniform vec2 uMouse;\nvarying vec3 vPosition;\n\n\nvarying vec3 vReflect;\nvarying vec2 vUV;\nvarying float intensity;\nvarying float vAlpha;\n\nuniform float mRefractionRatio;\nuniform float mFresnelBias;\nuniform float mFresnelScale;\nuniform float mFresnelPower;\n\nvarying float vReflectionFactor;\n\nvoid main() {\n\n  vUV = uv;\n\n  vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );\n  vec4 worldPosition = modelMatrix * vec4( position, 1.0 );\n  vec3 worldNormal = normalize( mat3( modelMatrix[0].xyz, modelMatrix[1].xyz, modelMatrix[2].xyz ) * normal );\n  vec3 I = worldPosition.xyz - cameraPosition;\n  vReflectionFactor = mFresnelBias + mFresnelScale * pow( 1.0 + dot( normalize( I ), worldNormal ), mFresnelPower );\n\n\n  vec4 mPosition = modelMatrix * vec4( position, 1.0 );\n  vec3 nWorld = normalize( mat3( modelMatrix[0].xyz, modelMatrix[1].xyz, modelMatrix[2].xyz ) * normal );\n  I = cameraPosition - mPosition.xyz;\n  vReflect = normalize( reflect( I, nWorld ) );\n  gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );\n\n  worldPosition = modelMatrix * vec4(position, 1.0);\n  float distFromMouse = distance( uMouse, gl_Position.xy / gl_Position.w );\n  vAlpha = ( ( 1.0 - ( distFromMouse * 4.0 ) ) * 0.5 ) + .5;\n  vAlpha = clamp( vAlpha, 0.0, 1.0 );\n\n  vPosition = gl_Position.xyz / gl_Position.w ;\n\n}\n"
 
+fs= "#define GLSLIFY 1\nuniform vec2 uResolution;\nuniform float uGlobalAlpha;\nvarying vec3 vPosition;\n// uniform float uIsDebug;\n// varying float vAlpha;\n\n// void main() {\n\n//   vec2 normCoord = gl_FragCoord.xy / uResolution;\n\n//   vec4 color = vec4( vec3( 0.0, 0.0, 0.0 ), vAlpha );\n\n//   if ( uIsDebug == 0.0 ) {\n//     color = vec4( vec3( 0.0, 0.0, 0.0 ), vAlpha );\n//   }\n//   else {\n//     color = vec4( 1.0, 0.0, 0.0, 1.0 );  \n//   }\n\n//   gl_FragColor = color;\n\n\n\n// }\n// \n// \n\nuniform sampler2D tDiffuse;\nvarying vec3 vReflect;\nvarying float intensity;\nvarying float vAlpha;\n\nvarying float vReflectionFactor;\n\nvarying vec2 vUV;\n\nvoid main(void) {\n\n  float PI = 3.14159265358979323846264;\n  float yaw = .5 + atan( vReflect.z, vReflect.x ) / ( 2.0 * PI );\n  float pitch = .5 + atan( vReflect.y, length( vReflect.xz ) ) / ( PI );\n  vec3 color = texture2D( tDiffuse, vec2( yaw, pitch ) ).rgb;\n\n  vec2 normCoord = gl_FragCoord.xy / uResolution;\n  vec4 gradientColor = vec4( vec3( vPosition.xy * 0.5 + 0.5, 1.0 ) , 1.0 );\n  vec4 restColor = vec4( vec3( 0.40 ), 1.0 );\n\n  vec4 mixColor = mix( gradientColor, restColor, 1.0 - vAlpha );\n\n  vec3 reflectionColor = color * ( vReflectionFactor - 0.1 );\n  vec3 metalReflectionColor = (reflectionColor * mixColor.xyz) / 0.2;\n  vec3 flatReflectionColor = (reflectionColor + mixColor.xyz) / 0.2;\n\n  vec3 mixedReflection = mix( metalReflectionColor, flatReflectionColor, 0.3 );\n  vec3 final = mixedReflection;\n\n  gl_FragColor = vec4( vec3( vAlpha * mixedReflection * 1.0 ) + ( metalReflectionColor * 0.3 ) , 0.85 * uGlobalAlpha );\n\n}\n"
+
+v= new THREE.ShaderMaterial({
+    uniforms: m,
+    vertexShader: vs,
+    fragmentShader: fs,
+    transparent: !0
+})
 balloonGroup.prototype.init = function() {
     var e = this;
     this.balloon = this.opts.model, this.balloon.balloonId = this.opts.id,
@@ -235,7 +268,7 @@ balloonGroup.prototype.init = function() {
         this.balloon.scale.x = this.balloon.scale.y = this.balloon.scale.z = this.opts.scale,
         this.balloon.sortObjects = !1, this.add(this.balloon),
         this.balloon.traverse(function(e) {
-            //e instanceof THREE.Mesh && (e.material = v, e.renderOrder = 1)
+            e instanceof THREE.Mesh && (e.material = v, e.renderOrder = 1)
         });
     var t = new THREE.LineBasicMaterial({
             color: 0,
@@ -277,8 +310,14 @@ balloonGroup.prototype.update= function(){
     }
 
 }
-balloonGroup.prototype.updateMouseUniform = function(){
-
+balloonGroup.prototype.updateMouseUniform = function(e){
+    var t = e.x / window.innerWidth * 2 - 1,
+        n = 2 * -(e.y / window.innerHeight) + 1;
+    this.balloon.children[0].material.uniforms.uMouse.value = {
+        x: t,
+        y: n,
+        z: 0
+    }
 }
 balloonGroup.prototype.setPosition = function(w,h){
 
