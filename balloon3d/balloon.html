@@ -1,0 +1,28 @@
+<style>
+body{
+	overflow: hidden;
+	margin:0;
+}
+</style>
+<body>
+<div class="container"></div>
+<canvas></canvas>
+<script src="three.min.js"></script>
+<script src="OBJLoader.js"></script>
+<script src="OrbitControls.js"></script>
+<script src="matter.min.js"></script>
+<script src="Scene.js"></script>
+<script src="model.js"></script>
+<script>
+	
+	loadModel({
+		name:'气球',
+		path:'balloon-r.obj',
+		position:{x: 57.68221122995594, y: 42.77494849265125, z: 73.11368214241135},
+		target:{x: 58.698102167531665, y: 14.363709643879496, z: -4.490236038101249},
+		loader:'obj'
+	})
+
+
+</script>
+</body>
