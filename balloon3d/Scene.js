@@ -47,7 +47,7 @@ Scene.prototype = {
         this.controls.dampingFactor = 0.25;
 
         //this.addGridHelper(5);
-        this.initPostprocessing();
+        //this.initPostprocessing();
  
     },
     add:function(object){
