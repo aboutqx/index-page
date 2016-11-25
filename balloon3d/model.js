@@ -88,10 +88,10 @@ balloonWorld.prototype = {
     addBalloons: function() {
         var self=this,t = (window.innerWidth,window.innerHeight,0);
         n=balloonPosition;
-        isMobile() && (n = balloonPosition.splice(0, 20))
+        isMobile() && (n = balloonPosition.splice(0, 12))
         n.forEach(function(n, i) {
             var r = B.clone();
-            o = isMobile() ? [100 * Math.random() - 50, n[1] / 5, n[2] / 1.5] : n;
+            o = isMobile() ? [100 * Math.random() - 50, n[1] / 5.5, n[2] / 1] : n;
             r.children[0].material=new THREE.MeshBasicMaterial({
                 color: 0x8329aa,
                 transparent:true,
@@ -413,14 +413,14 @@ balloonsPhysical.prototype =  {
     },
     setPosition:function(e){
         this.initRope(), this.initBalloon();
-                    var t = this.ropeBodies[0],
-                        n = window.innerWidth / 2,
-                        i = window.innerHeight / 2,
-                        r = n - (-1 * this.position.rawX);
-                    i + this.position.rawY;
-                    Matter.Body.setPosition(t, {
-                        x: r,
-                        y: window.innerHeight
-                    })
+        var t = this.ropeBodies[0],
+            n = window.innerWidth / 2,
+            i = window.innerHeight / 2,
+            r = n - (-1 * this.position.rawX);
+        i + this.position.rawY;
+        Matter.Body.setPosition(t, {
+            x: r,
+            y: window.innerHeight
+        })
     }
 }
