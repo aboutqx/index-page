@@ -37,7 +37,7 @@ Scene.prototype = {
         this.gl = this.renderer.context;
         this.renderer.setPixelRatio(window.devicePixelRatio);
         this.renderer.setSize(this.canvasWidth, this.canvasHeight);
-        this.renderer.setClearColor(0xdddddd, 1);
+        this.renderer.setClearColor(0x202327, 1);
         this.container.appendChild(this.renderer.domElement);
 
 
