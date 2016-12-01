@@ -88,10 +88,11 @@ balloonWorld.prototype = {
     addBalloons: function() {
         var self=this,t = (window.innerWidth,window.innerHeight,0);
         n=balloonPosition;
-        isMobile() && (n = balloonPosition.splice(0, 12))
+        isMobile() && (n = balloonPosition.splice(0, 20))
         n.forEach(function(n, i) {
             var r = B.clone();
-            o = isMobile() ? [100 * Math.random() - 50, n[1] / 5.5, n[2] / 1] : n;
+            o = isMobile() ? [100 * Math.random() - 50, n[1] / 5, n[2] / 1.5] : n;
+            console.log(o)
             r.children[0].material=new THREE.MeshBasicMaterial({
                 color: 0x8329aa,
                 transparent:true,
@@ -251,9 +252,85 @@ m = {
     },
 };
 m.tDiffuse.texture = THREE.ImageUtils.loadTexture("img/pano.jpg"), m.tDiffuse.texture.wrapT = THREE.RepeatWrapping, m.tDiffuse.texture.wrapS = THREE.RepeatWrapping, m.tDiffuse.texture.minFilter = THREE.LinearMipMapLinearFilter;
-vs = "#define GLSLIFY 1\nuniform vec2 uMouse;\nvarying vec3 vPosition;\n\n\nvarying vec3 vReflect;\nvarying vec2 vUV;\nvarying float intensity;\nvarying float vAlpha;\n\nuniform float mRefractionRatio;\nuniform float mFresnelBias;\nuniform float mFresnelScale;\nuniform float mFresnelPower;\n\nvarying float vReflectionFactor;\n\nvoid main() {\n\n  vUV = uv;\n\n  vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );\n  vec4 worldPosition = modelMatrix * vec4( position, 1.0 );\n  vec3 worldNormal = normalize( mat3( modelMatrix[0].xyz, modelMatrix[1].xyz, modelMatrix[2].xyz ) * normal );\n  vec3 I = worldPosition.xyz - cameraPosition;\n  vReflectionFactor = mFresnelBias + mFresnelScale * pow( 1.0 + dot( normalize( I ), worldNormal ), mFresnelPower );\n\n\n  vec4 mPosition = modelMatrix * vec4( position, 1.0 );\n  vec3 nWorld = normalize( mat3( modelMatrix[0].xyz, modelMatrix[1].xyz, modelMatrix[2].xyz ) * normal );\n  I = cameraPosition - mPosition.xyz;\n  vReflect = normalize( reflect( I, nWorld ) );\n  gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );\n\n  worldPosition = modelMatrix * vec4(position, 1.0);\n  float distFromMouse = distance( uMouse, gl_Position.xy / gl_Position.w );\n  vAlpha = ( ( 1.0 - ( distFromMouse * 4.0 ) ) * 0.5 ) + .5;\n  vAlpha = clamp( vAlpha, 0.0, 1.0 );\n\n  vPosition = gl_Position.xyz / gl_Position.w ;\n\n}\n"
+vs = "#define GLSLIFY 1\n"+
+"uniform vec2 uMouse;\n"+
+"varying vec3 vPosition;\n"+
+"\n"+
+"\n"+
+"varying vec3 vReflect;\n"+
+"varying vec2 vUV;\n"+
+"varying float intensity;\n"+
+"varying float vAlpha;\n"+
+"\n"+
 
-fs= "#define GLSLIFY 1\nuniform vec2 uResolution;\nuniform float uGlobalAlpha;\nvarying vec3 vPosition;\n// uniform float uIsDebug;\n// varying float vAlpha;\n\n// void main() {\n\n//   vec2 normCoord = gl_FragCoord.xy / uResolution;\n\n//   vec4 color = vec4( vec3( 0.0, 0.0, 0.0 ), vAlpha );\n\n//   if ( uIsDebug == 0.0 ) {\n//     color = vec4( vec3( 0.0, 0.0, 0.0 ), vAlpha );\n//   }\n//   else {\n//     color = vec4( 1.0, 0.0, 0.0, 1.0 );  \n//   }\n\n//   gl_FragColor = color;\n\n\n\n// }\n// \n// \n\nuniform sampler2D tDiffuse;\nvarying vec3 vReflect;\nvarying float intensity;\nvarying float vAlpha;\n\nvarying float vReflectionFactor;\n\nvarying vec2 vUV;\n\nvoid main(void) {\n\n  float PI = 3.14159265358979323846264;\n  float yaw = .5 + atan( vReflect.z, vReflect.x ) / ( 2.0 * PI );\n  float pitch = .5 + atan( vReflect.y, length( vReflect.xz ) ) / ( PI );\n  vec3 color = texture2D( tDiffuse, vec2( yaw, pitch ) ).rgb;\n\n  vec2 normCoord = gl_FragCoord.xy / uResolution;\n  vec4 gradientColor = vec4( vec3( vPosition.xy * 0.5 + 0.5, 1.0 ) , 1.0 );\n  vec4 restColor = vec4( vec3( 0.40 ), 1.0 );\n\n  vec4 mixColor = mix( gradientColor, restColor, 1.0 - vAlpha );\n\n  vec3 reflectionColor = color * ( vReflectionFactor - 0.1 );\n  vec3 metalReflectionColor = (reflectionColor * mixColor.xyz) / 0.2;\n  vec3 flatReflectionColor = (reflectionColor + mixColor.xyz) / 0.2;\n\n  vec3 mixedReflection = mix( metalReflectionColor, flatReflectionColor, 0.3 );\n  vec3 final = mixedReflection;\n\n  gl_FragColor = vec4( vec3( vAlpha * mixedReflection * 1.0 ) + ( metalReflectionColor * 0.3 ) , 0.85 * uGlobalAlpha );\n\n}\n"
+"uniform float mFresnelBias;\n"+
+"uniform float mFresnelScale;\n"+
+"uniform float mFresnelPower;\n"+
+"\n"+
+"varying float vReflectionFactor;\n"+
+"\n"+
+"void main() {\n"+
+"\n"+
+"  vUV = uv;\n"+
+"\n"+
+"  vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );\n"+
+"  vec4 worldPosition = modelMatrix * vec4( position, 1.0 );\n"+
+"  vec3 worldNormal = normalize( mat3( modelMatrix[0].xyz, modelMatrix[1].xyz, modelMatrix[2].xyz ) * normal );\n"+
+"  vec3 I = worldPosition.xyz - cameraPosition;\n"+
+"  vReflectionFactor = mFresnelBias + mFresnelScale * pow( 1.0 + dot( normalize( I ), worldNormal ), mFresnelPower );\n"+
+"\n"+
+"  vec4 mPosition = modelMatrix * vec4( position, 1.0 );\n"+
+"  vec3 nWorld = normalize( mat3( modelMatrix[0].xyz, modelMatrix[1].xyz, modelMatrix[2].xyz ) * normal );\n"+
+"  I = cameraPosition - mPosition.xyz;\n"+
+"  vReflect = normalize( reflect( I, nWorld ) );\n"+
+"  gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );\n"+
+"\n"+
+"  worldPosition = modelMatrix * vec4(position, 1.0);\n"+
+"  float distFromMouse = distance( uMouse, gl_Position.xy / gl_Position.w );\n"+
+"  vAlpha = ( ( 1.0 - ( distFromMouse * 4.0 ) ) * 0.5 ) + .5;\n"+
+"  vAlpha = clamp( vAlpha, 0.0, 1.0 );\n"+
+"\n"+
+"  vPosition = gl_Position.xyz / gl_Position.w ;\n"+
+"\n"+
+"}\n"+
+""
+
+fs= "#define GLSLIFY 1\n"+
+"uniform vec2 uResolution;\n"+
+"uniform float uGlobalAlpha;\n"+
+"varying vec3 vPosition;\n"+
+"uniform sampler2D tDiffuse;\n"+
+"uniform float mRefractionRatio;\n"+
+"varying vec3 vReflect;\n"+
+"varying float intensity;\n"+
+"varying float vAlpha;\n"+
+"\n"+
+"varying float vReflectionFactor;\n"+
+"\n"+
+"varying vec2 vUV;\n"+
+"\n"+
+"void main(void) {\n"+
+"\n"+
+"  float PI = 3.14159265358979323846264;\n"+
+"  float yaw = .5 + atan( vReflect.z, vReflect.x ) / ( 2.0 * PI );\n"+
+"  float pitch = .5 + atan( vReflect.y, length( vReflect.xz ) ) / ( PI );\n"+
+"  vec3 color = texture2D( tDiffuse, vec2( yaw, pitch ) ).rgb;\n"+
+"  vec4 gradientColor = vec4( vec3( vPosition.xy * 0.5 + 0.5, 1.0 ) , 1.0 );\n"+
+"  vec4 restColor = vec4( vec3( 0.40 ), 1.0 );\n"+
+"\n"+
+"  vec4 mixColor = mix( gradientColor, restColor, 1.0 - vAlpha );\n"+
+"\n"+
+"  vec3 reflectionColor = color * ( vReflectionFactor - 0.1 );\n"+
+"  vec3 metalReflectionColor = (reflectionColor * mixColor.xyz) / 0.2;\n"+
+"  vec3 flatReflectionColor = (reflectionColor + mixColor.xyz) / 0.2;\n"+
+"\n"+
+"  vec3 mixedReflection = mix( metalReflectionColor, flatReflectionColor, 0.3 );\n"+
+"  vec3 final = mixedReflection;\n"+
+"\n"+
+"  gl_FragColor = vec4( vec3( vAlpha * mixedReflection * 1.0 ) + ( metalReflectionColor * 0.3 ) , 0.85 * uGlobalAlpha );\n"+
+"\n"+
+"}\n"+
+""
 
 v= new THREE.ShaderMaterial({
     uniforms: m,
@@ -300,7 +377,10 @@ balloonGroup.prototype.update= function(){
     if (this.pBalloon.balloonBody && !(!this.line.geometry.vertices.length > 0)) {
         this.attractToOrigin();
         var e = this.getRopeAngle();
-        this.balloon.position.x = this.pBalloon.balloonBody.position.x - window.innerWidth / 2, this.balloon.position.y = -this.pBalloon.balloonBody.position.y + window.innerHeight / 2, this.balloon.rotation.z = e;
+        this.balloon.position.x = this.pBalloon.balloonBody.position.x - window.innerWidth / 2, this.balloon.position.y = -this.pBalloon.balloonBody.position.y + window.innerHeight / 2;
+        this.balloon.rotation.z = e;
+        this.balloon.rotation.y=Math.PI/2;
+        this.balloon.position.y-=48;
         for (var t = this.pBalloon.ropeBodies, n = this.pBalloon.ropeBodies.length, i = 0; n > i; i++) {
             var r = t[i],
                 o = this.line.geometry.vertices[i];
@@ -389,7 +469,7 @@ balloonsPhysical.prototype =  {
             t = this.position.y,
             n = this.ropeHeight / (this.nbLinks - 1),
             i = void 0;
-        this.balloonBody = Bodies.rectangle(e, t, 60, 85, {
+        this.balloonBody = Bodies.rectangle(e, t, 50, 65, {
             frictionAir: .15,
             collisionFilter: {
                 category: 1,

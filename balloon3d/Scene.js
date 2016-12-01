@@ -37,7 +37,7 @@ Scene.prototype = {
         this.gl = this.renderer.context;
         this.renderer.setPixelRatio(window.devicePixelRatio);
         this.renderer.setSize(this.canvasWidth, this.canvasHeight);
-        this.renderer.setClearColor(0x202327, 1);
+        this.renderer.setClearColor(0x202327, 1);//111222
         this.container.appendChild(this.renderer.domElement);
 
 
@@ -64,7 +64,7 @@ Scene.prototype = {
             this.copyPass.renderToScreen = true;
             this.composer.addPass(this.copyPass);
 
-            this.msaaRenderPass.sampleLevel = 1;
+            this.msaaRenderPass.sampleLevel = 4;
 
         }catch(e){
             console.warn("can't init Postprocessing")
@@ -89,11 +89,11 @@ Scene.prototype = {
     },
     addLight: function() {
 
-        var ambLight = new THREE.AmbientLight(0xffffff, 0.5);
+        var ambLight = new THREE.AmbientLight(0xfff000, 1);
 
         this.scene.add(ambLight)
 
-        this.pointLight = new THREE.PointLight(0xffffff, 1, 400)
+        this.pointLight = new THREE.PointLight(0xffffff, 1, 330)
         this.pointLight.position.set(0,0,300)
         this.scene.add(this.pointLight)
     },
@@ -118,6 +118,6 @@ Scene.prototype = {
         lightHelper && lightHelper.update(); // required
 
         this.controls.update();
-        this.composer ? this.composer.render() : this.renderer.render(this.scene, this.camera);
+        this.composer ? (this.composer.render()) : this.renderer.render(this.scene, this.camera);
     }
 }
