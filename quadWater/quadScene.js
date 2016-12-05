@@ -1,19 +1,22 @@
 import Promise from 'bluebird';
 import createScene from './createScene';
 import Model from './Model';
+import NoiseBg from './NoiseBg.js';
 
-var d={mouse:{x:0,y:0},isDown:false};
+var d={mouse:{x:window.innerWidth/2,y:window.innerHeight/2},isDown:false};
 function isMobile(){
     var ua=navigator.userAgent.toLowerCase();
     return /android|iphone|ipad/.test(ua)
 }
+var lastX,lastY,timer;
 var quadScene = createScene({
     init: function() {
         var e = this.gl;
         var o=function(){};
         this.addListener();
+        this.gl
         this.nrmCompo = {preRender:o,load:o,render:o,fbo:{color:0xffffff}},
-            this.noiseBg = {preRender:o,load:o,render:o},
+            this.noiseBg = new NoiseBg(e),
             this.ribbon = Model.ribbon(e),
             this.text = {preRender:o,load:o,render:o}
     },
@@ -28,21 +31,34 @@ var quadScene = createScene({
         }
     },
     render: function(frameTime) {
+
+        if(!(lastX==d.mouse.x&&lastY==d.mouse.y)){
+            clearTimeout(timer)
+            audioTag.play()  
+        } else{
+            
+
+        }
+        lastX=d.mouse.x;
+        lastY=d.mouse.y;
         var t = window.devicePixelRatio,
             width = this.width * t,
             height = this.height * t,
             posX = d.mouse.x / this.width * 2 - 1,
-            posY = d.mouse.y / this.height * 2 - 1,
-            a = this.gl;
+            posY = d.mouse.y / this.height * 2 - 1;
+        var a = this.gl;
         this.nrmCompo.preRender(frameTime),
+        this.ribbon.preRender(frameTime, width, height, posX, posY),
             a.bindFramebuffer(a.FRAMEBUFFER, null),
             a.viewport(0, 0, width, height),
             a.clear(a.COLOR_BUFFER_BIT | a.DEPTH_BUFFER_BIT),
-            this.noiseBg.render(),
-            this.ribbon.preRender(frameTime, width, height, posX, posY);
+
+            this.noiseBg.render()
+
             this.ribbon.renderCut(frameTime, width, height, this.nrmCompo.fbo.color)
-            //this.ribbon.renderDetached(e, n, i, this.noiseBg),
+            this.ribbon.renderDetached(frameTime, width, height, this.noiseBg),
             this.ribbon.renderShadow(frameTime, width, height)
+
             //this.text.render(n, i)
     },
     resize: function(e, t) {
@@ -60,13 +76,17 @@ quadScene.prototype.addListener = function(){
         d.isDown=true;
     })
     window.addEventListener('mousemove',function(e){
-            d.mouse={
-                x:e.pageX,
-                y:e.pageY
-            }
+        
+    
+        d.mouse={
+            x:e.pageX,
+            y:e.pageY
+        }
     })
     window.addEventListener('mouseup',function(){
         d.isDown=false;
+
+        
     })
     var self=this;
     window.addEventListener('resize',function(){
@@ -86,4 +106,6 @@ quadScene.prototype.renderTextOnly = function() {
         this.text.render(t, n)
 },
 quadScene.prototype.reset = function() {};
+
+
 module.exports = quadScene;

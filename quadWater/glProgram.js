@@ -98,7 +98,7 @@ f[String(5126)] = "1f",
                     return (glProgram.warn(i.getProgramInfoLog(this.program)), !1) 
                 }
             } else {
-                return false;
+                glProgram.warn(this.fShader,this.vShader)
             }
         },
         dispose: function() {

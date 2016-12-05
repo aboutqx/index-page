@@ -1,4 +1,7 @@
-var path = require('path');
+const path = require('path');
+const webpack           = require('webpack');
+const prod              = process.env.NODE_ENV === 'production';
+const isDevelopment     = process.env.NODE_ENV === 'development';
 
 module.exports = {
     entry: './index.js',
@@ -7,7 +10,22 @@ module.exports = {
         filename: 'bundle.js',
         publicPath:'/dist/'
     },
+    cache: isDevelopment,
+    debug: isDevelopment,
     devServer: { inline: true },
+    stats: {
+        cached: false,
+        cachedAssets: false,
+        chunkModules: false,
+        chunks: false,
+        colors: true,
+        errorDetails: true,
+        hash: false,
+        progress: true,
+        reasons: false,
+        timings: true,
+        version: false
+    },
     resolve: {
         extensions: ['', '.js', '.jsx']
     },
@@ -22,5 +40,15 @@ module.exports = {
         },
         { test: /\.jpg$/, loader: "file-loader?name=[name].[ext]" },
         ]
-    }
+    },
+    plugins: prod ? [
+    new webpack.optimize.DedupePlugin(),//去重
+    new webpack.optimize.OccurenceOrderPlugin(),//分配最小id
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        screw_ie8: true,
+        warnings: false
+      }
+    }),
+  ] : [new webpack.optimize.OccurenceOrderPlugin()]
 }

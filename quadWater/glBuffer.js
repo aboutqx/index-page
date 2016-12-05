@@ -67,12 +67,12 @@ i.prototype = {
         bind: function() {
             this.gl.bindBuffer(34962, this.buffer)
         },
-        attrib: function(e, t, n, i) {
+        attrib: function(e, t, n, f) {
             return this._attribs.push({
                     name: e,
                     type: 0 | n,
                     size: 0 | t,
-                    normalize: !!i,
+                    normalize: !!f,
                     offset: this._stride
                 }),
                 this._stride += r.getComponentSize(n) * t,
@@ -105,7 +105,7 @@ i.prototype = {
                 }
             }
         },
-        draw: function(e, t, n) {
+        draw: function(e, t, n) {//
             t = void 0 === t ? this.length : t,
                 n = void 0 === n ? 0 : n,
                 this.gl.drawArrays(e, n, t)
