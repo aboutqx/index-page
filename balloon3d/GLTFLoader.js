@@ -4,7 +4,7 @@
  * @author Tony Parisi / http://www.tonyparisi.com/
  */
 
-(function() {
+module.exports=function(THREE) {
 
 THREE.GLTFLoader = function( manager ) {
 
@@ -1755,4 +1755,4 @@ GLTFParser.prototype.loadScenes = function() {
 
 };
 
-})();
+};

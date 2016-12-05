@@ -1,3 +1,7 @@
+import Scene from './Scene';
+var THREE = require('./three.min.js')
+import Matter from 'matter-js';
+var  GLTFLoader =require( './GLTFLoader')(THREE);
 var lightHelper;
 var Engine = Matter.Engine,
     World = Matter.World,
@@ -18,7 +22,7 @@ function isMobile(){
     var ua=navigator.userAgent.toLowerCase();
     return /android|iphone|ipad/.test(ua)
 }
-loadModel=function(modelParams) {
+var loadModel=function(modelParams) {
         THREE.GLTFLoader.Shaders.removeAll();
         var loader = new THREE.GLTFLoader();
         var self = this;
@@ -30,7 +34,10 @@ loadModel=function(modelParams) {
             new balloonWorld().init();
         });
 }
-
+loadModel({
+    name:'气球',
+    path:'balloon-8.gltf',
+})
 
 var balloonWorld = function() {
     this.scene = new Scene(document.querySelector('.container'));
@@ -88,19 +95,17 @@ balloonWorld.prototype = {
 
     },
     addBalloons: function() {
-        var self=this,t = (window.innerWidth,window.innerHeight,0);
-        n=balloonPosition;
+        var self=this,t = (window.innerWidth,window.innerHeight,0),n=balloonPosition;
         isMobile() && (n = balloonPosition.splice(0, 20))
         n.forEach(function(n, i) {
             var r = B.clone();
-            o = isMobile() ? [100 * Math.random() - 50, n[1] / 5, n[2] / 1.5] : n;
-            console.log(o)
+            var o = isMobile() ? [100 * Math.random() - 50, n[1] / 5, n[2] / 1.5] : n;
             r.children[0].material=new THREE.MeshBasicMaterial({
                 color: 0x8329aa,
                 transparent:true,
                 opacity:.6
             })
-            a = new balloonGroup({
+            var a = new balloonGroup({
                 model: r,
                 position: [o[0], o[1]],
                 scale: o[2],
@@ -140,7 +145,8 @@ balloonWorld.prototype = {
         console.log('rope last vertices turn to 3d position:'+x+' '+y)
     },
     _resize: function(){
-        S = window.innerWidth, M = window.innerHeight, this.scene.resize(S, M),
+        var S = window.innerWidth, M = window.innerHeight;
+        this.scene.resize(S, M),
         P.forEach(function(e) {
             e.pBalloon.ropeEls.forEach(function(e) {
                 World.remove(engine.world, e)
@@ -154,8 +160,6 @@ balloonWorld.prototype = {
         })
     },
     _onMouseMove: function(e) {
-
-        b = null;
 
         L.x = e.pageX,
             L.y = e.pageY,
@@ -214,7 +218,7 @@ balloonGroup.prototype.initPhysics = function(t) {
         y: window.innerHeight/2 + this.opts.position[1]
     }
 }
-c = (new THREE.Raycaster, new THREE.Vector2(2, 2)),
+var c = (new THREE.Raycaster, new THREE.Vector2(2, 2)),
 m = {
     uMouse: {
         type: "v2",
@@ -254,7 +258,7 @@ m = {
     },
 };
 m.tDiffuse.texture = THREE.ImageUtils.loadTexture("img/pano.jpg"), m.tDiffuse.texture.wrapT = THREE.RepeatWrapping, m.tDiffuse.texture.wrapS = THREE.RepeatWrapping, m.tDiffuse.texture.minFilter = THREE.LinearMipMapLinearFilter;
-vs = "#define GLSLIFY 1\n"+
+var vs = "#define GLSLIFY 1\n"+
 "uniform vec2 uMouse;\n"+
 "varying vec3 vPosition;\n"+
 "\n"+
@@ -294,10 +298,9 @@ vs = "#define GLSLIFY 1\n"+
 "\n"+
 "  vPosition = gl_Position.xyz / gl_Position.w ;\n"+
 "\n"+
-"}\n"+
-""
+"}\n";
 
-fs= "#define GLSLIFY 1\n"+
+var fs= "#define GLSLIFY 1\n"+
 "uniform vec2 uResolution;\n"+
 "uniform float uGlobalAlpha;\n"+
 "varying vec3 vPosition;\n"+
@@ -331,10 +334,9 @@ fs= "#define GLSLIFY 1\n"+
 "\n"+
 "  gl_FragColor = vec4( vec3( vAlpha * mixedReflection * 1.0 ) + ( metalReflectionColor * 0.3 ) , 0.85 * uGlobalAlpha );\n"+
 "\n"+
-"}\n"+
-""
+"}\n";
 
-v= new THREE.ShaderMaterial({
+var v= new THREE.ShaderMaterial({
     uniforms: m,
     vertexShader: vs,
     fragmentShader: fs,
@@ -395,7 +397,6 @@ balloonGroup.prototype.update= function(){
 balloonGroup.prototype.updateMouseUniform = function(e){
     var t = e.x / window.innerWidth * 2 - 1,
         n = 2 * -(e.y / window.innerHeight) + 1;
-        console.log(this.balloon)
     this.balloon.children[0].children[0].material.uniforms.uMouse.value = {
         x: t,
         y: n,
@@ -433,7 +434,6 @@ balloonsPhysical.prototype =  {
             t = this.ropeHeight / this.nbLinks;
         this.ropeBodies = [], this.ropeEls = [];
         for (var n = 0; n < this.nbLinks; n++) {
-            if(this.balloonId==15) console.log(e - n * t)
             var i = this.position.x,
                 r = e - n * t,
                 o = .8,

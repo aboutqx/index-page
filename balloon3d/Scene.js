@@ -1,4 +1,5 @@
-
+var THREE = require('./three.min')
+var OrbitControls = require('three-orbit-controls')(THREE)
 //canvas dom,model params
 var Scene = function(dom, option) {
     this.container = dom;
@@ -41,7 +42,7 @@ Scene.prototype = {
         this.container.appendChild(this.renderer.domElement);
 
 
-        this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
+        this.controls = new OrbitControls(this.camera, this.renderer.domElement);
         //controls.addEventListener( 'change', render ); // add this only if there is no animation loop (requestAnimationFrame)
         this.controls.enableDamping = true;
         this.controls.dampingFactor = 0.25;
@@ -115,9 +116,10 @@ Scene.prototype = {
     },
 
     render: function() {
-        lightHelper && lightHelper.update(); // required
+        this.lightHelper && this.lightHelper.update(); // required
 
         this.controls.update();
         this.composer ? (this.composer.render()) : this.renderer.render(this.scene, this.camera);
     }
 }
+module.exports=Scene;
