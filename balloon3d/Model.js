@@ -19,10 +19,12 @@ function isMobile(){
     return /android|iphone|ipad/.test(ua)
 }
 loadModel=function(modelParams) {
-        this.objectLoader = new THREE.OBJLoader();
+        THREE.GLTFLoader.Shaders.removeAll();
+        var loader = new THREE.GLTFLoader();
         var self = this;
 
-        this.objectLoader.load(modelParams.path, function(obj) {
+        loader.load(modelParams.path, function(obj) {
+            obj=obj.scene;
             obj.name = modelParams.name;
             B=obj;
             new balloonWorld().init();
@@ -393,7 +395,8 @@ balloonGroup.prototype.update= function(){
 balloonGroup.prototype.updateMouseUniform = function(e){
     var t = e.x / window.innerWidth * 2 - 1,
         n = 2 * -(e.y / window.innerHeight) + 1;
-    this.balloon.children[0].material.uniforms.uMouse.value = {
+        console.log(this.balloon)
+    this.balloon.children[0].children[0].material.uniforms.uMouse.value = {
         x: t,
         y: n,
         z: 0
