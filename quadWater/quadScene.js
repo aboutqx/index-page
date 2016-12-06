@@ -35,9 +35,6 @@ var quadScene = createScene({
         if(!(lastX==d.mouse.x&&lastY==d.mouse.y)){
             clearTimeout(timer)
             audioTag.play()  
-        } else{
-            
-
         }
         lastX=d.mouse.x;
         lastY=d.mouse.y;
@@ -53,7 +50,7 @@ var quadScene = createScene({
             a.viewport(0, 0, width, height),
             a.clear(a.COLOR_BUFFER_BIT | a.DEPTH_BUFFER_BIT),
 
-            this.noiseBg.render()
+            //this.noiseBg.render()
 
             this.ribbon.renderCut(frameTime, width, height, this.nrmCompo.fbo.color)
             this.ribbon.renderDetached(frameTime, width, height, this.noiseBg),
@@ -76,8 +73,7 @@ quadScene.prototype.addListener = function(){
         d.isDown=true;
     })
     window.addEventListener('mousemove',function(e){
-        
-    
+        e.preventDefault(),
         d.mouse={
             x:e.pageX,
             y:e.pageY
@@ -86,8 +82,12 @@ quadScene.prototype.addListener = function(){
     window.addEventListener('mouseup',function(){
         d.isDown=false;
 
-        
     })
+    window.addEventListener('touchmove',function(e){
+        e.touches[0] && (d.mouse.x = e.touches[0].clientX,
+        d.mouse.y = e.touches[0].clientY)
+    })
+
     var self=this;
     window.addEventListener('resize',function(){
         self.resize(window.innerWidth,window.innerHeight)
