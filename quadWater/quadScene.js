@@ -16,7 +16,7 @@ var quadScene = createScene({
         this.addListener();
         this.gl
         this.nrmCompo = {preRender:o,load:o,render:o,fbo:{color:0xffffff}},
-            this.noiseBg = new NoiseBg(e),
+            //this.noiseBg = new NoiseBg(e),
             this.ribbon = Model.ribbon(e),
             this.text = {preRender:o,load:o,render:o}
     },
@@ -94,17 +94,6 @@ quadScene.prototype.addListener = function(){
     })
 },
 
-quadScene.prototype.renderTextOnly = function() {
-    var e = window.devicePixelRatio,
-        t = this.width * e,
-        n = this.height * e,
-        i = this.gl;
-    i.bindFramebuffer(i.FRAMEBUFFER, null),
-        i.viewport(0, 0, t, n),
-        i.clear(i.COLOR_BUFFER_BIT | i.DEPTH_BUFFER_BIT),
-        this.noiseBg.render(),
-        this.text.render(t, n)
-},
 quadScene.prototype.reset = function() {};
 
 
