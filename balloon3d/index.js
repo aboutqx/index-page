@@ -2,16 +2,16 @@ import Scene from './Scene';
 var THREE = require('./three.min.js')
 import Matter from 'matter-js';
 var  GLTFLoader =require( './GLTFLoader')(THREE);
-var lightHelper;
 var Engine = Matter.Engine,
     World = Matter.World,
     Body = Matter.Body,
     Constraint = Matter.Constraint,
     Render = Matter.Render,
+    Events = Matter.Events,
     Bodies = Matter.Bodies;
 var engine;
-var P=[];
-var B,R,L={};
+var P=[], B,R,L={},timer,isMove;
+var audioTag=document.getElementById('balloon3d');
 var balloonPosition = [[-474, -166, 5.6],[-484, 75, 5.5],[-219, 117, 5.2],[-320, -6, 5.2],[-475, 166, 5],
     [-393, -181, 5],[-246, 18, 4.9],[-378, 180, 4.7],[-490, -95, 4.3],[-478, -20, 4.3],[-280, -107, 4.2],[-319, -176, 4.1],
     [-293, 180, 4.1],[-404, -9, 3.8],[-4, 145, 5.7],[-20, -185, 4.6],[3, -26, 4.4],[-30, 51, 4.3],
@@ -45,23 +45,35 @@ var balloonWorld = function() {
     this.scene.controls.enabled=false;
 
     this.onMouseMove=this._onMouseMove.bind(this),
-    this.resize=this._resize.bind(this),
-    this.onTouchMove = this._onTouchMove.bind(this);
-    window.addEventListener("resize", this.resize), isMobile() ? (window.addEventListener("touchmove", this.onTouchMove), window.addEventListener("touchend", function() {
+    this.resize=this._resize.bind(this);
+    window.addEventListener("resize", this.resize), isMobile() ? (window.addEventListener("touchmove", this.onMouseMove), window.addEventListener("touchend", function() {
         L.x = -1, L.y = -1
     })) : window.addEventListener("mousemove", this.onMouseMove)
-
 }
 balloonWorld.prototype = {
     init: function() {
         this.initPhysicsWorld(), this.addBalloons(), this.resize();
-
         this.update();
 
+        Events.on(engine, 'collisionStart', function(event) {
+            //
+
+            isMove&&(console.log('collisionStart'),audioTag.play())
+        })
+        Events.on(engine, 'collisionEnd', function(event) {
+
+            clearTimeout(timer)
+            console.log('collisionEnd:'+isMove)
+            timer=setTimeout(function(){
+                if(!isMove){
+                    //audioTag.currentTime=0;
+                    audioTag.pause();
+                }
+                
+            },300)
+        })
         //this.setDebug(15)
-
     },
-
     initPhysicsWorld:function(){
         var e = {
             create: function() {
@@ -161,12 +173,12 @@ balloonWorld.prototype = {
     },
     _onMouseMove: function(e) {
 
-        L.x = e.pageX,
-            L.y = e.pageY,
-            this.scene.pointLight.position.x = e.pageX - window.innerWidth / 2,
-            this.scene.pointLight.position.y = -1 * (e.pageY - window.innerHeight / 2);
+        L.x = isMobile() ? e.targetTouches[0].clientX : e.pageX,
+            L.y = isMobile() ? e.targetTouches[0].clientY : e.pageY,
+            this.scene.pointLight.position.x = L.x - window.innerWidth / 2,
+            this.scene.pointLight.position.y = -1 * (L.y - window.innerHeight / 2);
         var t = new THREE.Vector3;
-        t.set(e.pageX / window.innerWidth * 2 - 1, 2 * -(e.pageY / window.innerHeight) + 1, .5),
+        t.set(L.x/ window.innerWidth * 2 - 1, 2 * -(L.y / window.innerHeight) + 1, .5),
             t.unproject(this.scene.camera),
             t.sub(this.scene.camera.position),
             t.x *= this.scene.camera.position.z / -t.z,
@@ -177,15 +189,10 @@ balloonWorld.prototype = {
         for (var n = 0; n < P.length; n++)
         P[n].updateMouseUniform(L)
 
-    },
-    _onTouchMove: function(e) {
-        L.x = e.targetTouches[0].clientX, L.y = e.targetTouches[0].clientY, 
-        this.scene.pointLight.position.x = e.targetTouches[0].clientX - window.innerWidth / 2, this.scene.pointLight.position.y = -1 * (e.targetTouches[0].clientY - window.innerHeight / 2);
-        var t = new THREE.Vector3;
-        t.set(e.targetTouches[0].clientX / window.innerWidth * 2 - 1, 2 * -(e.targetTouches[0].clientY / window.innerHeight) + 1, .5), t.unproject(this.scene.camera), t.sub(this.scene.camera.position), 
-        t.x *= this.scene.camera.position.z / -t.z, t.y *= this.scene.camera.position.z / -t.z, t.x = t.x + window.innerWidth / 2, t.y = -t.y + window.innerHeight / 2,
-        Body.setPosition(R, t);
-        for (var n = 0; n < P.length; n++) P[n].updateMouseUniform(L)
+        isMove=true;
+        setTimeout(function(){
+            isMove=false
+        },1000)
     },
     update:function(){
         var self = this;
@@ -261,43 +268,36 @@ m.tDiffuse.texture = THREE.ImageUtils.loadTexture("img/pano.jpg"), m.tDiffuse.te
 var vs = "#define GLSLIFY 1\n"+
 "uniform vec2 uMouse;\n"+
 "varying vec3 vPosition;\n"+
-"\n"+
-"\n"+
 "varying vec3 vReflect;\n"+
 "varying vec2 vUV;\n"+
 "varying float intensity;\n"+
 "varying float vAlpha;\n"+
-"\n"+
-
 "uniform float mFresnelBias;\n"+
 "uniform float mFresnelScale;\n"+
 "uniform float mFresnelPower;\n"+
-"\n"+
 "varying float vReflectionFactor;\n"+
-"\n"+
+
 "void main() {\n"+
-"\n"+
 "  vUV = uv;\n"+
-"\n"+
 "  vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );\n"+
 "  vec4 worldPosition = modelMatrix * vec4( position, 1.0 );\n"+
 "  vec3 worldNormal = normalize( mat3( modelMatrix[0].xyz, modelMatrix[1].xyz, modelMatrix[2].xyz ) * normal );\n"+
 "  vec3 I = worldPosition.xyz - cameraPosition;\n"+
 "  vReflectionFactor = mFresnelBias + mFresnelScale * pow( 1.0 + dot( normalize( I ), worldNormal ), mFresnelPower );\n"+
-"\n"+
+
 "  vec4 mPosition = modelMatrix * vec4( position, 1.0 );\n"+
 "  vec3 nWorld = normalize( mat3( modelMatrix[0].xyz, modelMatrix[1].xyz, modelMatrix[2].xyz ) * normal );\n"+
 "  I = cameraPosition - mPosition.xyz;\n"+
 "  vReflect = normalize( reflect( I, nWorld ) );\n"+
 "  gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );\n"+
-"\n"+
+
 "  worldPosition = modelMatrix * vec4(position, 1.0);\n"+
 "  float distFromMouse = distance( uMouse, gl_Position.xy / gl_Position.w );\n"+
 "  vAlpha = ( ( 1.0 - ( distFromMouse * 4.0 ) ) * 0.5 ) + .5;\n"+
 "  vAlpha = clamp( vAlpha, 0.0, 1.0 );\n"+
-"\n"+
+
 "  vPosition = gl_Position.xyz / gl_Position.w ;\n"+
-"\n"+
+
 "}\n";
 
 var fs= "#define GLSLIFY 1\n"+
@@ -309,11 +309,9 @@ var fs= "#define GLSLIFY 1\n"+
 "varying vec3 vReflect;\n"+
 "varying float intensity;\n"+
 "varying float vAlpha;\n"+
-"\n"+
 "varying float vReflectionFactor;\n"+
-"\n"+
 "varying vec2 vUV;\n"+
-"\n"+
+
 "void main(void) {\n"+
 "\n"+
 "  float PI = 3.14159265358979323846264;\n"+
