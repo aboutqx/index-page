@@ -10,7 +10,7 @@ var Engine = Matter.Engine,
     Events = Matter.Events,
     Bodies = Matter.Bodies;
 var engine;
-var P=[], B,R,L={},timer,isMove;
+var P=[], B,R,L={},timer,isMove=false;
 var audioTag=document.getElementById('balloon3d');
 var balloonPosition = [[-474, -166, 5.6],[-484, 75, 5.5],[-219, 117, 5.2],[-320, -6, 5.2],[-475, 166, 5],
     [-393, -181, 5],[-246, 18, 4.9],[-378, 180, 4.7],[-490, -95, 4.3],[-478, -20, 4.3],[-280, -107, 4.2],[-319, -176, 4.1],
@@ -38,7 +38,14 @@ loadModel({
     name:'气球',
     path:'balloon-8.gltf',
 })
-
+document.addEventListener('DOMContentLoaded',function(){
+    window.addEventListener("touchstart", function(e) {
+        e.preventDefault()
+    }, false),
+    window.addEventListener("touchmove", function(e) {
+        e.preventDefault()
+    }, false)
+})
 var balloonWorld = function() {
     this.scene = new Scene(document.querySelector('.container'));
     this.scene.camera.position.set(0,0,830);
@@ -84,9 +91,9 @@ balloonWorld.prototype = {
             world: function(e) {}
         };
         engine = Engine.create({
-                //render: {
-                    //controller: e
-                //},
+                render: {
+                    controller: e
+                },
                 constraintIterations: .1,
                 positionIterations: .5
             }),
