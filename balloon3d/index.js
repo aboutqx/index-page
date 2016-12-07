@@ -116,7 +116,7 @@ balloonWorld.prototype = {
         isMobile() && (n = balloonPosition.splice(0, 20))
         n.forEach(function(n, i) {
             var r = B.clone();
-            var o = isMobile() ? [100 * Math.random() - 50, n[1] / 5, n[2] / 1.5] : n;
+            var o = isMobile() ? [200 * Math.sin(+new Date), n[1] / 6, n[2] / 1.5] : n;
             r.children[0].material=new THREE.MeshBasicMaterial({
                 color: 0x8329aa,
                 transparent:true,
@@ -486,7 +486,7 @@ balloonsPhysical.prototype =  {
             collisionFilter: {
                 category: 1,
                 group: 0,
-                mask: 7
+                mask: i
             },
             render: {
                 strokeStyle: "#00ff00"
