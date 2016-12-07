@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded',function(){
 })
 var balloonWorld = function() {
     this.scene = new Scene(document.querySelector('.container'));
-    isMobile() ? this.camera.position.z = 400 : this.camera.position.z = 830;
+    isMobile() ? this.scene.camera.position.z = 400 : this.scene.camera.position.z = 830;
 
     this.onMouseMove=this._onMouseMove.bind(this),
     this.resize=this._resize.bind(this);
