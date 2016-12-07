@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded',function(){
 })
 var balloonWorld = function() {
     this.scene = new Scene(document.querySelector('.container'));
-    isMobile() ? this.scene.camera.position.z = 400 : this.scene.camera.position.z = 830;
+    isMobile() ? this.scene.camera.position.z = 830 : this.scene.camera.position.z = 830;
 
     this.onMouseMove=this._onMouseMove.bind(this),
     this.resize=this._resize.bind(this);
@@ -64,12 +64,11 @@ balloonWorld.prototype = {
         Events.on(engine, 'collisionStart', function(event) {
             //
 
-            isMove&&(console.log('collisionStart'),audioTag.play())
+            isMove&&(audioTag.play())
         })
         Events.on(engine, 'collisionEnd', function(event) {
 
             clearTimeout(timer)
-            console.log('collisionEnd:'+isMove)
             timer=setTimeout(function(){
                 if(!isMove){
                     //audioTag.currentTime=0;
@@ -423,6 +422,11 @@ balloonGroup.prototype.setPosition = function(w,h){
     this.pBalloon.setPosition()
 
 }
+var mask={
+    mouse:2,
+    chainLink:1,
+    balloon:4
+}
 var balloonsPhysical = function(t) {
     this.position = t.position||{x: 0,y: 0};
     this.ropeHeight = window.innerHeight - this.position.y,
@@ -476,6 +480,7 @@ balloonsPhysical.prototype =  {
             t = this.position.y,
             n = this.ropeHeight / (this.nbLinks - 1),
             i = void 0;
+        i=isMobile() ? mask.balloon || mask.chainLink || mask.mouse : mask.balloon | mask.chainLink | mask.mouse
         this.balloonBody = Bodies.rectangle(e, t, 50, 65, {
             frictionAir: .15,
             collisionFilter: {
