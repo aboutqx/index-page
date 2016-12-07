@@ -49,7 +49,6 @@ document.addEventListener('DOMContentLoaded',function(){
 var balloonWorld = function() {
     this.scene = new Scene(document.querySelector('.container'));
     this.scene.camera.position.set(0,0,830);
-    this.scene.controls.enabled=false;
 
     this.onMouseMove=this._onMouseMove.bind(this),
     this.resize=this._resize.bind(this);
