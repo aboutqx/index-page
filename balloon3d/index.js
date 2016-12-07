@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded',function(){
 })
 var balloonWorld = function() {
     this.scene = new Scene(document.querySelector('.container'));
-    this.scene.camera.position.set(0,0,830);
+    isMobile() ? this.camera.position.z = 400 : this.camera.position.z = 830;
 
     this.onMouseMove=this._onMouseMove.bind(this),
     this.resize=this._resize.bind(this);
@@ -203,8 +203,8 @@ balloonWorld.prototype = {
     update:function(){
         var self = this;
         requestAnimationFrame(function() { self.update() });
-        this.scene.render();
         for (var e = 0; e < P.length; e++) P[e].update();
+        this.scene.render();
     }
 }
 
