@@ -1,3 +1,4 @@
+import Promise from 'bluebird';
 function isMobile(){
     var ua=navigator.userAgent.toLowerCase();
     return /android|iphone|ipad/.test(ua)
@@ -25,17 +26,28 @@ var pacmanScene=function(dom){
 	
 }
 pacmanScene.prototype={
-	init:function(){		
-		this.addPacman();
-		this.addListener()
+	init:function(){
+		var self=this;		
+		this.addPacman().then(function(){
+			self.addListener()
+		})
 	},
-	addPacman:function(){	
-		var img=this.addImg(this.pacman,'img/pacman1.gif');
-		this.pacman.img=img
-		
-		this.pacman.style='z-index:99;position:absolute;left:'+(window.innerWidth/2-66/2)+'px;top:330px;'
+	addPacman:function(){
+		var self=this;
+		return new Promise(function(resolve,reject){
+			var img=new Image();
+			img.src='img/pacman1.gif';
+			img.onload=function(){
+				self.pacman.appendChild(img)
+				self.pacman.width=img.width;
+				self.pacman.height=img.height;
+				resolve(img)
+			}
+			self.pacman.img=img		
+			self.pacman.style='z-index:99;position:absolute;left:'+(window.innerWidth/2-66/2)+'px;top:330px;'
 
-		this.container.appendChild(this.pacman)
+			self.container.appendChild(self.pacman)
+		})	
 	},
 	addFood:function(e){
 		var x=isMobile ? e.targetTouches[0].clientX : e.pageX, y=isMobile ? e.targetTouches[0].clientY : e.pageY,
@@ -68,7 +80,7 @@ pacmanScene.prototype={
 
 		setTimeout(function(){self.pacman.style[preFix('transform')]='translate('+moveX+'px,'+moveY+'px)'},500)
 		setTimeout(function(){self.food.style.opacity=0},800)
-		setTimeout(function(){self.container.removeChild(self.food)},1200)
+		setTimeout(function(){self.container.removeChild(self.food)},900)
 	},
 	isEating:function(){
 		return document.querySelector('.food')
@@ -92,19 +104,6 @@ pacmanScene.prototype={
 			this.addFood(e)
 		}	
 	},
-	addImg:function (parent,src,style){
-		var img=new Image(),self=this;
-		img.src=src;
-		img.onload=function(){
-			parent.appendChild(img)
-			self.pacman.width=img.width;
-			self.pacman.height=img.height;
-		}
-		if(style){
-			img.style=style;
-		}
-		return img
-	},
 	addListener:function(){
 		isMobile ? window.addEventListener('touchstart',this.down) : window.addEventListener('mousedown',this.down)
 
@@ -127,4 +126,4 @@ function preFix(name){
 	}
 	return tmp;
 }
-//module.exports=app;
+module.exports=app;
