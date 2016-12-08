@@ -20,6 +20,7 @@ var pacmanScene=function(dom){
 	this.foodPos={x:0,y:0}
 	this.food=null,
 	this.lastAngle=0,
+	this.isEating=false,
 	this.pacman=document.createElement('div');
 	this.down=this._down.bind(this);
 	this.init();
@@ -53,21 +54,24 @@ pacmanScene.prototype={
 		var x=isMobile ? e.targetTouches[0].clientX : e.pageX, y=isMobile ? e.targetTouches[0].clientY : e.pageY,
 		foodId=Math.round(Math.random()*(this.foodLength-1)),self=this;
 		
-		var img=new Image();
-		img.src="img/"+this.foodPre+foodId+'.png';
-		img.onload=function(){
-			self.container.appendChild(img);
-			self.foodPos={x:x-img.width/2,y:y-img.height/2}
-			img.className='food ';
-			img.style="transition:.5s;z-index:98;position:absolute;top:"+self.foodPos.y+'px;left:'+self.foodPos.x+'px;';
+		return new Promise(function(resolve,reject){
+			var img=new Image();
+			img.src="img/"+self.foodPre+foodId+'.png';
+			img.onload=function(){
+				self.container.appendChild(img);
+				self.foodPos={x:x-img.width/2,y:y-img.height/2}
+				img.className='food ';
+				img.style="transition:.5s;z-index:98;position:absolute;top:"+self.foodPos.y+'px;left:'+self.foodPos.x+'px;';
 
 
-			self.food=img;
-			self.eatFood()
-		}
-
+				self.food=img;
+				resolve(self.food)
+			}
+		})
+		
 	},
 	eatFood:function(){
+		this.isEating=true;
 
 		var moveX=this.foodPos.x+this.food.width/2-parseFloat(this.pacman.style.left)-this.pacman.width/2,
 		    moveY=this.foodPos.y+this.food.height/2-parseFloat(this.pacman.style.top)-this.pacman.height/2,
@@ -80,10 +84,7 @@ pacmanScene.prototype={
 
 		setTimeout(function(){self.pacman.style[preFix('transform')]='translate('+moveX+'px,'+moveY+'px)'},500)
 		setTimeout(function(){self.food.style.opacity=0},800)
-		setTimeout(function(){self.container.removeChild(self.food)},900)
-	},
-	isEating:function(){
-		return document.querySelector('.food')
+		setTimeout(function(){self.container.removeChild(self.food);self.isEating=false;},900)
 	},
 	getAngle:function(){
 		var rect=this.pacman.getBoundingClientRect();
@@ -100,8 +101,8 @@ pacmanScene.prototype={
 		
 	},
 	_down:function(e){
-		if(!this.isEating()){
-			this.addFood(e)
+		if(!this.isEating){
+			this.addFood(e).then(this.eatFood.bind(this))
 		}	
 	},
 	addListener:function(){
