@@ -7,7 +7,11 @@ var isMobile=isMobile();
 var app={
 	p:null,
 	load:function(dom){
+		var self=this;
 		this.p=new pacmanScene(dom);
+		this.p.load().then(function(){
+			self.p.play();
+		})
 	},
 	inactive:function(){
 		this.p.removeListener()
@@ -21,16 +25,39 @@ var pacmanScene=function(dom){
 	this.food=null,
 	this.lastAngle=0,
 	this.isEating=false,
+	this.foodImg=[],
 	this.pacman=document.createElement('div');
 	this.down=this._down.bind(this);
 	this.init();
-	
 }
 pacmanScene.prototype={
 	init:function(){
 		var self=this;		
-		this.addPacman().then(function(){
-			self.addListener()
+
+	},
+	load:function(){
+		return Promise.all([this.addPacman(),this.loadImage()])
+	},
+	play:function(){
+		this.addListener()
+	},
+	loadImage:function(){
+		var self=this,num=0;
+		return new Promise(function(resolve,reject){
+			for(var i=0;i<self.foodLength;i++){
+				(function(){
+					var index=i;
+					var img= new Image();
+					img.src="img/"+self.foodPre+index+'.png';
+					img.onload=function(){
+						num++
+						self.foodImg.push(img)
+						if(num==self.foodLength){
+							resolve(img)
+						}				
+					}
+				})()		
+			}
 		})
 	},
 	addPacman:function(){
@@ -54,26 +81,19 @@ pacmanScene.prototype={
 		this.isEating=true;
 		var x=isMobile ? e.targetTouches[0].clientX : e.pageX, y=isMobile ? e.targetTouches[0].clientY : e.pageY,
 		foodId=Math.round(Math.random()*(this.foodLength-1)),self=this;
+
+		var img=this.foodImg[foodId]
 		
-		return new Promise(function(resolve,reject){
-			var img=new Image();
-			img.src="img/"+self.foodPre+foodId+'.png';
-			img.onload=function(){
-				self.container.appendChild(img);
-				self.foodPos={x:x-img.width/2,y:y-img.height/2}
-				img.className='food ';
-				img.setAttribute('style',"transition:.5s;z-index:98;position:absolute;top:"+self.foodPos.y+'px;left:'+self.foodPos.x+'px;');
+		self.container.appendChild(img);
+		self.foodPos={x:x-img.width/2,y:y-img.height/2}
+		img.className='food shake-slow';
+		img.setAttribute('style',"z-index:98;position:absolute;top:"+self.foodPos.y+'px;left:'+self.foodPos.x+'px;');
 
-
-				self.food=img;
-				resolve(self.food)
-			}
-		})
+		self.food=img;
 		
 	},
 	eatFood:function(){
 		
-
 		var moveX=this.foodPos.x+this.food.width/2-parseFloat(this.pacman.style.left)-this.pacman.width/2,
 		    moveY=this.foodPos.y+this.food.height/2-parseFloat(this.pacman.style.top)-this.pacman.height/2,
 		self=this;
@@ -85,7 +105,10 @@ pacmanScene.prototype={
 
 		setTimeout(function(){self.pacman.style[preFix('transform')]='translate('+moveX+'px,'+moveY+'px)'},500)
 		setTimeout(function(){self.food.style.opacity=0},800)
-		setTimeout(function(){self.container.removeChild(self.food);self.isEating=false;},900)
+		setTimeout(function(){
+			//self.container.removeChild(self.food);
+			self.isEating=false;
+		},900)
 	},
 	getAngle:function(){
 		var rect=this.pacman.getBoundingClientRect();
@@ -104,7 +127,7 @@ pacmanScene.prototype={
 	_down:function(e){
 		e.preventDefault();
 		if(!this.isEating){
-			this.addFood(e).then(this.eatFood.bind(this))
+			this.addFood(e),this.eatFood()
 		}	
 	},
 	addListener:function(){
