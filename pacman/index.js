@@ -46,7 +46,7 @@ pacmanScene.prototype={
 			}
 			self.pacman.img=img
 			self.container.appendChild(self.pacman)	
-			self.pacman.style='z-index:99;position:absolute;left:'+(window.innerWidth/2-66/2)+'px;top:330px;'
+			self.pacman.setAttribute('style','z-index:99;position:absolute;left:'+(window.innerWidth/2-100/2)+'px;top:330px;')
 			
 		})	
 	},
@@ -62,7 +62,7 @@ pacmanScene.prototype={
 				self.container.appendChild(img);
 				self.foodPos={x:x-img.width/2,y:y-img.height/2}
 				img.className='food ';
-				img.style="transition:.5s;z-index:98;position:absolute;top:"+self.foodPos.y+'px;left:'+self.foodPos.x+'px;';
+				img.setAttribute('style',"transition:.5s;z-index:98;position:absolute;top:"+self.foodPos.y+'px;left:'+self.foodPos.x+'px;');
 
 
 				self.food=img;
