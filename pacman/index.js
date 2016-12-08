@@ -51,6 +51,7 @@ pacmanScene.prototype={
 		})	
 	},
 	addFood:function(e){
+		this.isEating=true;
 		var x=isMobile ? e.targetTouches[0].clientX : e.pageX, y=isMobile ? e.targetTouches[0].clientY : e.pageY,
 		foodId=Math.round(Math.random()*(this.foodLength-1)),self=this;
 		
@@ -71,7 +72,7 @@ pacmanScene.prototype={
 		
 	},
 	eatFood:function(){
-		this.isEating=true;
+		
 
 		var moveX=this.foodPos.x+this.food.width/2-parseFloat(this.pacman.style.left)-this.pacman.width/2,
 		    moveY=this.foodPos.y+this.food.height/2-parseFloat(this.pacman.style.top)-this.pacman.height/2,
