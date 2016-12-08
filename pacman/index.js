@@ -44,10 +44,10 @@ pacmanScene.prototype={
 				self.pacman.height=img.height;
 				resolve(img)
 			}
-			self.pacman.img=img		
+			self.pacman.img=img
+			self.container.appendChild(self.pacman)	
 			self.pacman.style='z-index:99;position:absolute;left:'+(window.innerWidth/2-66/2)+'px;top:330px;'
-
-			self.container.appendChild(self.pacman)
+			
 		})	
 	},
 	addFood:function(e){
@@ -102,6 +102,7 @@ pacmanScene.prototype={
 		
 	},
 	_down:function(e){
+		e.preventDefault();
 		if(!this.isEating){
 			this.addFood(e).then(this.eatFood.bind(this))
 		}	
