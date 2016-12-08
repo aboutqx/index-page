@@ -30,11 +30,10 @@ pacmanScene.prototype={
 		this.addListener()
 	},
 	addPacman:function(){	
-		var img=addImg(this.pacman,'img/pacman1.gif');
+		var img=this.addImg(this.pacman,'img/pacman1.gif');
 		this.pacman.img=img
-		this.pacman.width=img.width;
-		this.pacman.height=img.height;
-		this.pacman.style='z-index:99;position:absolute;left:'+(window.innerWidth/2-66/2)+';top:330px;'
+		
+		this.pacman.style='z-index:99;position:absolute;left:'+(window.innerWidth/2-66/2)+'px;top:330px;'
 
 		this.container.appendChild(this.pacman)
 	},
@@ -47,7 +46,7 @@ pacmanScene.prototype={
 		img.onload=function(){
 			self.container.appendChild(img);
 			self.foodPos={x:x-img.width/2,y:y-img.height/2}
-			img.className='food shake-slow';
+			img.className='food ';
 			img.style="transition:.5s;z-index:98;position:absolute;top:"+self.foodPos.y+'px;left:'+self.foodPos.x+'px;';
 
 
@@ -68,7 +67,7 @@ pacmanScene.prototype={
 		this.pacman.img.style.transform='rotate('+angle+'deg)'
 
 		setTimeout(function(){self.pacman.style[preFix('transform')]='translate('+moveX+'px,'+moveY+'px)'},500)
-		setTimeout(function(){self.food.style.opacity=0},750)
+		setTimeout(function(){self.food.style.opacity=0},800)
 		setTimeout(function(){self.container.removeChild(self.food)},1200)
 	},
 	isEating:function(){
@@ -93,6 +92,19 @@ pacmanScene.prototype={
 			this.addFood(e)
 		}	
 	},
+	addImg:function (parent,src,style){
+		var img=new Image(),self=this;
+		img.src=src;
+		img.onload=function(){
+			parent.appendChild(img)
+			self.pacman.width=img.width;
+			self.pacman.height=img.height;
+		}
+		if(style){
+			img.style=style;
+		}
+		return img
+	},
 	addListener:function(){
 		isMobile ? window.addEventListener('touchstart',this.down) : window.addEventListener('mousedown',this.down)
 
@@ -102,17 +114,7 @@ pacmanScene.prototype={
 		window.removeEventListener('touchstart',this.down)
 	}
 }
-function addImg(parent,src,style){
-	var img=new Image(),self=this;
-	img.src=src;
-	img.onload=function(){
-		parent.appendChild(img)
-	}
-	if(style){
-		img.style=style;
-	}
-	return img
-}
+
 function preFix(name){
 	var div = document.createElement("div"),
 	divStyle = div.style,vendor=['O','webkit','ms','Moz'],tmp;
@@ -125,4 +127,4 @@ function preFix(name){
 	}
 	return tmp;
 }
-module.exports=app;
+//module.exports=app;
