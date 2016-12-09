@@ -429,7 +429,7 @@
 	                return glProgram.warn(i.getProgramInfoLog(this.program)), !1;
 	            }
 	        } else {
-	            glProgram.warn(this.fShader, this.vShader);
+	            return glProgram.warn(this.fShader, this.vShader), false;
 	        }
 	    },
 	    dispose: function dispose() {
@@ -8498,7 +8498,7 @@
 	    setupGL: function setupGL(gl) {
 	        this.geom = new Geom(gl);
 	        this.ribbonPrg = new _glProgram2.default(gl);
-	        this.ribbonPrg.compile(ribbonVShader, ribbonFShader);
+	        console.log(this.ribbonPrg.compile(ribbonVShader, ribbonFShader), this.ribbonPrg);
 	        this.prgShadow = new _glProgram2.default(gl), this.prgShadow.compile(shadowVShader, shadowFShader, "#define SHADOW_OFFSET vec2(.01,-.01)\n#define DEPTH .99");
 
 	        this.gradientTex = function (e) {
@@ -8733,7 +8733,7 @@
 
 	    var glScene = function glScene(e) {
 	        var t = this.getContextOptions();
-	        this.gl = e.getContext("webgl", t) || e.getContext("experimental-webgl", t) || e.getContext("webgl"), console.log(this.gl), this.canvas = e, this.width = 0, this.height = 0, this.frame = this._frame.bind(this), this.previousTime = r(), this._rafId = 0, this._playing = !1, this.init();
+	        this.gl = e.getContext("webgl", t) || e.getContext("experimental-webgl", t) || e.getContext("webgl"), this.canvas = e, this.width = 0, this.height = 0, this.frame = this._frame.bind(this), this.previousTime = r(), this._rafId = 0, this._playing = !1, this.init();
 	    };
 	    var r = window.performance && window.performance.now ? function () {
 	        return performance.now();
