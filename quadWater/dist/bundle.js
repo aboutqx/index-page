@@ -8733,7 +8733,7 @@
 
 	    var glScene = function glScene(e) {
 	        var t = this.getContextOptions();
-	        this.gl = e.getContext("webgl", t) || e.getContext("experimental-webgl", t) || e.getContext("webgl"), this.canvas = e, this.width = 0, this.height = 0, this.frame = this._frame.bind(this), this.previousTime = r(), this._rafId = 0, this._playing = !1, this.init();
+	        this.gl = e.getContext("webgl", t) || e.getContext("experimental-webgl", t) || e.getContext("webgl"), console.log(this.gl), this.canvas = e, this.width = 0, this.height = 0, this.frame = this._frame.bind(this), this.previousTime = r(), this._rafId = 0, this._playing = !1, this.init();
 	    };
 	    var r = window.performance && window.performance.now ? function () {
 	        return performance.now();
