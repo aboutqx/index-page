@@ -8532,7 +8532,6 @@
 	    },
 	    renderCut: function renderCut(time, width, height, color) {
 	        var r = this.ribbonPrg;
-	        console.log(r.iResolution);
 	        r.use(), r.uVPScale(height / width, 1), r.uTime(this.time), r.iResolution(width, height);
 	        //r.uNormalTex(color),
 	        r.uGradTex(this.gradientTex), this.geom.prepare(this.ribbonPrg), this.geom.render();
