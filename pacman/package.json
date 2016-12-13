@@ -23,6 +23,7 @@
     "webpack": "^1.13.2"
   },
   "dependencies": {
+    "gsap": "^1.19.0",
     "matter-js": "^0.11.1"
   }
 }

@@ -990,6 +990,10 @@ graceful-fs@^4.1.2:
   version "1.0.1"
   resolved "http://registry.npm.taobao.org/graceful-readlink/download/graceful-readlink-1.0.1.tgz#4cafad76bc62f02fa039b2f94e9a3dd3a391a725"
 
+gsap:
+  version "1.19.0"
+  resolved "http://registry.npm.taobao.org/gsap/download/gsap-1.19.0.tgz#f36b78c6b1a449028d89efbb4c161db29f5991dd"
+
 har-validator@~2.0.6:
   version "2.0.6"
   resolved "http://registry.npm.taobao.org/har-validator/download/har-validator-2.0.6.tgz#cdcbc08188265ad119b6a5a7c8ab70eecfb5d27d"

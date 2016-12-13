@@ -1,4 +1,5 @@
 import Promise from 'bluebird';
+import TweenMax from 'gsap'
 function isMobile(){
     var ua=navigator.userAgent.toLowerCase();
     return /android|iphone|ipad/.test(ua)
@@ -22,8 +23,9 @@ var pacmanScene=function(dom){
 	this.foodLength=23;
 	this.foodPre='f';
 	this.foodPos={x:0,y:0}
-	this.food=null,
+	this.food=[],
 	this.lastAngle=0,
+	this.eatPromise=null,
 	this.isEating=false,
 	this.foodImg=[],
 	this.pacman=document.createElement('div');
@@ -40,6 +42,7 @@ pacmanScene.prototype={
 	},
 	play:function(){
 		this.addListener()
+		
 	},
 	loadImage:function(){
 		var self=this,num=0;
@@ -73,62 +76,93 @@ pacmanScene.prototype={
 			}
 			self.pacman.img=img
 			self.container.appendChild(self.pacman)	
-			self.pacman.setAttribute('style','z-index:99;position:absolute;left:'+(window.innerWidth/2-100/2)+'px;top:330px;')
+			self.pacman.setAttribute('style','z-index:99;position:absolute;left:'+(window.innerWidth/2-100/2)+'px;top:'+(window.innerHeight/2-100/2)+'px;')
 			
 		})	
 	},
 	addFood:function(e){
-		this.isEating=true;
+
 		var x=isMobile ? e.targetTouches[0].clientX : e.pageX, y=isMobile ? e.targetTouches[0].clientY : e.pageY,
 		foodId=Math.round(Math.random()*(this.foodLength-1)),self=this;
 
 		var img=this.foodImg[foodId]
+		if(has(this.food,'target',img)){
+			img =new Image();
+			img.src=self.foodImg[foodId].src;
+			img.onload=function(){
+				self.container.appendChild(img);
+			}
+		}else {
+			self.container.appendChild(img);
+		}
 		
-		self.container.appendChild(img);
 		self.foodPos={x:x-img.width/2,y:y-img.height/2}
-		img.className='food shake-slow';
+		img.className='food';
 		img.setAttribute('style',"z-index:98;position:absolute;top:"+self.foodPos.y+'px;left:'+self.foodPos.x+'px;');
 
-		self.food=img;
-		
+		self.food.push({target:img,centerPos:{x:x,y:y},position:self.foodPos})
+	},
+	startEat:function(){
+		if(this.food.length>0&&(!this.eatPromise||this.eatPromise.isFulfilled())&&!this.isEating){
+			this.eatFood()
+		}
 	},
 	eatFood:function(){
 		
-		var moveX=this.foodPos.x+this.food.width/2-parseFloat(this.pacman.style.left)-this.pacman.width/2,
-		    moveY=this.foodPos.y+this.food.height/2-parseFloat(this.pacman.style.top)-this.pacman.height/2,
 		self=this;
 
-		var angle=this.getAngle();
-		this.pacman.style.transition='.6s ease-out';
-		this.pacman.img.style.transition='.3s'
-		this.pacman.img.style.transform='rotate('+angle+'deg)'
+		this.eatPromise= new Promise(function(resolve,reject){
+			var angle=self.getAngle();
+			
+			//self.pacman.img.style.transform='rotate('+angle+'deg)'
+			TweenMax.to(self.pacman.img,.3,{transform:'rotate('+angle+'deg)',onComplete:move})
+			var moveX=self.food[0].centerPos.x-parseFloat(self.pacman.style.left)-self.pacman.width/2,
+		    moveY=self.food[0].centerPos.y-parseFloat(self.pacman.style.top)-self.pacman.height/2
 
-		setTimeout(function(){self.pacman.style[preFix('transform')]='translate('+moveX+'px,'+moveY+'px)'},500)
-		setTimeout(function(){self.food.style.opacity=0},800)
-		setTimeout(function(){
-			//self.container.removeChild(self.food);
-			self.isEating=false;
-		},900)
+			function move(){
+				TweenMax.to(self.pacman,.8,{'transform':'translate('+moveX+'px,'+moveY+'px)', onComplete:next})
+				
+				//self.pacman.img.removeEventListener('webkitTransitionEnd',move)
+				//self.pacman.img.removeEventListener('transitionend',move)
+			}
+			function next(){
+				self.food[0].target.style.display='none';
+				//self.food[0].target.style.background='red';
+				self.food.shift()
+				if(self.food.length>0){
+					self.eatFood()
+					self.isEating=true;
+				}else {
+					console.log('eatFinished')
+					TweenMax.to(self.pacman,.4,{'transform':'translate('+0+'px,'+0+'px)'})
+					TweenMax.to(self.pacman.img,.4,{transform:'rotate('+0+'deg)'})
+					self.isEating=false;
+				}		
+				resolve('eat next')
+			}	
+	
+		})
+		return this.eatPromise
 	},
 	getAngle:function(){
 		var rect=this.pacman.getBoundingClientRect();
 
-		var tan=(this.foodPos.y-rect.top)/(this.foodPos.x-rect.left);
+		var tan=(this.food[0].position.y-rect.top)/(this.food[0].position.x-rect.left);
 		var angle=Math.atan(tan)*180/Math.PI;//-90..90
-		if(this.foodPos.x-rect.left<0){
+		if(this.food[0].position.x-rect.left<0){
 			angle=angle+180
 
 		} else {
 			
 		}
 		return angle;
-		
 	},
 	_down:function(e){
 		e.preventDefault();
-		if(!this.isEating){
-			this.addFood(e),this.eatFood()
-		}	
+		
+		this.addFood(e)
+		this.startEat()
+		
 	},
 	addListener:function(){
 		isMobile ? window.addEventListener('touchstart',this.down) : window.addEventListener('mousedown',this.down)
@@ -151,5 +185,12 @@ function preFix(name){
 		}		
 	}
 	return tmp;
+}
+function has(arr, key, value) { //array child object has key-value
+    if (!arr||!arr.length) return -1;
+    for (var i = 0; i < arr.length; i++) {
+        if (arr[i][key] == value) return i;
+    }
+    return -1;
 }
 module.exports=app;
