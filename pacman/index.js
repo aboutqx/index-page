@@ -11,11 +11,13 @@ var app={
 		var self=this;
 		this.p=new pacmanScene(dom);
 		this.p.load().then(function(){
+			self.p.init();
 			self.p.play();
 		})
 	},
 	inactive:function(){
 		this.p.removeListener()
+		this.p.dispose();
 	}
 }
 var pacmanScene=function(dom){
@@ -24,25 +26,24 @@ var pacmanScene=function(dom){
 	this.foodPre='f';
 	this.foodPos={x:0,y:0}
 	this.food=[],
-	this.lastAngle=0,
 	this.eatPromise=null,
 	this.isEating=false,
 	this.foodImg=[],
 	this.pacman=document.createElement('div');
 	this.down=this._down.bind(this);
-	this.init();
+	this.resize=this._resize.bind(this);
 }
 pacmanScene.prototype={
 	init:function(){
 		var self=this;		
-
+		self.container.appendChild(self.pacman)
+		self.pacman.setAttribute('style','z-index:99;position:absolute;left:'+(window.innerWidth/2-100/2)+'px;top:'+(window.innerHeight/2-100/2)+'px;')
 	},
 	load:function(){
-		return Promise.all([this.addPacman(),this.loadImage()])
+		return Promise.all([this.loadPacman(),this.loadImage()])
 	},
 	play:function(){
-		this.addListener()
-		
+		this.addListener()	
 	},
 	loadImage:function(){
 		var self=this,num=0;
@@ -63,7 +64,7 @@ pacmanScene.prototype={
 			}
 		})
 	},
-	addPacman:function(){
+	loadPacman:function(){
 		var self=this;
 		return new Promise(function(resolve,reject){
 			var img=new Image();
@@ -75,9 +76,6 @@ pacmanScene.prototype={
 				resolve(img)
 			}
 			self.pacman.img=img
-			self.container.appendChild(self.pacman)	
-			self.pacman.setAttribute('style','z-index:99;position:absolute;left:'+(window.innerWidth/2-100/2)+'px;top:'+(window.innerHeight/2-100/2)+'px;')
-			
 		})	
 	},
 	addFood:function(e){
@@ -99,8 +97,11 @@ pacmanScene.prototype={
 		self.foodPos={x:x-img.width/2,y:y-img.height/2}
 		img.className='food';
 		img.setAttribute('style',"z-index:98;position:absolute;top:"+self.foodPos.y+'px;left:'+self.foodPos.x+'px;');
+		var moveX=x-parseFloat(self.pacman.style.left)-self.pacman.width/2,
+		moveY=y-parseFloat(self.pacman.style.top)-self.pacman.height/2;
 
-		self.food.push({target:img,centerPos:{x:x,y:y},position:self.foodPos})
+		self.food.push({target:img,move:{x:moveX,y:moveY},position:self.foodPos})
+	
 	},
 	startEat:function(){
 		if(this.food.length>0&&(!this.eatPromise||this.eatPromise.isFulfilled())&&!this.isEating){
@@ -116,8 +117,8 @@ pacmanScene.prototype={
 			
 			//self.pacman.img.style.transform='rotate('+angle+'deg)'
 			TweenMax.to(self.pacman.img,.3,{transform:'rotate('+angle+'deg)',onComplete:move})
-			var moveX=self.food[0].centerPos.x-parseFloat(self.pacman.style.left)-self.pacman.width/2,
-		    moveY=self.food[0].centerPos.y-parseFloat(self.pacman.style.top)-self.pacman.height/2
+			var moveX=self.food[0].move.x,
+		    moveY=self.food[0].move.y
 
 			function move(){
 				TweenMax.to(self.pacman,.8,{'transform':'translate('+moveX+'px,'+moveY+'px)', onComplete:next})
@@ -146,7 +147,18 @@ pacmanScene.prototype={
 	},
 	getAngle:function(){
 		var rect=this.pacman.getBoundingClientRect();
-
+		this.food.forEach(function(v,i){
+			this.food[i].distance=Math.pow(this.food[i].position.y-rect.top,2)+Math.pow(this.food[i].position.x-rect.left,2)
+		}.bind(this))
+		this.food.sort(function(a,b){
+			if (a.distance > b.distance) {
+			    return 1;
+			}
+			if (a.distance < b.distance) {
+			    return -1;
+			}
+			return 0;
+		})
 		var tan=(this.food[0].position.y-rect.top)/(this.food[0].position.x-rect.left);
 		var angle=Math.atan(tan)*180/Math.PI;//-90..90
 		if(this.food[0].position.x-rect.left<0){
@@ -164,13 +176,21 @@ pacmanScene.prototype={
 		this.startEat()
 		
 	},
+	_resize:function(){
+
+		this.pacman.setAttribute('style','z-index:99;position:absolute;left:'+(window.innerWidth/2-100/2)+'px;top:'+(window.innerHeight/2-100/2)+'px;')
+	},
 	addListener:function(){
 		isMobile ? window.addEventListener('touchstart',this.down) : window.addEventListener('mousedown',this.down)
-
+		window.addEventListener('resize',this.resize)
 	},
 	removeListener:function(){
 		window.removeEventListener('mousedown',this.down)
 		window.removeEventListener('touchstart',this.down)
+		window.removeEventListener('resize',this.resize)
+	},
+	dispose:function(){
+		this.foodImg=null,this.food=null;
 	}
 }
 
@@ -193,4 +213,5 @@ function has(arr, key, value) { //array child object has key-value
     }
     return -1;
 }
+
 module.exports=app;
