@@ -10,7 +10,7 @@ var app={
 	load:function(dom){
 		var self=this;
 		this.p=new pacmanScene(dom);
-		this.p.load().then(function(){
+		this.p.load().delay(100).then(function(){
 			self.p.init();
 			self.p.play();
 		})
