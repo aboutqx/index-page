@@ -24,19 +24,18 @@ export default function play(){
 
     // init scene and camera
     var scene = new THREE.Scene();
-    scene.fog = new THREE.Fog(0x000000, 3500, 15000);
-    scene.fog.color.setHSL(0.51, 0.4, 0.01);
+  
 
     var ambient = new THREE.AmbientLight( 0x444444 );
     scene.add( ambient );
 
     var directionalLight = new THREE.DirectionalLight( 'white' );
-    directionalLight.position.set( 1, 12, 0.3 ).setLength(12)
-    directionalLight.shadow.mapSize.set(128,128)
-    directionalLight.shadow.camera.bottom = -3
-    directionalLight.shadow.camera.top = 3
-    directionalLight.shadow.camera.right = 3
-    directionalLight.shadow.camera.left = -3
+    directionalLight.position.set( 1, 8, 4.3 ).setLength(12)
+    directionalLight.shadow.mapSize.set(256,128)
+    directionalLight.shadow.camera.bottom = -12
+    directionalLight.shadow.camera.top = 12
+    directionalLight.shadow.camera.right = 12
+    directionalLight.shadow.camera.left = -12
     directionalLight.castShadow = true;
 
     scene.add( directionalLight );
@@ -86,9 +85,9 @@ export default function play(){
     var arToolkitContext = new THREEx.ArToolkitContext({
         cameraParametersUrl: THREEx.ArToolkitContext.baseURL + './data/data/camera_para.dat',
         detectionMode: 'mono',
-        maxDetectionRate: 30,
-        canvasWidth: 80 * 3,
-        canvasHeight: 60 * 3,
+        // maxDetectionRate: 30,
+        // canvasWidth: 80 * 3,
+        // canvasHeight: 60 * 3,
     })
     // initialize it
     arToolkitContext.init(function onCompleted() {
@@ -146,7 +145,7 @@ export default function play(){
      
     var material = new THREE.ShadowMaterial();
     material.opacity = 0.7; //! bug in threejs. can't set in constructor
-    var geometry = new THREE.PlaneGeometry(3, 3)
+    var geometry = new THREE.PlaneGeometry(6, 6)
     var planeMesh = new THREE.Mesh( geometry, material);
     planeMesh.receiveShadow = true;
     planeMesh.depthWrite = false;
@@ -162,7 +161,7 @@ export default function play(){
     
 
     onRenderFcts.push(function () {
-    mesh.rotation.x += 0.1
+    // mesh.rotation.x += 0.1
     viewHorse.render()
     })
 
