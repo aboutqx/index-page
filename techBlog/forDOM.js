@@ -208,8 +208,8 @@ show(elem);
 var h=fullHeight(elem);
 	elem.style.height='0px';
 for (var i=0;i<101; i+=5){
-(function(){//使用一个匿名函数来激发一个作用域
-var pos=i;
+(function(){//使用一个闭包对象来保存变量，闭包包括函数和创建该函数的环境。环境由闭包创建时在作用域中的任何局部变量组成
+var pos=i;//或使用let
 setTimeout(
 function(){elem.style.height=((pos/100)*h)+'px';}
 ,(pos+1)*12);})();

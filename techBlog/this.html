@@ -1,0 +1,37 @@
+全局上下文
+this===window
+函数上下文
+简单调用
+因为下面的代码不是在严格模式下执行，且this的值不是通过调用设置的，所以this的值默认指向全局对象。
+作为对象的方法
+当以对象里的方法的方式调用函数时，它们的 this 是调用该函数的对象.
+
+箭头函数的this被设置为它被创建时的上下文，而普通函数的this是window或者作为对象调用时指向对象
+<script>
+	
+	var a=2;
+	function A(){
+		// this.a=4
+		
+		function e(){
+			console.log(this.a)
+		}
+		e()
+		setTimeout(()=>{
+			console.log(this.a)
+		},100)
+	}
+	function c(){
+		
+		console.log(this.a,a);
+		function d(){
+			console.log(this);
+		}
+		d()
+		var a=3
+	}
+c()
+b=new A()//this被设置为当前对象
+
+console.log(b.a)
+</script>

@@ -1,4 +1,4 @@
-import glProgram from './glProgram';
+、import glProgram from './glProgram';
 import glTexture from './glTexture';
 import glMatrix from 'gl-matrix';
 import { arrayBuffer, indexBuffer } from './glBuffer';

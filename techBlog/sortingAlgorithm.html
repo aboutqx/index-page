@@ -29,7 +29,7 @@
 快速排序步骤如下：
 <ol>
 <li>从list里选择一个基准点pivot，一般是中心点</li>
-<li>对list排序，保证比pivot小的在pivot前面，比pivot大的元素都在它后面，在这次分割后pivot会有一个最终的位置</li>
+<li>对list排序，保证比pivot小的在pivot前面，比pivot大的元素都在它后面，具体是设置两个标点i,j;i发现比基准大的，j发现比基准小的，则交换数字，ij继续像中靠，直到相遇，比较相遇处值和基准值，考虑是否交换，结束，在这次分割后pivot会有一个最终的位置</li>
 <li>对以pivot为界的两个sublists递归使用上面的方法，直到sublist只有一个元素，这样就确保生成了一个sorted list。</li>
 </ol>
 <h3>Bubble sort 基于的思想和方法:exchanging</h3>
@@ -217,4 +217,5 @@ function quickSort(items){
 
 <span> reference: <a href="https://en.wikipedia.org/wiki/Sorting_algorithm">wiki文档:Sorting algorithm</a>
 <a href="http://www.nczonline.net/blog/2012/11/27/computer-science-in-javascript-quicksort/">Nicholas C. Zakas's blog</a>
+<a href="http://developer.51cto.com/art/201403/430986.htm">快速排序</a>
 </span>

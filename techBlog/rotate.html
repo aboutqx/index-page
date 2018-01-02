@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>rotate动画</title>
+    <style>
+    .red-ball {
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        left: 0;
+        color: orange;
+        font-size: 100px;
+        line-height: 1;
+        animation: circle 5s linear 0s infinite;
+        transform-origin: 100px 100px;
+    }
+    
+    .red-ball>div {
+        animation: inner-circle 5s linear 0s infinite;
+    }
+    
+    @keyframes circle {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+    
+    @keyframes inner-circle {
+        from {
+            transform: rotate(360deg);
+        }
+    }
+    
+    .ball {
+        width: 100px;
+        height: 100px;
+        background: #ddd;
+        border-radius: 50%;
+        background: linear-gradient( to right, red, #f06d06);
+        -webkit-animation-duration: 4s;
+        -webkit-animation-timing-function: linear;
+        -webkit-animation-name: "rotate";
+        -webkit-animation-iteration-count: infinite;
+        position: absolute;
+        left: 30%;
+        top: 20%;
+    }
+    
+    @-webkit-keyframes rotate {
+        0% {
+            -webkit-transform: translate(100px, 100px) rotate(0deg) translate(-100px, -100px) rotate(0deg);
+            background-color: red;
+        }
+        13% {
+            -webkit-transform: translate(100px, 100px) rotate(45deg) translate(-100px, -100px) rotate(-45deg);
+        }
+        25% {
+            -webkit-transform: translate(100px, 100px) rotate(90deg) translate(-100px, -100px) rotate(-90deg);
+        }
+        38% {
+            -webkit-transform: translate(100px, 100px) rotate(135deg) translate(-100px, -100px) rotate(0deg);
+        }
+        50% {
+            -webkit-transform: translate(100px, 100px) rotate(180deg) translate(-100px, -100px) rotate(-180deg);
+        }
+        63% {
+            -webkit-transform: translate(100px, 100px) rotate(225deg) translate(-100px, -100px) rotate(225deg);
+        }
+        75% {
+            -webkit-transform: translate(100px, 100px) rotate(270deg) translate(-100px, -100px) rotate(-270deg);
+        }
+        88% {
+            -webkit-transform: translate(100px, 100px) rotate(315deg) translate(-100px, -100px) rotate(315deg);
+        }
+        100% {
+            -webkit-transform: translate(100px, 100px) rotate(360deg) translate(-100px, -100px) rotate(-360deg);
+        }
+    }
+    </style>
+</head>
+
+<body>
+    <div class="red-ball">
+        <div>☺</div>
+    </div>
+    <div class="ball"></div>
+</body>
+
+</html>
