@@ -84,7 +84,7 @@ export default function play(){
 
     // create atToolkitContext
     var arToolkitContext = new THREEx.ArToolkitContext({
-        cameraParametersUrl: THREEx.ArToolkitContext.baseURL + '../data/data/camera_para.dat',
+        cameraParametersUrl: THREEx.ArToolkitContext.baseURL + './data/data/camera_para.dat',
         detectionMode: 'mono',
         maxDetectionRate: 30,
         canvasWidth: 80 * 3,
@@ -113,7 +113,7 @@ export default function play(){
     scene.add(markerGroup)
     var artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, markerGroup, {
         type: 'pattern',
-        patternUrl: THREEx.ArToolkitContext.baseURL + '../data/data/patt.hiro'
+        patternUrl: THREEx.ArToolkitContext.baseURL + './data/data/patt.hiro'
             // patternUrl : THREEx.ArToolkitContext.baseURL + '../data/data/patt.kanji'
     })
     scene.visible = false
