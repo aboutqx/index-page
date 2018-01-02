@@ -110,10 +110,10 @@ export default function play(){
 
     var markerGroup = new THREE.Group
     scene.add(markerGroup)
-    var artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, markerGroup, {
+    var artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, camera, {
         type: 'pattern',
-        patternUrl: THREEx.ArToolkitContext.baseURL + './data/data/patt.hiro'
-            // patternUrl : THREEx.ArToolkitContext.baseURL + '../data/data/patt.kanji'
+        patternUrl: THREEx.ArToolkitContext.baseURL + './data/data/pattern-marker.patt',
+        changeMatrixMode: 'cameraTransformMatrix'
     })
     scene.visible = false
 
