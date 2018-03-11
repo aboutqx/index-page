@@ -1,4 +1,4 @@
-变量声明，无论发生在何处，都在执行任何代码之前进行处理。
+变量声明，无论发生在何处，都在执行当前函数代码之前进行处理。
 bla = 2
 var bla;
 // ...
@@ -52,3 +52,13 @@ var myvar = "my value";
   console.log(myvar); // undefined
   var myvar = "local value";
 })();
+
+var name="world!";
+(function(){
+  if(typeof name === "undefined"){
+    var name="Jack";
+    console.log('Goodbye '+name)
+  } else {
+    console.log('Hello'+name)
+  }
+})()
