@@ -1,0 +1,24 @@
+<select style="width:50px;" >
+	<option value="a">a</option>
+	<option value="b">b</option>
+	<option value="c">c</option>
+</select>
+<span></span>
+
+<input type="radio" value="d" name="s"><lable for="d">d</lable>
+<input type="radio" value="e" name="s"><lable for="e">e</lable>
+<p></p>
+
+
+<script>
+document.querySelector('select').addEventListener('change',function handleSelect(e){
+		console.log(e)
+		let t = document.querySelector('span')
+		t.innerHTML=e.target.value
+	}
+)
+
+function change(){
+	
+}
+</script>
