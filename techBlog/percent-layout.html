@@ -1,0 +1,12 @@
+CSS百分比padding都是相对宽度计算的
+
+保证外部的div是定比，再将图片设置为100%宽高，就能保证图片是定比例
+.banner {
+    padding: 15.15% 0 0;
+    position: relative;
+}
+.banner > img {
+    position: absolute;
+    width: 100%; height: 100%;
+    left: 0; top: 0;
+}
