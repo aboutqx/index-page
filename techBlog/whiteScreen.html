@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+<head>
+	<script>
+		requestAnimationFrame(function(){
+			var time = Date.now() - performance.timing.navigationStart;
+				console.log("白屏时间：",time)
+		})	
+ </script>
+</head>
+<body>
+<script>
+	var start =Date.now()
+	while(Date.now()-start<3000){}
+</script>
+</body>
+<html>
