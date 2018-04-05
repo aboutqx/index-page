@@ -49,7 +49,6 @@ var quadScene = createScene({
             a.bindFramebuffer(a.FRAMEBUFFER, null),
             a.viewport(0, 0, width, height),
             a.clear(a.COLOR_BUFFER_BIT | a.DEPTH_BUFFER_BIT),
-
             //this.noiseBg.render()
 
             this.ribbon.renderCut(frameTime, width, height, this.nrmCompo.fbo.color)

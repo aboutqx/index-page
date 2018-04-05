@@ -1,54 +1,98 @@
+// webpack.config.js
 const path = require('path');
-const webpack           = require('webpack');
-const prod              = process.env.NODE_ENV === 'production';
-const isDevelopment     = process.env.NODE_ENV === 'development';
+const webpack = require('webpack');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
-module.exports = {
-    entry: './index.js',
-    output: {
-        path: path.join(__dirname, '/dist/'),
-        filename: 'bundle.js',
-        publicPath:'/dist/'
-    },
-    cache: isDevelopment,
-    debug: isDevelopment,
-    devServer: { inline: true },
-    stats: {
-        cached: false,
-        cachedAssets: false,
-        chunkModules: false,
-        chunks: false,
-        colors: true,
-        errorDetails: true,
-        hash: false,
-        progress: true,
-        reasons: false,
-        timings: true,
-        version: false
-    },
-    resolve: {
-        extensions: ['', '.js', '.jsx']
-    },
-    module: {
-        loaders: [{
-            test: /\.js$/,
-            exclude: /node_modules/,
-            loader: "babel",
-            query:{
-                presets:['es2015']
-            }
+const pathOutput = path.resolve(__dirname, 'dist');
+const pathNodeModules = path.resolve(__dirname, 'node_modules');
+const env = process.env.NODE_ENV;
+const isProd = env === 'production';
+
+console.log('Environment isProd :', isProd);
+
+const plugins = [
+    new webpack.HotModuleReplacementPlugin()
+];
+
+if(isProd) {
+    plugins.push(new webpack.optimize.UglifyJsPlugin({
+        sourceMap:false,
+        compress: {
+            drop_debugger: true,
+            drop_console: true,
+            screw_ie8: true
         },
-        { test: /\.jpg$/, loader: "file-loader?name=[name].[ext]" },
+        comments:false,
+        mangle:false
+    }));
+    plugins.push(new ExtractTextPlugin('assets/css/main.css'));
+}
+
+const entry = isProd ? {app:'./src/js/app.js'}
+                : {app:'./index.js'};
+const output = isProd ? {
+        filename:'assets/js/app.js',
+        path: pathOutput
+    } : {
+        filename:'bundle.js',
+        path: pathOutput,
+        publicPath:'/dist/'
+    };
+
+const devtool = isProd ? 'source-map' : 'inline-source-map';
+
+
+
+const config = {
+    entry,
+    devtool,
+    devServer: {
+        host:'0.0.0.0',
+        contentBase: './',
+        hot:true,
+        disableHostCheck:true
+    },
+    plugins,
+    output,
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                loader: 'babel-loader',
+                query: {
+                    presets: ['env']
+                },
+                exclude: pathNodeModules
+            },
+            {
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader'],
+                exclude: pathNodeModules
+            },
+            {
+                test: /\.scss$/,
+                use: isProd ?
+                ExtractTextPlugin.extract({
+                    fallback:"style-loader",
+                    use: ["css-loader", "sass-loader"]
+                }) : 
+                ["style-loader", "css-loader", "sass-loader"]
+                ,
+                exclude: pathNodeModules
+            },
+            {
+                test: /\.(glsl|vert|frag)$/,
+                use: ["raw-loader", "glslify-loader"],
+                exclude: pathNodeModules
+            }
         ]
     },
-    plugins: prod ? [
-    new webpack.optimize.DedupePlugin(),//去重
-    new webpack.optimize.OccurenceOrderPlugin(),//分配最小id
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        screw_ie8: true,
-        warnings: false
-      }
-    }),
-  ] : [new webpack.optimize.OccurenceOrderPlugin()]
+    resolve: {
+        alias: {
+            'libs':path.resolve(__dirname, 'src/js/libs'),
+            'shaders':path.resolve(__dirname, 'src/shaders')
+        }
+    }
 }
+
+module.exports = config;

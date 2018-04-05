@@ -1,6 +1,6 @@
-、import glProgram from './glProgram';
+import glProgram from './glProgram';
 import glTexture from './glTexture';
-import glMatrix from 'gl-matrix';
+import * as glMatrix from 'gl-matrix';
 import { arrayBuffer, indexBuffer } from './glBuffer';
 
 var ribbonVShader = "#define GLSLIFY 1\n" +
@@ -135,10 +135,12 @@ var Ribbon = function(t) {
     this.currDir = new Float32Array(2);
     this.time = 0,
     this.ltime=0;
-    this.setupGL(t);
+    this.setupGL();
+    this.started = false;
 }
 Ribbon.prototype = {
-    setupGL: function(gl) {
+    setupGL: function() {
+    	  var gl = this.gl
         this.geom = new Geom(gl);
         this.ribbonPrg = new glProgram(gl);
         this.ribbonPrg.compile(ribbonVShader, ribbonFShader);
@@ -157,23 +159,22 @@ Ribbon.prototype = {
         })(gl)
     },
     preRender: function(time, width, height, posX, posY) {
-        var e = time,
-            t = width,
-            n = height,
-            i = posX,
-            r = posY;
-        this.time += e,
-            this.ltime += e,
-            r = -r,
-            i *= t / n,
-            p.set(this.currPos, i, r),
-            this.started || (p.copy(this.lastPos, this.currPos),
-                this.started = !0);
+        this.time += time,
+            this.ltime += time,
+            posY = -posY,
+            posX *= width / height,
+            p.set(this.currPos, posX, posY)
+
+        if(!this.started){
+          p.copy(this.lastPos, this.currPos),
+          this.started = true
+        }
         var o = v,
             a = g;
         p.subtract(o, this.currPos, this.lastPos);
         var s = p.length(o),
             u = s / this.ltime;
+        
         if (s > .03) {
             var l = Math.PI / 2 + 1.3 * (Math.random() - .5);
             m.fromRotation(y, l),
@@ -185,12 +186,10 @@ Ribbon.prototype = {
                 c = Math.min(.3, c),
                 p.scale(this.currDir, a, c),
                 this.geom.addQuad(this.lastPos, this.lastDir, this.currPos, this.currDir, this.time);
-                if(this.lastPos[0]==this.currPos[0]&&this.lastPos[1]==this.currPos[1]){
-
-                }
                 p.copy(this.lastDir, this.currDir),
                 p.copy(this.lastPos, this.currPos),
                 this.ltime = 0
+
         }
         this.geom.updateRange(this.time)
 
@@ -263,55 +262,49 @@ Ribbon.prototype = {
             this.startQuad = 0,
             this.endQuad = 0,
             this.times = []
-
     }
     Geom.prototype = {
         addQuad: function(lastPos, lastDir, currPos, currDir, time) {
-            var e = lastPos,
-                t = lastDir,
-                n = currPos,
-                i = currDir;
-
             time += .1 * Math.random() - .05;
             var o = this.endQuad;
             this.endQuad++,
                 this.endQuad > d - 1 && (this.endQuad = 0),
                 this.times.push(time);
-            var a = .5 * (e[0] + n[0]),
-                s = .5 * (e[1] + n[1]),
-                u = n[0] - a,
-                l = n[1] - s,
+            var a = .5 * (lastPos[0] + currPos[0]),
+                s = .5 * (lastPos[1] + currPos[1]),
+                u = currPos[0] - a,
+                l = currPos[1] - s,
                 c = 2 * Math.random() - 1;
             m[0 * f + 0] = a,
                 m[0 * f + 1] = s,
                 m[0 * f + 2] = -u,
                 m[0 * f + 3] = -l,
-                m[0 * f + 4] = -t[0],
-                m[0 * f + 5] = -t[1],
+                m[0 * f + 4] = -lastDir[0],
+                m[0 * f + 5] = -lastDir[1],
                 m[0 * f + 6] = time,
                 m[0 * f + 7] = c,
                 m[1 * f + 0] = a,
                 m[1 * f + 1] = s,
                 m[1 * f + 2] = -u,
                 m[1 * f + 3] = -l,
-                m[1 * f + 4] = t[0],
-                m[1 * f + 5] = t[1],
+                m[1 * f + 4] = lastDir[0],
+                m[1 * f + 5] = lastDir[1],
                 m[1 * f + 6] = time,
                 m[1 * f + 7] = c,
                 m[2 * f + 0] = a,
                 m[2 * f + 1] = s,
                 m[2 * f + 2] = u,
                 m[2 * f + 3] = l,
-                m[2 * f + 4] = -i[0],
-                m[2 * f + 5] = -i[1],
+                m[2 * f + 4] = -currDir[0],
+                m[2 * f + 5] = -currDir[1],
                 m[2 * f + 6] = time,
                 m[2 * f + 7] = c,
                 m[3 * f + 0] = a,
                 m[3 * f + 1] = s,
                 m[3 * f + 2] = u,
                 m[3 * f + 3] = l,
-                m[3 * f + 4] = i[0],
-                m[3 * f + 5] = i[1],
+                m[3 * f + 4] = currDir[0],
+                m[3 * f + 5] = currDir[1],
                 m[3 * f + 6] = time,
                 m[3 * f + 7] = c,
                 this.vBuffer.subData(m, o * h * p)
@@ -330,11 +323,11 @@ Ribbon.prototype = {
             
         },
         render: function() {
-            var e;
+            var e;console.log(this.endQuad,this.startQuad)
             if(this.endQuad < this.startQuad) {
-                (e = 6 * (d - this.startQuad),
+                e = 6 * (d - this.startQuad),
                 this.iBuffer.drawTriangles(6 * this.endQuad, 0),
-                this.iBuffer.drawTriangles(e, 12 * this.startQuad))
+                this.iBuffer.drawTriangles(e, 12 * this.startQuad)
 
             }  else{
                 e = 6 * (this.endQuad - this.startQuad);

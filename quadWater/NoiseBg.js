@@ -1,5 +1,5 @@
 import glProgram from './glProgram';
-import glMatrix from 'gl-matrix';
+import * as glMatrix from 'gl-matrix';
 import {arrayBuffer} from './glBuffer';
 for(var r = 512, o = new Uint8Array(r * r), a = 0;r * r > a;a++){
 	o[a] = Math.min(255 * Math.random() * 3, 255);
