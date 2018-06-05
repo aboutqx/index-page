@@ -29,6 +29,17 @@ function parent (elem, num) {
   for (var i = 0; i < num; i++) if (elem != null) elem = elem.parentChild
   return elem
 }
+const findParent = (elem, query) => {
+  let collects = document.querySelectorAll(query)
+  do {
+    elem = elem.parentNode
+    console.log(elem)
+    for (let i = 0; i < collects.length; i++) {
+      if (elem === collects[i]) return elem
+    }
+  } while (elem)
+  return null
+}
 function attr (elem, name, value) {
   if (!name || name.constructor != String) return ''
   name = { for: 'htmmlFor', class: 'className' }[name] || name
