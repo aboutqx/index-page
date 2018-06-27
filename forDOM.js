@@ -249,3 +249,69 @@ function fadeIn (elem) {
     })()
   }
 }
+function has(arr, key, value) { // array child object has key-value
+  if (!arr || !arr.length) return -1
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i][key] === value) return i
+  }
+  return -1
+}
+
+function append(parent, child, option) {
+  let elm
+  // use id or class as identity
+  if (typeof child === 'string') {
+    if (/<(.+?)\b/i.test(child)) {
+      elm = document.createElement(RegExp.$1)
+    }
+
+    if (option === 'once') {
+
+      let exist
+      if (/id="?(.+?)"?/i.test(child)) {
+        exist = document.getElementById(RegExp.$1)
+      } else if (/class="?(.+?)"?/i.test(child)) {
+        exist = document.getElementsByClassName(RegExp.$1)[0]
+      }
+      if (exist)
+        return exist
+    }
+  } else {
+    elm = child
+    if (option === 'once') {
+
+      let exist
+      if (elm.id) {
+        exist = document.getElementById(elm.id)
+      } else if (elm.className) {
+        exist = document.getElementsByClassName(elm.className)[0]
+      }
+      if (exist)
+        return exist
+    }
+  }
+
+
+  parent.appendChild(elm)
+  if (typeof child === 'string') requestAnimationFrame(() => {
+    elm.outerHTML = child
+  })
+  return elm
+}
+
+function toggle(parent, child, className) {
+  parent.querySelector(`.${className}`) && parent.querySelector(`.${className}`).classList.remove(className)
+  child.classList.add(className)
+}
+
+function Toast(message) {
+  if (typeof message === 'string') {
+    const div = document.createElement('div')
+    document.body.appendChild(div)
+    div.outerHTML = `<div class="simple-toast">${message}</div>`
+    setTimeout(() => {
+      document.body.removeChild(div)
+    }, 1000)
+  }
+
+}
