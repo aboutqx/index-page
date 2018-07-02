@@ -1,0 +1,17 @@
+{
+  "name": "aboutqx-resume",
+  "version": "1.0.0",
+  "description": "personal",
+  "main": "index.js",
+  "dependencies": {
+    "normalize.css": "^8.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "parcel resume.html",
+    "dev": "parcel resume.html",
+    "build": "parcel build index.js"
+  },
+  "author": "",
+  "license": "MIT"
+}

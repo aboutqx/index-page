@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>resume</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <section class="basic"></section>
+    <section class="education"></section>
+    <section class="work"></section>
+    <section class="projects">
+        <p class="dept">背景:做后台项目的一些积累,element-ui并不能完全满足需要,就自己写了相关的</p>
+        <p>使用typescript+vue-cli集成</p>
+        <iframe src="https://aboutqx.github.io/simple-vue-components/dist" frameborder="0" name="simple-vue-components"></iframe>
+        <p class="dept">背景:做一个需要重构的项目,项目本身是前后端不分离的,准备逐渐迁移到vue上.
+            <br> 使用多个html-webpack-plugin逐步迁移,前端代码和后端代码不是放在一个服务器上,所以需要生成路径(后来发现publicPath可以写成cdn形式),后缀是使用后端时间戳,这样就不用更新html模板到jsp页面.
+        </p>
+        <div class="project-section script-link-html-webpack-plugin">
+
+        </div>
+        <p>背景:接触webgl过程中,做的2d webgl 图片应用,不断更新中...</p>
+        <p>最新:基于sobel算子的edge detection</p>
+        <a href="https://aboutqx.github.io/simple-webgl/webglFilter/dist">webgl filter demo地址</a>
+        <div class="project-section webgl-filter"></div>
+        
+        <p class="dept">背景:早期的类似jQuery的辅助函数,例如findParent等.</p>
+        <p>
+            <a href="https://github.com/aboutqx/index-page/blob/gh-pages/forDOM.js">forDom.js github地址</a>
+        </p>
+        <div class="project-section fordom.js">
+
+        </div>
+    </section>
+    <footer>all rights reseved</footer>
+    <script src="./index.js"></script>
+</body>
+
+</html>
