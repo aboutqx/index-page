@@ -1,12 +1,60 @@
 iframe {
-    width:700px;
-    height:400px;
+    width: 800px;
+    height: 400px;
     background: hsl(0, 0%, 95%);
 }
-section,footer{
-    margin:0 auto;
-    width:700px;
+
+section,
+footer,p.no-print {
+    margin: 0 auto;
+    width: 800px;
 }
-p{
+
+p {
     line-height: 1.5;
+}
+
+body {
+    padding: 10px 0;
+}
+h2>*{
+    font-weight: normal;
+    font-size: 16px;
+}
+li{
+    line-height: 1.5;
+}
+.basic{
+    img{
+        width:150px;
+        float:right;
+    }
+}
+.skills{
+    span{
+        padding:2px 12px;
+        border-radius: 11px;
+        background: hsl(0.1, 10%, 93%);
+    }
+}
+a+span{
+
+    color:gray;
+    font-size:14px;
+}
+.project-section{
+    padding-left: 20px;
+    span{
+        font-weight: normal;
+        color:gray;
+        font-size:14px;
+    }
+}
+footer{
+    text-align: center;
+}
+@media print {
+    .no-print {
+        display: none;
+    }
 }

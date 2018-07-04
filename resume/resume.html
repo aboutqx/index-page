@@ -4,38 +4,109 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>resume</title>
+    <title>the resume</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
-    <section class="basic"></section>
-    <section class="education"></section>
-    <section class="work"></section>
+    <p class="no-print">
+        <em>按下 Ctrl + P 来打印该简历。此行不会出现在打印版本中</em>
+    </p>
+    <section class="basic">
+        <h2>周江
+            <span>前端/男</span>
+            <a href="mailto:aboutqx@163.com">aboutqx@163.com</a>
+        </h2>
+        <img src="./imgs/portrait.jpg" alt="">
+    </section>
+    <section class="education">
+        <h3>教育经历</h3>
+        <ul>
+            <li>2010 - 2014 北京林业大学 数字媒体技术</li>
+        </ul>
+    </section>
+    <section class="work">
+        <h3>工作经历</h3>
+        <ul>
+            <li>2014.7 - 2015.6 北京泰德网聚科技有限公司
+                <em>电视节目单等组件</em>
+            </li>
+            <li>2015.7 - 2017.6 北京网易科技有限公司
+                <em>奥运赛事系统,自媒体h5</em>
+            </li>
+            <li>2017.8 - 2018.1 个人兼职</li>
+            <li>2018.4 至今 杭州唯依科技
+                <em>网站重构,新项目开发,后台系统开发</em>
+            </li>
+        </ul>
+    </section>
+    <section class="workDept">
+        <h3>工作项目</h3>
+        <ul>
+            <li>全景系统
+                <p>
+                    从拍摄全景图,全景图切割,到全景前端展示,后端编辑页面的一整个流程的负责 使用three.js进行开发,实现了多分辨率的全景,场景跳转,热点的显示和编辑
+                </p>
+            </li>
+            <li>
+                <a href="http://data.2016.163.com">2016网易奥运赛程pc版</a> <span>http://data.2016.163.com</span>
+            </li>
+            <li>
+                <a href="http://news.163.com/special/dada2016">网易哒哒年终策划</a> <span>http://news.163.com/special/dada2016</span>
+            </li>
+            <li>vue+typescript的后台系统<p>
+                使用element-ui,typescript,用webpack dll plugin优化,附带成果包括一个自动编译,并更新修改的element-ui的bash文件
+            </p></li>
+        </ul>
+    </section>
     <section class="projects">
-        <p class="dept">背景:做后台项目的一些积累,element-ui并不能完全满足需要,就自己写了相关的</p>
-        <p>使用typescript+vue-cli集成</p>
-        <iframe src="https://aboutqx.github.io/simple-vue-components/dist" frameborder="0" name="simple-vue-components"></iframe>
-        <p class="dept">背景:做一个需要重构的项目,项目本身是前后端不分离的,准备逐渐迁移到vue上.
-            <br> 使用多个html-webpack-plugin逐步迁移,前端代码和后端代码不是放在一个服务器上,所以需要生成路径(后来发现publicPath可以写成cdn形式),后缀是使用后端时间戳,这样就不用更新html模板到jsp页面.
-        </p>
-        <div class="project-section script-link-html-webpack-plugin">
+        <h3>个人项目</h3>
+        <div class="project-section simple-vue-components">
+            <h4><a href="https://aboutqx.github.io/simple-vue-components/dist/index.html#/dashboard">simple-vue-components</a> <span>https://aboutqx.github.io/simple-vue-components/dist</span></h4>
+            <p class="dept">背景:做后台项目的一些积累,element-ui并不能完全满足需要</p>
+            <ul>
+                <li>使用typescript+vue-cli集成</li>
+                <li>无侵犯性,易于修改</li>
+            </ul>
 
         </div>
-        <p>背景:接触webgl过程中,做的2d webgl 图片应用,不断更新中...</p>
-        <p>最新:基于sobel算子的edge detection</p>
-        <a href="https://aboutqx.github.io/simple-webgl/webglFilter/dist">webgl filter demo地址</a>
-        <div class="project-section webgl-filter"></div>
-        
-        <p class="dept">背景:早期的类似jQuery的辅助函数,例如findParent等.</p>
-        <p>
-            <a href="https://github.com/aboutqx/index-page/blob/gh-pages/forDOM.js">forDom.js github地址</a>
-        </p>
+        <div class="project-section script-link-html-webpack-plugin">
+
+            <h4><a href="https://github.com/aboutqx/script-link-html-webpack-plugin">script-link-html-webpack-plugin</a> <span>https://github.com/aboutqx/script-link-html-webpack-plugin</span></h4>
+            <p class="dept">背景:接手一个需要重构的项目,项目是前后端不分离的,准备逐渐迁移到vue上.
+                <br>使用多个html-webpack-plugin逐步迁移,前端代码和后端代码不是放在一个服务器上,所以需要生成路径(后来发现publicPath可以写成cdn形式),后缀是使用后端时间戳,这样就不用更新html模板到jsp页面.</p>
+            <ul>
+                <li>可用于自定义链接和图片前后缀</li>
+            </ul>
+        </div>
+        <div class="project-section webgl-filter">
+
+            <h4><a href="https://aboutqx.github.io/simple-webgl/webglFilter/dist">webgl filter</a> <span>https://aboutqx.github.io/simple-webgl/webglFilter/dist</span></h4>
+            <p>背景:接触webgl过程中,做的2d webgl 图片应用,不断更新中...</p>
+            <ul>
+                <li>使用fork的nanogl作为基础库,构建图片处理框架</li>
+                <li>最新:基于sobel算子的edge detection</li>
+            </ul>
+        </div>
+
         <div class="project-section fordom.js">
+
+            <h4><a href="https://github.com/aboutqx/index-page/blob/gh-pages/forDOM.js">forDom.js</a> <span>https://github.com/aboutqx/index-page/blob/gh-pages/forDOM.js</span></h4>
+            <p class="dept">背景:早期的类似jQuery的辅助函数,例如findParent等.</p>
 
         </div>
     </section>
-    <footer>all rights reseved</footer>
+    <section class="skills">
+        <h3>技能</h3>
+        <ul>
+            <li>熟练使用vue + sass + webpack + eslint + prettier进行开发( 新加入typescript )</li>
+            <li>熟悉配置webpack</li>
+            <li>熟悉进行webgl原生开发(目前只到2d)</li>
+            <li>了解后台开发,了解node开发</li>
+            <li>掌握http协议,前端性能优化,熟悉正则表达式</li>
+        </ul>
+    </section>
+    <footer>all rights reseved ©aboutqx</footer>
     <script src="./index.js"></script>
 </body>
 
