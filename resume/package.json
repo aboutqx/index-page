@@ -8,9 +8,9 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "parcel resume.html",
-    "dev": "parcel resume.html",
-    "build": "parcel build index.js"
+    "test": "parcel index.html",
+    "dev": "parcel index.html",
+    "build": "parcel build index.js --public-url ./"
   },
   "author": "",
   "license": "MIT"
