@@ -1,1 +1,0 @@
-{"version":3,"sources":["index.js"],"names":[],"mappings":";;;AACA,aADA,QAAA,iBACA,QAAA","file":"index.map","sourceRoot":"..","sourcesContent":["import 'normalize.css'\r\nimport './main.scss'"]}

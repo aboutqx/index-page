@@ -10,7 +10,8 @@
   "scripts": {
     "test": "parcel index.html",
     "dev": "parcel index.html",
-    "build": "parcel build index.js --public-url ./"
+    "build": "parcel build index.html --public-url ./",
+    "debug": "node --inspect-brk C:\\Users\\lili\\AppData\\Roaming\\npm\\node_modules\\parcel-bundler\\bin\\cli.js  build index.html --public-url ./"
   },
   "author": "",
   "license": "MIT"
