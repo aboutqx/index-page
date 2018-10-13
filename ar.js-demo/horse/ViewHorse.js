@@ -17,7 +17,7 @@ export default class  ViewHorse {
 		for ( var i = 0; i !== ANIMATION_GROUPS; ++ i ) {
 
 			var group = new THREE.AnimationObjectGroup();
-			animGroups.push( new THREE.AnimationObjectGroup() );
+			animGroups.push( group );
 
 		}
 

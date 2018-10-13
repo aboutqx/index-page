@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server",
-    "dev": "set NODE_ENV=development&webpack-dev-server --https --open --hot --inline --host 192.168.199.111 --colors  --content-base dist --port 8081",
+    "dev": "set NODE_ENV=development&webpack-dev-server --https --open --hot --colors  --content-base dist --port 8081",
     "build": "set NODE_ENV=production&webpack --progress --colors --display-error-details"
   },
   "author": "aboutqx",

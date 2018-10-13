@@ -20,7 +20,8 @@ function getOutput() {
 module.exports = {
     entry: {
         basic:'./basic.js',
-        cloud:'./horse/app.js'
+        cloud:'./horse/app.js',
+        lion: './lion/app.js'
     },
     output: {
         path: getOutput(),//file system
@@ -30,7 +31,7 @@ module.exports = {
         //library: "app"
     },
     cache: isDevelopment,
-    devServer: { inline: true },
+    devServer: { inline: true, host: serverIp },
     stats: {
         cached: false,
         cachedAssets: false,
