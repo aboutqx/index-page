@@ -32,6 +32,7 @@ module.exports = {
     },
     cache: isDevelopment,
     devServer: { inline: true, host: serverIp },
+    devtool: 'source-map',
     stats: {
         cached: false,
         cachedAssets: false,

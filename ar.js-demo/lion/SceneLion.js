@@ -1,9 +1,12 @@
-import ViewLion from './ViewLion'
 
-export default function play(){
+import ViewLion from './ViewLion'
+import ViewYuanBao from './ViewYuanBao'
+window.debug = false
+
+export default function play(container){
     // init renderer
     var renderer = new THREE.WebGLRenderer({
-    // antialias	: true,
+    antialias	: true,
     alpha: true
     });
 
@@ -17,7 +20,7 @@ export default function play(){
     renderer.domElement.style.position = 'absolute'
     renderer.domElement.style.top = '0px'
     renderer.domElement.style.left = '0px'
-    document.body.appendChild(renderer.domElement);
+    container.appendChild(renderer.domElement);
 
     // array of functions for the rendering loop
     var onRenderFcts = [];
@@ -26,19 +29,20 @@ export default function play(){
     var scene = new THREE.Scene();
   
 
-    var ambient = new THREE.AmbientLight( 0x444444 );
-    scene.add( ambient );
+    scene.add(new THREE.AmbientLight(0x222222));
 
-    var directionalLight = new THREE.DirectionalLight( 'white' );
-    directionalLight.position.set( 1, 8, 4.3 ).setLength(12)
-    directionalLight.shadow.mapSize.set(256,128)
-    directionalLight.shadow.camera.bottom = -12
-    directionalLight.shadow.camera.top = 12
-    directionalLight.shadow.camera.right = 12
-    directionalLight.shadow.camera.left = -12
-    directionalLight.castShadow = true;
+    var particleLight = new THREE.Mesh(new THREE.SphereBufferGeometry(4, 8, 8), new THREE.MeshBasicMaterial({
+        color: 0xffffff
+    }));
 
-    scene.add( directionalLight );
+    var directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    directionalLight.position.set(1, 1, 1).normalize();
+    scene.add(directionalLight);
+    
+    scene.add(particleLight);
+    var pointLight = new THREE.PointLight(0xffffff, 1,500);
+    particleLight.add(pointLight);
+    particleLight.position.set(12, 12,-12).normalize();
     // Create a camera
     var camera = new THREE.Camera();
     scene.add(camera);
@@ -46,7 +50,6 @@ export default function play(){
     ////////////////////////////////////////////////////////////////////////////////
     //          handle arToolkitSource
     ////////////////////////////////////////////////////////////////////////////////
-    let debug = false
 
     let sourceParam
     if(debug) {
@@ -82,7 +85,7 @@ export default function play(){
     // artoolkitProfile.contextParameters.patternRatio = 0.9
     // create atToolkitContext
     var arToolkitContext = new THREEx.ArToolkitContext({
-        cameraParametersUrl: './data/data/camera_para.dat',
+        cameraParametersUrl: './data/camera_para.dat',
         detectionMode: 'mono',
         patternRatio: 0.9
         // maxDetectionRate: 30,
@@ -95,12 +98,34 @@ export default function play(){
         camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
     })
 
+    var debounceMatrices = [];
+
+    function smoothCamera(inputMatrix, debounce_count = 5) {
+        // Creates a moving average over the last n matrices.
+        debounceMatrices.push(inputMatrix);
+        if (debounceMatrices.length < debounce_count + 1) {
+            return inputMatrix;
+        } else {
+            debounceMatrices.shift();
+            let outputMatrix = new THREE.Matrix4().multiplyScalar(0);
+            for (let n in debounceMatrices) {
+                for (let i in debounceMatrices[n].elements) {
+                    outputMatrix.elements[i] += debounceMatrices[n].elements[i];
+                }
+            }
+            return outputMatrix.multiplyScalar(1 / debounce_count)
+            //取过去5个matrix的平均值
+        }
+    }
+
     // update artoolkit on every frame
     onRenderFcts.push(function () {
         if (arToolkitSource.ready === false) return
 
         arToolkitContext.update(arToolkitSource.domElement)
         scene.visible = camera.visible
+        camera.updateMatrix()
+        camera.matrix.copy(smoothCamera(camera.matrix.clone()))
     })
 
 
@@ -117,6 +142,17 @@ export default function play(){
     })
     scene.visible = false
 
+    // build a smoothedControls
+    var smoothedGroup = new THREE.Group()
+    scene.add(smoothedGroup)
+    var smoothedControls = new THREEx.ArSmoothedControls(smoothedGroup, {
+        lerpPosition: 0.8,
+        lerpQuaternion: 0.8,
+        lerpScale: 1,
+    })
+    onRenderFcts.push(function(delta){
+    	smoothedControls.update(markerGroup)
+    })
     //////////////////////////////////////////////////////////////////////////////////
     //		add an object in the scene
     //////////////////////////////////////////////////////////////////////////////////
@@ -147,10 +183,15 @@ export default function play(){
         directionalLight.target = viewLion.mesh
     })
     
+    let viewYuanBao = new ViewYuanBao(scene, camera, renderer)
+    viewYuanBao.load(() => {
+        markerScene.add(viewYuanBao.mesh[0])
+    })
 
     onRenderFcts.push(function () {
         // mesh.rotation.x += 0.1
         viewLion.render()
+        viewYuanBao.render()
     })
 
  
