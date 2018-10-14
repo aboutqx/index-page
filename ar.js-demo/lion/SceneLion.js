@@ -32,8 +32,8 @@ export default function play(container){
     scene.add(new THREE.AmbientLight(0xcccccc));
 
 
-    var directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-    directionalLight.position.set(1, 1, 1).normalize();
+    var directionalLight = new THREE.DirectionalLight(0xffffff, .8);
+    directionalLight.position.set(1, 1.5, 1)
     scene.add(directionalLight);
     
     var pointLight = new THREE.PointLight(0xcccccc, 1,500)
@@ -195,7 +195,7 @@ export default function play(container){
             //取过去5个matrix的平均值
         }
     }
-    
+
     var stats = new Stats();
     document.body.appendChild(stats.dom);
     // render the scene

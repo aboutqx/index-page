@@ -10,7 +10,7 @@ export default class  ViewLion {
 	//  PRIVATE MATHODS
 	_init(){
 		this.mixers = []
-		const scaleSize = window.debug ? 0.03 : .06
+		const scaleSize = window.debug ? 0.03 : .08
 		this.scaleSize = scaleSize
 	}
 		
@@ -35,6 +35,7 @@ export default class  ViewLion {
 			mesh.scale.set(this.scaleSize, this.scaleSize, this.scaleSize)
 			mesh.rotation.y = Math.PI
 			mesh.rotation.x = -Math.PI / 2
+			mesh.position.y = .5
 			this.mesh = mesh
 			fn()
 		})

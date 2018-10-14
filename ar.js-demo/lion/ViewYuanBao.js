@@ -13,7 +13,7 @@ export default class ViewLion {
     //  PRIVATE MATHODS
     _init() {
         this.mesh = []
-        const scaleSize = window.debug ? 120 :180
+        const scaleSize = window.debug ? 120 :250
         this.scaleSize = scaleSize
     }
 
@@ -24,8 +24,8 @@ export default class ViewLion {
         loader.load('models/animated/yuanbao.FBX', (mesh) => {
 
             mesh.scale.set(this.scaleSize, this.scaleSize, this.scaleSize)
-            mesh.rotation.x = Math.PI * 1.2
-            mesh.position.y = Math.random()
+            mesh.rotation.x = Math.PI * 1.3
+            mesh.position.y = Math.random()+.3
             mesh.position.z = -1.7
 
             this._originalMesh = mesh
