@@ -18,7 +18,7 @@ export default class  ViewLion {
 	//	PUBLIC METHODS
 	load(fn){
 		var loader = new THREE.FBXLoader();
-		loader.load('models/animated/lion.fbx', (mesh) => {
+		loader.load('models/animated/lion.FBX', (mesh) => {
 			mesh.mixer = new THREE.AnimationMixer(mesh);
 			this.mixers.push(mesh.mixer);
 			var action = mesh.mixer.clipAction(mesh.animations[0]);

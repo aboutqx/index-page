@@ -21,7 +21,7 @@ export default class ViewLion {
     //	PUBLIC METHODS
     load(fn) {
         var loader = new THREE.FBXLoader()
-        loader.load('models/animated/yuanbao.fbx', (mesh) => {
+        loader.load('models/animated/yuanbao.FBX', (mesh) => {
 
             mesh.scale.set(this.scaleSize, this.scaleSize, this.scaleSize)
             mesh.rotation.x = Math.PI * 1.2
