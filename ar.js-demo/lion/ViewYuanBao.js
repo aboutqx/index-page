@@ -25,7 +25,7 @@ export default class ViewLion {
 
             mesh.scale.set(this.scaleSize, this.scaleSize, this.scaleSize)
             mesh.rotation.x = Math.PI * 1.2
-            mesh.position.y = 1.
+            mesh.position.y = Math.random()
             mesh.position.z = -1.7
 
             this._originalMesh = mesh

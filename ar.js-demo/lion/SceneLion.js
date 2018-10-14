@@ -29,20 +29,17 @@ export default function play(container){
     var scene = new THREE.Scene();
   
 
-    scene.add(new THREE.AmbientLight(0x222222));
+    scene.add(new THREE.AmbientLight(0xcccccc));
 
-    var particleLight = new THREE.Mesh(new THREE.SphereBufferGeometry(4, 8, 8), new THREE.MeshBasicMaterial({
-        color: 0xffffff
-    }));
 
     var directionalLight = new THREE.DirectionalLight(0xffffff, 1);
     directionalLight.position.set(1, 1, 1).normalize();
     scene.add(directionalLight);
     
-    scene.add(particleLight);
-    var pointLight = new THREE.PointLight(0xffffff, 1,500);
-    particleLight.add(pointLight);
-    particleLight.position.set(12, 12,-12).normalize();
+    var pointLight = new THREE.PointLight(0xcccccc, 1,500)
+    pointLight.position.set(12, 12, 12)
+    // scene.add(pointLight);
+
     // Create a camera
     var camera = new THREE.Camera();
     scene.add(camera);
@@ -98,34 +95,13 @@ export default function play(container){
         camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
     })
 
-    var debounceMatrices = [];
-
-    function smoothCamera(inputMatrix, debounce_count = 5) {
-        // Creates a moving average over the last n matrices.
-        debounceMatrices.push(inputMatrix);
-        if (debounceMatrices.length < debounce_count + 1) {
-            return inputMatrix;
-        } else {
-            debounceMatrices.shift();
-            let outputMatrix = new THREE.Matrix4().multiplyScalar(0);
-            for (let n in debounceMatrices) {
-                for (let i in debounceMatrices[n].elements) {
-                    outputMatrix.elements[i] += debounceMatrices[n].elements[i];
-                }
-            }
-            return outputMatrix.multiplyScalar(1 / debounce_count)
-            //取过去5个matrix的平均值
-        }
-    }
-
     // update artoolkit on every frame
     onRenderFcts.push(function () {
         if (arToolkitSource.ready === false) return
 
         arToolkitContext.update(arToolkitSource.domElement)
         scene.visible = camera.visible
-        camera.updateMatrix()
-        camera.matrix.copy(smoothCamera(camera.matrix.clone()))
+        
     })
 
 
@@ -200,10 +176,33 @@ export default function play(container){
     //////////////////////////////////////////////////////////////////////////////////
     //		render the whole thing on the page
     //////////////////////////////////////////////////////////////////////////////////
+    var debounceMatrices = [];
+
+    function smoothCamera(inputMatrix, debounce_count = 5) {
+        // Creates a moving average over the last n matrices.
+        debounceMatrices.push(inputMatrix);
+        if (debounceMatrices.length < debounce_count + 1) {
+            return inputMatrix;
+        } else {
+            debounceMatrices.shift();
+            let outputMatrix = new THREE.Matrix4().multiplyScalar(0);
+            for (let n in debounceMatrices) {
+                for (let i in debounceMatrices[n].elements) {
+                    outputMatrix.elements[i] += debounceMatrices[n].elements[i];
+                }
+            }
+            return outputMatrix.multiplyScalar(1 / debounce_count)
+            //取过去5个matrix的平均值
+        }
+    }
+    
     var stats = new Stats();
     document.body.appendChild(stats.dom);
     // render the scene
     onRenderFcts.push(function () {
+        camera.updateMatrix()
+        camera.matrix.copy(smoothCamera(camera.matrix.clone()))
+
         renderer.render(scene, camera);
         stats.update();
     })
