@@ -40,7 +40,7 @@ export default class ViewLion {
         var delta = this.clock.getDelta()
         now = performance.now()
         if (now - prevTime > 2000 && this._originalMesh && this._originalMesh.position.z > 0) {
-            for (let j = 0; j < 3; j++) {
+            for (let j = 0; j < 4; j++) {
                 let clone = this._originalMesh.clone()
                 clone.position.x = (Math.random()*2 -1) * 2
                 clone.position.z = -1.7-Math.random()
