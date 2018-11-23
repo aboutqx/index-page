@@ -10,7 +10,7 @@
 
 <body>
     <p class="no-print">
-        <em>按下 Ctrl + P 来打印该简历。此行不会出现在打印版本中</em>
+        <em>按下 Ctrl + P 来打印或保存为PDF。此行不会出现在打印版本中</em>
     </p>
     <section class="basic">
         <h2>周江
@@ -32,11 +32,11 @@
                 <em>电视节目单等组件</em>
             </li>
             <li>2015.7 - 2017.6 北京网易科技有限公司
-                <em>奥运赛事系统,自媒体h5</em>
+                <em>奥运赛事系统,自媒体创意h5</em>
             </li>
             <li>2017.8 - 2018.1 个人兼职，个人项目和技术提升</li>
             <li>2018.4 至今 杭州唯依科技
-                <em>网站重构,新项目开发,后台系统开发</em>
+                <em>网站重构,后台系统开发</em>
             </li>
         </ul>
     </section>
@@ -52,69 +52,89 @@
             </li>
             <li>
                 <a href="http://data.2016.163.com">2016网易奥运赛程pc版</a> <span>http://data.2016.163.com</span>
+                <p>
+                    基于模板渲染，响应式的赛事系统
+                </p>
             </li>
             <li>
                 <a href="http://news.163.com/special/dada2016">网易哒哒年终策划</a> <span>http://news.163.com/special/dada2016</span>
+                <p>
+                    使用three.js加上物理引擎的场景
+                </p>
             </li>
             <li>vue+typescript的后台系统<p>
-                使用element-ui,typescript,用webpack dll plugin优化,附带成果包括一个自动编译,并更新修改的element-ui的bash文件
+                使用element-ui，typescript构建的单页面后台系统
             </p></li>
         </ul>
     </section>
     <section class="projects">
         <h3>个人项目</h3>
-        <div class="project-section simple-vue-components">
-            <h4><a href="https://aboutqx.github.io/simple-vue-components/dist/index.html#/dashboard">simple-vue-components</a> <span>https://aboutqx.github.io/simple-vue-components/dist</span></h4>
-            <p class="dept">背景:做后台项目的一些积累,element-ui并不能完全满足需要</p>
-            <ul>
-                <li>使用typescript+vue-cli集成</li>
-                <li>无侵犯性,易于修改</li>
-            </ul>
 
-        </div>
         <div class="project-section script-link-html-webpack-plugin">
 
-            <h4><a href="https://github.com/aboutqx/script-link-html-webpack-plugin">script-link-html-webpack-plugin</a> <span>https://github.com/aboutqx/script-link-html-webpack-plugin</span></h4>
-            <p class="dept">背景:接手一个需要重构的项目,项目是前后端不分离的,准备逐渐迁移到vue上.
-                <br>使用多个html-webpack-plugin逐步迁移,前端代码和后端代码不是放在一个服务器上,所以需要生成路径(后来发现publicPath可以写成cdn形式),后缀是使用后端时间戳,这样就不用更新html模板到jsp页面.</p>
+            <h4><a href="https://github.com/aboutqx/script-link-html-webpack-plugin">script-link-html-webpack-plugin</a></h4>
+            <p class="dept">背景:接手一个需要重构的项目，项目前后端不分离，逐渐迁移到vue上.
+                <br>使用多个html-webpack-plugin逐步迁移，前端代码和后端代码放在不同服务器上
+                <br>需要生成路径(publicPath最近版本可以写成cdn形式)，后缀是使用后端时间戳，这样就不用更新html模板到jsp页面.</p>
             <ul>
                 <li>可用于自定义链接和图片前后缀</li>
             </ul>
         </div>
         <div class="project-section webgl-filter">
 
-            <h4><a href="https://aboutqx.github.io/simple-webgl/webglFilter/dist">webgl filter</a> <span>https://aboutqx.github.io/simple-webgl/webglFilter/dist</span></h4>
-            <p>背景:接触webgl过程中,做的2d webgl 图片应用,不断更新中...</p>
+            <h4><a href="https://aboutqx.github.io/simple-webgl/webglFilter/dist">webgl filter</a></h4>
+            <p>使用webgl shader进行gpu上的image processing</p>
             <ul>
-                <li>可继承的图片处理框架</li>
-                <li>最新:基于sobel算子的edge detection</li>
+                <li>单个颜色过滤</li>
+                <li>使用sobel算子的edge detection</li>
             </ul>
         </div>
 
-        <div class="project-section webgl-test">
-            <h4>webgl-test：</h4>
-            <h5>
-                <a href="https://aboutqx.github.io/simple-webgl/test/dist#mrt">multiple-render-target</a>
-                <span>https://aboutqx.github.io/simple-webgl/test/dist#mrt</span>
-            </h5>
-            <h5>
-                <a href="https://aboutqx.github.io/simple-webgl/test/dist#reflection">光照镜面反射模拟</a>
-                <span>https://aboutqx.github.io/simple-webgl/test/dist#reflection</span>
-            </h5>
-            <h5>
-                <a href="https://aboutqx.github.io/simple-webgl/test/dist#mask">stencil test生成边框</a>
-                <span>https://aboutqx.github.io/simple-webgl/test/dist#mask</span>
-            </h5>
+        <div class="project-section simple-webgl">
+            <h4><a href="https://aboutqx.github.io/simple-webgl/test/dist">webgl test</a></h4>
+            <p>自给自足的webgl(2)系统</p>
+            <p>功能：</p>
+            <ul>
+                <li>OBJ格式模型导入，MTL文件材质解析</li>
+                <li>球形，圆环，立方体等基本形状，Vao 支持</li>
+                <li>Webgl2 功能测试：depthTexture，float texture， multiple render target...</li>
+            </ul>
+            <p>例子：</p>
+            <div>
+                <img src="./imgs/shadow.png" alt=""> <span>阴影(shadow mapping)</span>
+            </div>
+            <div>
+                <img src="./imgs/deferred_shading.png" alt=""> <span>延迟着色(deferred shading)</span>
+            </div>
+            <div>
+                <img src="./imgs/pbr.png" alt=""> <span>基于物理的渲染(pbr)</span>
+            </div>
+            
+            
         </div>
+
+        <div class="project-section raytracing">
+
+            <h4><a href="#">ray tracing</a></h4>
+            <p>使用Ray Tracing技术进行渲染图像</p>
+            <ul>
+                <li>lamberian</li>
+                <li>reflect，refract</li>
+            </ul>
+            <img src="./imgs/raytracing.jpg" alt="">
+        </div>
+        <!-- <h4>webgl-test：</h4>
+            <h5>贝塞尔曲线</h5>
+            <h5>subsurface scattering</h5>
+            <h5>gpgpu</h5> -->
     </section>
     <section class="skills">
         <h3>技能</h3>
         <ul>
-            <li>熟练使用vue + sass + webpack + eslint + prettier进行开发</li>
-            <li>熟悉配置webpack,parcel</li>
-            <li>熟悉进行webgl原生开发</li>
+            <li>熟悉使用vue + sass + webpack + eslint + prettier进行开发</li>
+            <li>熟悉使用webgl(2)原生和three.js进行3d场景开发</li>
             <li>了解后台开发,了解node开发</li>
-            <li>掌握http协议,前端性能优化,熟悉正则表达式</li>
+            <li>掌握http协议,前端性能优化</li>
         </ul>
     </section>
     <footer>all rights reseved ©aboutqx</footer>

@@ -43,11 +43,29 @@ a+span{
     font-size:14px;
 }
 .project-section{
+    
     padding-left: 20px;
     span{
         font-weight: normal;
         color:gray;
         font-size:14px;
+    }
+    &.simple-webgl img{
+        width:270px;
+        height: auto;
+        margin: 10px 0;
+    }
+    &.simple-webgl > div{
+        display: flex;
+        flex-direction: column;
+        span {
+            color: #000;
+        }
+    }
+    &.raytracing{
+        img{
+            width: 400px;
+        }
     }
 }
 footer{
