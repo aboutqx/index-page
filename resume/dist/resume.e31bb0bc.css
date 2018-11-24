@@ -362,9 +362,11 @@ h2 > * {
 li {
   line-height: 1.5; }
 
-.basic img {
-  width: 150px;
-  float: right; }
+.basic {
+  margin-bottom: 10px; }
+  .basic img {
+    width: 150px;
+    float: right; }
 
 .skills span {
   padding: 2px 12px;
@@ -399,3 +401,6 @@ footer {
 @media print {
   .no-print {
     display: none; } }
+
+.work li {
+  line-height: 1.8; }

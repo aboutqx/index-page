@@ -29,6 +29,7 @@ li{
         width:150px;
         float:right;
     }
+    margin-bottom: 10px;
 }
 .skills{
     span{
@@ -74,5 +75,10 @@ footer{
 @media print {
     .no-print {
         display: none;
+    }
+}
+.work{
+    li{
+        line-height: 1.8;
     }
 }
