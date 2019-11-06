@@ -10,6 +10,7 @@
     "node-sass": "^4.9.3"
   },
   "scripts": {
+    "test2": "parcel index2.html",
     "test": "parcel index.html",
     "dev": "parcel index.html",
     "build": "parcel build index.html --public-url ./",
