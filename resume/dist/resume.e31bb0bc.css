@@ -395,10 +395,11 @@ a + span {
   .project-section.simple-webgl img {
     width: 270px;
     height: auto;
-    margin: 10px 0; }
+    margin: 6px 15px; }
   .project-section.simple-webgl > div {
     display: flex;
-    flex-direction: column; }
+    flex-direction: column;
+    margin: 10px 0; }
     .project-section.simple-webgl > div span {
       color: #000; }
   .project-section.raytracing img {

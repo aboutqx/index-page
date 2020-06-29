@@ -54,11 +54,12 @@ a+span{
     &.simple-webgl img{
         width:270px;
         height: auto;
-        margin: 10px 0;
+        margin: 6px 15px;
     }
     &.simple-webgl > div{
         display: flex;
         flex-direction: column;
+        margin: 10px 0;
         span {
             color: #000;
         }
