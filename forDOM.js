@@ -308,10 +308,20 @@ function Toast(message) {
   if (typeof message === 'string') {
     const div = document.createElement('div')
     document.body.appendChild(div)
-    div.outerHTML = `<div class="simple-toast">${message}</div>`
+    div.style = `z-index: 9999;
+              position: relative;
+              top:0;
+              left:0;
+              text-align:center;
+              width:100%;
+              color: antiquewhite;`
+    div.innerHTML = `
+              ${message}
+            `
+    console.log(div)
     setTimeout(() => {
       document.body.removeChild(div)
-    }, 1000)
+    }, 2000)
   }
 
 }
